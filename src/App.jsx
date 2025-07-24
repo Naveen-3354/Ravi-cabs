@@ -12,7 +12,7 @@ function App() {
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
       
-        <div className='text-lg '>Hello World</div>
+        <div className='text-lg '>Nk drop taxi</div>
  
       <Footer />
     </div>
