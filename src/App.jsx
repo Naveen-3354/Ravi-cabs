@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Header from './components/Header';
+import HeroSection from './components/HeroSection';
 import Footer from './components/Footer';
 
 function App() {
@@ -11,9 +10,7 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
-      
-        <div className='text-lg '>Nk drop taxi</div>
- 
+      <HeroSection />
       <Footer />
     </div>
   );
