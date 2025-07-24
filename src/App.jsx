@@ -11,9 +11,9 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
-      <main className="flex-1 flex items-center justify-center">
-        <h1 className="text-5xl font-bold text-gray-900">Hello World</h1>
-      </main>
+      
+        <div className='text-lg '>Hello World</div>
+ 
       <Footer />
     </div>
   );
