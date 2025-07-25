@@ -1,33 +1,112 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import { FiMenu, FiX, FiPhone, FiMail } from 'react-icons/fi';
 
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const drawerRef = useRef(null);
+
+  const toggleMenu = () => setIsMenuOpen(prev => !prev);
+  const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (drawerRef.current && !drawerRef.current.contains(e.target)) {
+        closeMenu();
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   return (
-    <header className="bg-gray-100 py-4 px-6 flex flex-col md:flex-row items-center justify-between w-full">
+    <header className="fixed top-0 left-0 w-full bg-gray-100 py-4 px-6 flex items-center justify-between z-50">
+
       {/* Logo */}
-      <div className="flex items-center mb-4 md:mb-0">
-        <span className="text-4xl font-bold text-orange-500 mr-1">C</span>
-        <span className="text-3xl font-semibold text-gray-900 tracking-widest">ARNTEL</span>
-      </div>
-      {/* Navigation */}
-      <nav className="flex-1 flex justify-center space-x-6 text-lg font-medium text-gray-900">
-        <Link to="/" className="hover:text-orange-500">Home</Link>
-        <Link to="/about" className="hover:text-orange-500">About</Link>
-        <Link to="/cars" className="hover:text-orange-500">Cars</Link>
-        <Link to="/services" className="hover:text-orange-500">Services</Link>
-        <Link to="/pages" className="hover:text-orange-500">Pages</Link>
-        <Link to="/blog" className="hover:text-orange-500">Blog</Link>
-        <Link to="/contact" className="hover:text-orange-500">Contact</Link>
-      </nav>
-      {/* Contact Info */}
-      <div className="flex items-center space-x-4 mt-4 md:mt-0">
-        <div className="flex items-center bg-orange-500 rounded-lg px-3 py-2 text-white">
-          <span className="mr-2">[✉]</span>
-          <span className="text-base font-medium text-gray-900 ml-2 text-black">+71 202 102 2525</span>
+      <a href="/">
+        <div className="flex items-center">
+          <img
+            src="/images/NK_TAXI.png"
+            alt="CARNTEL Logo"
+            className="h-14 w-auto object-contain"
+          />
         </div>
-        <div className="flex items-center bg-orange-500 rounded-lg px-3 py-2 text-white">
-          <span className="mr-2">[☎]</span>
-          <span className="text-base font-medium text-gray-900 ml-2 text-black">carntelinfo@gmail.com</span>
+      </a>
+
+      {/* Desktop Navigation */}
+      <nav className="hidden md:flex flex-1 justify-center space-x-6 text-lg font-medium text-gray-900">
+        <a href="#" onClick={closeMenu} className="hover:text-orange-500">Home</a>
+        <a href="#" onClick={closeMenu} className="hover:text-orange-500">About</a>
+        <a href="#" onClick={closeMenu} className="hover:text-orange-500">Our Services</a>
+        <a href="#" onClick={closeMenu} className="hover:text-orange-500">Terms & Conditions</a>
+        <a href="#" onClick={closeMenu} className="hover:text-orange-500">Contact</a>
+      </nav>
+
+      {/* Contact Info - Desktop */}
+      <div className="hidden lg:flex items-center space-x-4">
+        <div className="flex items-center space-x-2">
+          <span className="bg-orange-500 p-2 rounded-md text-white">
+            <FiMail />
+          </span>
+          <span className="text-base font-medium text-gray-900">+71 202 102 2525</span>
+        </div>
+        {/* <div className="flex items-center space-x-2">
+          <span className="bg-orange-500 p-2 rounded-md text-white">
+            <FiPhone />
+          </span>
+          <span className="text-base font-medium text-gray-900">carntelinfo@gmail.com</span>
+        </div> */}
+      </div>
+
+      {/* Hamburger Button - Mobile */}
+      <button className="lg:hidden text-3xl text-gray-800" onClick={toggleMenu}>
+        <FiMenu />
+      </button>
+
+      {/* Backdrop */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 z-40"></div>
+      )}
+
+      {/* Drawer */}
+      <div
+        ref={drawerRef}
+        className={`fixed top-0 right-0 w-64 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+      >
+        <div className="flex items-center justify-between px-4 py-4 border-b">
+          <span className="text-xl font-bold text-orange-500">Menu</span>
+          <button onClick={closeMenu} className="text-2xl text-gray-700">
+            <FiX />
+          </button>
+        </div>
+        <div className="flex flex-col space-y-4 px-6 py-6 text-lg text-gray-800 font-medium">
+          <a href="#" onClick={closeMenu} className="hover:text-orange-500">Home</a>
+          <a href="#" onClick={closeMenu} className="hover:text-orange-500">About</a>
+          <a href="#" onClick={closeMenu} className="hover:text-orange-500">Our Services</a>
+          <a href="#" onClick={closeMenu} className="hover:text-orange-500">Terms & Conditions</a>
+          <a href="#" onClick={closeMenu} className="hover:text-orange-500">Contact</a>
+        </div>
+
+        {/* Drawer Contact Info */}
+        <div className="border-t mt-4 px-6 py-4 space-y-3">
+          <div className="flex items-center space-x-2">
+            <span className="bg-orange-500 p-2 rounded-md text-white">
+              <FiMail />
+            </span>
+            <span className="text-base font-medium text-gray-900">+71 202 102 2525</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="bg-orange-500 p-2 rounded-md text-white">
+              <FiPhone />
+            </span>
+            <span className="text-base font-medium text-gray-900">carntelinfo@gmail.com</span>
+          </div>
         </div>
       </div>
     </header>

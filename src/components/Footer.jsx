@@ -1,77 +1,133 @@
-import React from "react";
+import {
+  FiPhone,
+  FiMail,
+  FiMapPin,
+  FiFacebook,
+  FiInstagram,
+  FiTwitter,
+} from "react-icons/fi";
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white pt-10 pb-4 px-4 md:px-16 w-full">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Logo and Description */}
-        <div>
-          <div className="flex items-center mb-4">
-            <span className="text-4xl font-bold text-orange-500 mr-1">C</span>
-            <span className="text-3xl font-semibold text-white tracking-widest">ARNTEL</span>
+    <footer className="w-full text-white bg-cover bg-center" style={{ backgroundImage: "url('/images/footer_bg.jpg')" }}>
+      <div className=" w-full pt-10 pb-4 px-6 md:px-16">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* Logo & Description */}
+          <div>
+            <a href="/">
+              <div className="flex items-center">
+                <img
+                  src="/images/NK_TAXI.png"
+                  alt="CARNTEL Logo"
+                  className="h-14 w-auto object-contain"
+                />
+              </div>
+            </a>
+            <p className="text-gray-300 mb-4 text-sm">
+              We offer a range of the finest and most premium cars and bikes on rent.
+            </p>
+            <div className="space-y-3 mb-4 text-sm">
+              <div className="flex items-center text-gray-300">
+                <FiPhone className="text-orange-500 mr-2" />
+                <span>123 654 0214</span>
+              </div>
+              <div className="flex items-center text-gray-300">
+                <FiMail className="text-orange-500 mr-2" />
+                <span>carntelinfo@gmail.com</span>
+              </div>
+              <div className="flex items-center text-gray-300">
+                <FiMapPin className="text-orange-500 mr-2" />
+                <span>55/11 ronin tower New York</span>
+              </div>
+            </div>
+            <div className="flex space-x-3 mt-4">
+              <div className="bg-orange-500 p-2 rounded-md">
+                <FiTwitter className="text-white" />
+              </div>
+              <div className="bg-orange-500 p-2 rounded-md">
+                <FiFacebook className="text-white" />
+              </div>
+              <div className="bg-orange-500 p-2 rounded-md">
+                <FiInstagram className="text-white" />
+              </div>
+            </div>
           </div>
-          <p className="text-gray-300 mb-4 text-sm">We offer a range of the finest and most premium cars and bikes on rent.</p>
-          <div className="space-y-2 mb-4">
-            <div className="flex items-center space-x-2 text-orange-500"><span>[☎]</span><span className="text-white">123 654 0214</span></div>
-            <div className="flex items-center space-x-2 text-orange-500"><span>[✉]</span><span className="text-white">carntelinfo@gmail.com</span></div>
-            <div className="flex items-center space-x-2 text-orange-500"><span>[🏠]</span><span className="text-white">55/11 ronin tower New York</span></div>
+
+          {/* Working Hours */}
+          <div>
+            <h3 className="font-semibold mb-3 text-white text-lg">Quick Links</h3>
+            <div className="text-gray-300 text-sm space-y-2">
+              <div className="flex justify-between">
+                <span>Monday - Friday:</span>
+                <span>09:00 AM - 09:00 PM</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Saturday:</span>
+                <span>09:00 AM - 07:00PM</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Sunday:</span>
+                <span>Closed</span>
+              </div>
+            </div>
           </div>
-          <div className="flex space-x-2">
-            <span className="bg-orange-500 rounded-lg px-3 py-2">X</span>
-            <span className="bg-orange-500 rounded-lg px-3 py-2">f</span>
-            <span className="bg-orange-500 rounded-lg px-3 py-2">ig</span>
-            <span className="bg-orange-500 rounded-lg px-3 py-2">p</span>
+
+          {/* Site Links */}
+          <div>
+            <h3 className="font-semibold mb-3 text-white text-lg">Quick Links</h3>
+            <div className="text-gray-300 text-sm space-y-2">
+              <div>About us</div>
+              <div>FAQ’s</div>
+              <div>Services</div>
+              <div>Team</div>
+              <div>Contact</div>
+            </div>
+          </div>
+
+          {/* Vehicle Types */}
+          <div>
+            <h3 className="font-semibold mb-3 text-white text-lg">Vehicles Type</h3>
+            <div className="text-gray-300 text-sm grid grid-cols-2 gap-y-2 gap-x-6">
+              <div>SUVs</div>
+              <div>Sport Coupe</div>
+              <div>Convertible</div>
+              <div>Wagon</div>
+              <div>Sedan</div>
+              <div>Yamaha R15</div>
+              <div>BMW S 1000 RR</div>
+              <div>Kawasaki</div>
+              <div>Hayabusa</div>
+              <div>Harley Davidson</div>
+            </div>
           </div>
         </div>
-        {/* Quick Links 1 */}
-        <div>
-          <h3 className="font-semibold mb-2">Quick Links</h3>
-          <div className="text-gray-300 text-sm space-y-1">
-            <div>Monday - Friday: <span className="ml-2">09:00 AM - 09:00 PM</span></div>
-            <div>Saturday: <span className="ml-2">09:00 AM - 07:00PM</span></div>
-            <div>Sunday: <span className="ml-2">Closed</span></div>
-          </div>
-        </div>
-        {/* Quick Links 2 */}
-        <div>
-          <h3 className="font-semibold mb-2">Quick Links</h3>
-          <div className="text-gray-300 text-sm space-y-1">
-            <div>About us</div>
-            <div>FAQ’s</div>
-            <div>Services</div>
-            <div>Team</div>
-            <div>Contact</div>
-          </div>
-        </div>
-        {/* Vehicles Type */}
-        <div>
-          <h3 className="font-semibold mb-2">Vehicles Type</h3>
-          <div className="text-gray-300 text-sm space-y-1 grid grid-cols-2 gap-x-4">
-            <div>SUVs</div>
-            <div>Sport Coupe</div>
-            <div>Convertible</div>
-            <div>Wagon</div>
-            <div>Sedan</div>
-            <div>Yamaha R15</div>
-            <div>BMW S 1000 RR</div>
-            <div>Kawasaki</div>
-            <div>Hayabusa</div>
-            <div>Harley Davidson</div>
-          </div>
+
+        {/* Newsletter */}
+        <div className="max-w-7xl mx-auto mt-8 border-t border-gray-700 pt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="text-lg font-semibold text-white">Subscribe To Our Newsletter Today!</div>
+          <form className="flex w-full md:w-auto">
+            <input
+              type="email"
+              placeholder="Email address..."
+              className="px-4 py-2 rounded-l bg-black text-white border border-gray-700 focus:outline-none w-full md:w-64"
+            />
+            <button
+              type="submit"
+              className="bg-black border border-l-0 border-gray-700 px-4 py-2 rounded-r text-orange-500 text-xl"
+            >
+              →
+            </button>
+          </form>
         </div>
       </div>
-      {/* Newsletter */}
-      <div className="max-w-7xl mx-auto mt-8 border-t border-gray-700 pt-6 flex flex-col md:flex-row items-center justify-between">
-        <div className="text-lg font-semibold mb-4 md:mb-0">Subscribe To Our Newsletter Today!</div>
-        <form className="flex w-full md:w-auto">
-          <input type="email" placeholder="Email address..." className="px-4 py-2 rounded-l bg-black text-white border border-gray-700 focus:outline-none w-full md:w-64" />
-          <button type="submit" className="bg-black border border-l-0 border-gray-700 px-4 py-2 rounded-r text-orange-500 text-xl">→</button>
-        </form>
-      </div>
-      {/* Copyright */}
-      <div className="max-w-7xl mx-auto mt-8 flex items-center justify-between text-gray-400 text-sm">
-        <span>© 2024 <span className="text-orange-500">CARNTEL</span> All rights reserved.</span>
-        <span className="bg-gray-800 p-2 rounded"><span className="text-white">▲</span></span>
+
+      {/* Bottom Bar */}
+      <div className="bg-black text-gray-400 text-sm py-4 px-4 md:px-16">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+          <span>
+            © 2024 <span className="text-orange-500">CARNTEL</span> All rights reserved.
+          </span>
+        </div>
       </div>
     </footer>
   );
