@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
-import HeroSection from './components/HeroSection';
+import Home from './components/pages/Home';
 import Footer from './components/Footer';
 import About from './components/pages/About';
 import Services from './components/pages/Services'; // Note capital 'S' if your file is Services.jsx
@@ -17,7 +17,7 @@ function App() {
         <Header />
         <main className="flex-grow">
           <Routes>
-            <Route path="/" element={<HeroSection />} />
+            <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/terms" element={<Terms />} />
