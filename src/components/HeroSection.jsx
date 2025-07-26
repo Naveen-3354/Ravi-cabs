@@ -3,97 +3,140 @@ import { useState } from 'react';
 const HeroSection = () => {
     const [activeTab, setActiveTab] = useState('oneWay');
     const [isRoundTrip, setIsRoundTrip] = useState(false);
+    
     return (
         <>
-            <div className="px-0 pb-0 pt-0 lg:px-24 lg:pb-24 lg:pt-12 ">
+            <div className="px-0 pb-0 pt-0 lg:px-24 lg:pb-24 lg:pt-12">
                 <div
                     className="w-full bg-cover bg-center bg-no-repeat rounded-xl"
                     style={{ backgroundImage: "url('/images/hero_bg.jpg')" }}
                 >
-                    <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20 flex flex-col lg:flex-row items-center justify-between gap-12">
+                    <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20 mt-20 lg:mt-0 flex flex-col lg:flex-row items-center justify-between gap-12">
                         {/* Left Section */}
                         <div className="w-full lg:w-1/2 text-white">
-                            <p className="text-sm tracking-widest text-orange-500 uppercase mb-2">- Premium -</p>
+                            {/* <p className="text-sm tracking-widest text-orange-500 uppercase mb-2">- Premium -</p> */}
                             <h1 className="text-4xl md:text-5xl font-light leading-tight">
-                                The Best Rent <br />
-                                <span className="font-bold text-orange-500">Cars & Bikes</span>
+                                The Best Rent 
+                                <span className="font-bold text-orange-500 ms-4">Cars & Bikes</span>
                             </h1>
 
                             {/* Booking Form */}
-                            <div className="mt-8 bg-black/80 rounded-xl text-white p-4 md:p-6 w-full max-w-xl relative z-20">
-                                <p className="font-medium mb-4">Available For Rent</p>
+                            <div className="mt-8 bg-black/80 backdrop-blur-sm rounded-xl text-white p-4 md:p-6 w-full max-w-xl relative z-20 border border-gray-700/50">
+                                {/* <p className="font-medium mb-6 text-lg">Available For Rent</p> */}
 
-                                {/* Main Tabs */}
-                                <div className="flex gap-2 mb-6">
-                                    <button
-                                        onClick={() => setActiveTab('oneWay')}
-                                        className={`flex-shrink-0 px-4 py-2 rounded-md font-semibold ${activeTab === 'oneWay' ? 'bg-orange-500' : 'bg-gray-700'
+                                {/* Material UI Style Tabs */}
+                                <div className="relative mb-8">
+                                    {/* Tab Indicator */}
+                                    <div className="absolute bottom-0 left-0 h-0.5 bg-orange-500 transition-all duration-300 ease-in-out"
+                                         style={{
+                                             width: activeTab === 'oneWay' ? '33.33%' : activeTab === 'roundTrip' ? '33.33%' : '33.33%',
+                                             transform: `translateX(${activeTab === 'oneWay' ? '0%' : activeTab === 'roundTrip' ? '100%' : '200%'})`
+                                         }}>
+                                    </div>
+                                    
+                                    {/* Tab Buttons */}
+                                    <div className="flex border-b border-gray-600">
+                                        <button
+                                            onClick={() => setActiveTab('oneWay')}
+                                            className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 relative ${
+                                                activeTab === 'oneWay' 
+                                                    ? 'text-orange-500' 
+                                                    : 'text-gray-400 hover:text-gray-300'
                                             }`}
-                                    >
-                                        One Way
-                                    </button>
-                                    <button
-                                        onClick={() => setActiveTab('roundTrip')}
-                                        className={`flex-shrink-0 px-4 py-2 rounded-md font-semibold ${activeTab === 'roundTrip' ? 'bg-orange-500' : 'bg-gray-700'
+                                        >
+                                            One Way
+                                        </button>
+                                        <button
+                                            onClick={() => setActiveTab('roundTrip')}
+                                            className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 relative ${
+                                                activeTab === 'roundTrip' 
+                                                    ? 'text-orange-500' 
+                                                    : 'text-gray-400 hover:text-gray-300'
                                             }`}
-                                    >
-                                        Round Trip
-                                    </button>
-                                    <button
-                                        onClick={() => setActiveTab('airportTaxi')}
-                                        className={`flex-shrink-0 px-4 py-2 rounded-md font-semibold ${activeTab === 'airportTaxi' ? 'bg-orange-500' : 'bg-gray-700'
+                                        >
+                                            Round Trip
+                                        </button>
+                                        <button
+                                            onClick={() => setActiveTab('airportTaxi')}
+                                            className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 relative ${
+                                                activeTab === 'airportTaxi' 
+                                                    ? 'text-orange-500' 
+                                                    : 'text-gray-400 hover:text-gray-300'
                                             }`}
-                                    >
-                                        Airport Taxi
-                                    </button>
+                                        >
+                                            Airport Taxi
+                                        </button>
+                                    </div>
                                 </div>
+
                                 {/* Tab Content */}
                                 <div className="tab-content">
                                     {/* One Way Tab */}
                                     {activeTab === 'oneWay' && (
-                                        <div className="grid grid-cols-1 gap-4">
+                                        <div className="space-y-4">
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <select className="bg-white text-black px-3 py-2 rounded-md">
-                                                    <option>Select vehicle type</option>
-                                                    <option>Sedan</option>
-                                                    <option>SUV</option>
-                                                    <option>Luxury</option>
-                                                </select>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Full name"
-                                                    className="bg-white text-black px-3 py-2 rounded-md"
-                                                />
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Vehicle Type</label>
+                                                    <select className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400">
+                                                        <option className="text-gray-800">Select vehicle type</option>
+                                                        <option className="text-gray-800">Sedan</option>
+                                                        <option className="text-gray-800">SUV</option>
+                                                        <option className="text-gray-800">Luxury</option>
+                                                    </select>
+                                                </div>
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Full Name</label>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Enter your full name"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                                                    />
+                                                </div>
                                             </div>
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <input
-                                                    type="text"
-                                                    placeholder="Mobile No"
-                                                    className="bg-white text-black px-3 py-2 rounded-md"
-                                                />
-                                                <input
-                                                    type="text"
-                                                    placeholder="Pickup Location"
-                                                    className="bg-white text-black px-3 py-2 rounded-md"
-                                                />
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Mobile Number</label>
+                                                    <input
+                                                        type="tel"
+                                                        placeholder="Enter mobile number"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                                                    />
+                                                </div>
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Location</label>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Enter pickup location"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                                                    />
+                                                </div>
                                             </div>
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <input
-                                                    type="text"
-                                                    placeholder="Drop Location"
-                                                    className="bg-white text-black px-3 py-2 rounded-md"
-                                                />
-                                                <div className="flex gap-2">
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Drop Location</label>
                                                     <input
-                                                        type="date"
-                                                        className="bg-white text-black px-3 py-2 rounded-md w-1/2"
+                                                        type="text"
+                                                        placeholder="Enter drop location"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                                                     />
-                                                    <input
-                                                        type="time"
-                                                        className="bg-white text-black px-3 py-2 rounded-md w-1/2"
-                                                    />
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-2">
+                                                    <div className="relative">
+                                                        <label className="block text-xs font-medium text-gray-300 mb-1">Date</label>
+                                                        <input
+                                                            type="date"
+                                                            className="w-full bg-white/10 border border-gray-600 text-white px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                                                        />
+                                                    </div>
+                                                    <div className="relative">
+                                                        <label className="block text-xs font-medium text-gray-300 mb-1">Time</label>
+                                                        <input
+                                                            type="time"
+                                                            className="w-full bg-white/10 border border-gray-600 text-white px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -101,65 +144,77 @@ const HeroSection = () => {
 
                                     {/* Round Trip Tab */}
                                     {activeTab === 'roundTrip' && (
-                                        <div className="grid grid-cols-1 gap-4">
+                                        <div className="space-y-4">
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <select className="bg-white text-black px-3 py-2 rounded-md">
-                                                    <option>Select vehicle type</option>
-                                                    <option>Sedan</option>
-                                                    <option>SUV</option>
-                                                    <option>Luxury</option>
-                                                </select>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Full name"
-                                                    className="bg-white text-black px-3 py-2 rounded-md"
-                                                />
-                                            </div>
-
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <input
-                                                    type="text"
-                                                    placeholder="Mobile No"
-                                                    className="bg-white text-black px-3 py-2 rounded-md"
-                                                />
-                                                <input
-                                                    type="text"
-                                                    placeholder="Pickup Location"
-                                                    className="bg-white text-black px-3 py-2 rounded-md"
-                                                />
-                                            </div>
-
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <input
-                                                    type="text"
-                                                    placeholder="Drop Location"
-                                                    className="bg-white text-black px-3 py-2 rounded-md"
-                                                />
-                                                <div className="flex gap-2">
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Vehicle Type</label>
+                                                    <select className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400">
+                                                        <option className="text-gray-800">Select vehicle type</option>
+                                                        <option className="text-gray-800">Sedan</option>
+                                                        <option className="text-gray-800">SUV</option>
+                                                        <option className="text-gray-800">Luxury</option>
+                                                    </select>
+                                                </div>
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Full Name</label>
                                                     <input
-                                                        type="date"
-                                                        placeholder="Pick-Up Date"
-                                                        className="bg-white text-black px-3 py-2 rounded-md w-1/2"
-                                                    />
-                                                    <input
-                                                        type="time"
-                                                        placeholder="Pick-Up Time"
-                                                        className="bg-white text-black px-3 py-2 rounded-md w-1/2"
+                                                        type="text"
+                                                        placeholder="Enter your full name"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                                                     />
                                                 </div>
                                             </div>
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <div className="flex gap-2">
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Mobile Number</label>
+                                                    <input
+                                                        type="tel"
+                                                        placeholder="Enter mobile number"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                                                    />
+                                                </div>
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Location</label>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Enter pickup location"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Drop Location</label>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Enter drop location"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                                                    />
+                                                </div>
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Date</label>
                                                     <input
                                                         type="date"
-                                                        placeholder="Return Date"
-                                                        className="bg-white text-black px-3 py-2 rounded-md w-1/2"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                                                     />
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Time</label>
                                                     <input
                                                         type="time"
-                                                        placeholder="Return Time"
-                                                        className="bg-white text-black px-3 py-2 rounded-md w-1/2"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                                                    />
+                                                </div>
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Return Date</label>
+                                                    <input
+                                                        type="date"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                                                     />
                                                 </div>
                                             </div>
@@ -168,57 +223,69 @@ const HeroSection = () => {
 
                                     {/* Airport Taxi Tab */}
                                     {activeTab === 'airportTaxi' && (
-                                        <div className="grid grid-cols-1 gap-4">
+                                        <div className="space-y-4">
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <select className="bg-white text-black px-3 py-2 rounded-md">
-                                                    <option>Select vehicle type</option>
-                                                    <option>Sedan</option>
-                                                    <option>SUV</option>
-                                                    <option>Luxury</option>
-                                                </select>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Full name"
-                                                    className="bg-white text-black px-3 py-2 rounded-md"
-                                                />
-                                            </div>
-
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <input
-                                                    type="text"
-                                                    placeholder="Mobile No"
-                                                    className="bg-white text-black px-3 py-2 rounded-md"
-                                                />
-                                                <input
-                                                    type="text"
-                                                    placeholder="Flight Number"
-                                                    className="bg-white text-black px-3 py-2 rounded-md"
-                                                />
-                                            </div>
-
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <select className="bg-white text-black px-3 py-2 rounded-md">
-                                                    <option>Select Airport</option>
-                                                    <option>International Airport</option>
-                                                    <option>Domestic Airport</option>
-                                                </select>
-                                                <div className="flex gap-2">
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Vehicle Type</label>
+                                                    <select className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400">
+                                                        <option className="text-gray-800">Select vehicle type</option>
+                                                        <option className="text-gray-800">Sedan</option>
+                                                        <option className="text-gray-800">SUV</option>
+                                                        <option className="text-gray-800">Luxury</option>
+                                                    </select>
+                                                </div>
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Full Name</label>
                                                     <input
-                                                        type="date"
-                                                        className="bg-white text-black px-3 py-2 rounded-md w-1/2"
-                                                    />
-                                                    <input
-                                                        type="time"
-                                                        className="bg-white text-black px-3 py-2 rounded-md w-1/2"
+                                                        type="text"
+                                                        placeholder="Enter your full name"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                                                     />
                                                 </div>
                                             </div>
 
-                                            <div className="grid grid-cols-1 gap-4">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Mobile Number</label>
+                                                    <input
+                                                        type="tel"
+                                                        placeholder="Enter mobile number"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                                                    />
+                                                </div>
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Airport</label>
+                                                    <select className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400">
+                                                        <option className="text-gray-800">Select Airport</option>
+                                                        <option className="text-gray-800">International Airport</option>
+                                                        <option className="text-gray-800">Domestic Airport</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Date</label>
+                                                    <input
+                                                        type="date"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                                                    />
+                                                </div>
+                                                <div className="relative">
+                                                    <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Time</label>
+                                                    <input
+                                                        type="time"
+                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="relative">
+                                                <label className="block text-xs font-medium text-gray-300 mb-1">Hotel/Destination Address</label>
                                                 <input
                                                     type="text"
-                                                    placeholder="Hotel/Destination Address"
-                                                    className="bg-white text-black px-3 py-2 rounded-md"
+                                                    placeholder="Enter hotel or destination address"
+                                                    className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                                                 />
                                             </div>
                                         </div>
@@ -226,7 +293,7 @@ const HeroSection = () => {
                                 </div>
 
                                 {/* Button */}
-                                <button className="mt-6 bg-orange-500 text-white px-6 py-2 rounded-md font-semibold hover:bg-orange-600 transition w-full">
+                                <button className="mt-8 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all duration-200 w-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                                     {activeTab === 'oneWay' && 'BOOK ONE WAY'}
                                     {activeTab === 'roundTrip' && 'BOOK ROUND TRIP'}
                                     {activeTab === 'airportTaxi' && 'BOOK AIRPORT TAXI'}
