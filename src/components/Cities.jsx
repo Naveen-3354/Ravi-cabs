@@ -1,36 +1,60 @@
-import { FiCircle } from 'react-icons/fi';
+import { FiMapPin } from 'react-icons/fi';
 
+// All cities (can be any number)
 const cities = [
   'Ariyalur', 'Chengalpattu', 'Chennai', 'Coimbatore', 'Cuddalore', 'Dharmapuri', 'Dindigul', 'Kanchipuram', 'Kanyakumari',
   'Karur', 'Krishnagiri', 'Madurai', 'Nagapattinam', 'Namakkal', 'Perambalur', 'Pudukkottai', 'Ramanathapuram', 'Salem',
   'Sivaganga', 'Thanjavur', 'Theni', 'Nilgiris', 'Ooty', 'Thiruvallur', 'Thiruvarur', 'Thoothukkudi', 'Trichy',
-  'Tirunelveli', 'Tiruppur', 'Tiruvannamalai', 'Vellore', 'Viluppuram', 'Virudhunagar', 'Bangalore', 'Tirupati', 'Pondicherry',
-  'Ranipet', 'Tenkasi', 'Thoothukudi', 'Tirupathur', 'Tiruvallur', 'Tiruvarur', 'Erode', 'Kallakurichi',
+  'Tirunelveli', 'Tiruppur', 'Tiruvannamalai', 'Vellore', 'Viluppuram', 'Virudhunagar', 'Bangalore', 'Tirupati',
+  'Pondicherry', 'Ranipet', 'Tenkasi', 'Tirupathur', 'Erode', 'Kallakurichi',
 ];
 
-const columns = 5;
-const getColumns = () => {
-  // Split cities into N columns for desktop, fewer for mobile
-  const colCount = columns;
-  const perCol = Math.ceil(cities.length / colCount);
-  return Array.from({ length: colCount }, (_, i) => cities.slice(i * perCol, (i + 1) * perCol));
+// Function to dynamically split cities into N columns
+const splitIntoColumns = (items, columns) => {
+  const perCol = Math.ceil(items.length / columns);
+  return Array.from({ length: columns }, (_, i) =>
+    items.slice(i * perCol, (i + 1) * perCol)
+  );
 };
 
 export default function Cities() {
-  const cityColumns = getColumns();
+  const mobileColumns = splitIntoColumns(cities, 2); // For mobile
+  const desktopColumns = splitIntoColumns(cities, 5); // For desktop
+
   return (
-    <section className="w-full py-10 px-2 md:px-8 bg-white">
+    <section className="w-full py-10 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8 text-gray-700">
-          One Way Taxi Service in <span className="text-orange-600 font-bold">Cities</span>
+        <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-10">
+          One Way Taxi Service in <span className="text-orange-600">Cities</span>
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          {cityColumns.map((col, i) => (
-            <ul key={i} className="space-y-3">
+
+        {/* Responsive design: 2 columns on mobile, 5 on desktop */}
+        <div className="grid grid-cols-2 md:hidden gap-6">
+          {mobileColumns.map((col, index) => (
+            <ul key={index} className="space-y-3">
               {col.map(city => (
-                <li key={city} className="flex items-center gap-2 text-base md:text-lg text-gray-900 font-semibold">
-                  <FiCircle className="text-orange-500" style={{ strokeWidth: 2, minWidth: 20, minHeight: 20 }} />
-                  <span>{city}</span>
+                <li
+                  key={city}
+                  className="flex items-center gap-2 text-gray-800 hover:text-orange-600 transition"
+                >
+                  <FiMapPin className="text-orange-500" />
+                  <span className="text-base font-medium">{city}</span>
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+
+        <div className="hidden md:grid grid-cols-5 gap-6">
+          {desktopColumns.map((col, index) => (
+            <ul key={index} className="space-y-3">
+              {col.map(city => (
+                <li
+                  key={city}
+                  className="flex items-center gap-2 text-gray-800 hover:text-orange-600 transition"
+                >
+                  <FiMapPin className="text-orange-500" />
+                  <span className="text-base font-medium">{city}</span>
                 </li>
               ))}
             </ul>
@@ -39,4 +63,4 @@ export default function Cities() {
       </div>
     </section>
   );
-} 
+}

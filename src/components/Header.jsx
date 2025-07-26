@@ -53,7 +53,7 @@ const Header = () => {
           <span className="bg-orange-500 p-2 rounded-md text-white">
             <FiMail />
           </span>
-          <span className="text-base font-medium text-gray-900">+71 202 102 2525</span>
+          <span className="text-base font-medium text-gray-900 ">+ 91 8778243755</span>
         </div>
         {/* <div className="flex items-center space-x-2">
           <span className="bg-orange-500 p-2 rounded-md text-white">
@@ -86,11 +86,11 @@ const Header = () => {
           </button>
         </div>
         <div className="flex flex-col space-y-4 px-6 py-6 text-lg text-gray-800 font-medium">
-          <a href="#" onClick={closeMenu} className="hover:text-orange-500">Home</a>
-          <a href="#" onClick={closeMenu} className="hover:text-orange-500">About</a>
-          <a href="#" onClick={closeMenu} className="hover:text-orange-500">Our Services</a>
-          <a href="#" onClick={closeMenu} className="hover:text-orange-500">Terms & Conditions</a>
-          <a href="#" onClick={closeMenu} className="hover:text-orange-500">Contact</a>
+          <a href="/" onClick={closeMenu} className="hover:text-orange-500">Home</a>
+          <a href="about" onClick={closeMenu} className="hover:text-orange-500">About</a>
+          <a href="services" onClick={closeMenu} className="hover:text-orange-500">Our Services</a>
+          <a href="terms" onClick={closeMenu} className="hover:text-orange-500">Terms & Conditions</a>
+          <a href="contact" onClick={closeMenu} className="hover:text-orange-500">Contact</a>
         </div>
 
         {/* Drawer Contact Info */}
@@ -99,13 +99,13 @@ const Header = () => {
             <span className="bg-orange-500 p-2 rounded-md text-white">
               <FiMail />
             </span>
-            <span className="text-base font-medium text-gray-900">+71 202 102 2525</span>
+            <span className="text-base font-medium text-gray-900">+8778243755</span>
           </div>
           <div className="flex items-center space-x-2">
             <span className="bg-orange-500 p-2 rounded-md text-white">
               <FiPhone />
             </span>
-            <span className="text-base font-medium text-gray-900">carntelinfo@gmail.com</span>
+            <span className="text-base font-medium text-gray-900">ekumarnkr@gmail.com</span>
           </div>
         </div>
       </div>

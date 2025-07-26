@@ -1,68 +1,55 @@
 import React from 'react';
-import { FaUserTie } from "react-icons/fa";
+import { FaUser, FaSuitcase, FaCarSide, FaSnowflake } from 'react-icons/fa';
+import { MdAirlineSeatReclineNormal } from 'react-icons/md';
 
-export default function VehicleCard({ image, name, seat, bags, type, fuel, price, isService, rate, driverBetta }) {
-  if (isService) {
-    // Service card layout with same theming as homepage vehicle cards
-    return (
-      <div className="bg-white flex flex-col overflow-hidden h-full rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
-        <div className="relative">
-          <img 
-            src={image} 
-            alt={name} 
-            className="w-full h-56 object-contain rounded-t-3xl bg-white" 
-          />
-          {/* Price tab right-aligned */}
-          <div className="absolute right-6 bottom-0 translate-y-1/2 bg-white rounded-t-2xl shadow px-7 py-4 flex flex-col items-center border-b-2 border-orange-500 min-w-[120px]" style={{right: 24}}>
-            <span className="text-2xl font-bold text-orange-600">₹{rate}</span>
-            <span className="text-xs text-gray-500 font-semibold">/ Km</span>
-            <div className="flex items-center gap-1 mt-1 text-xs text-gray-600">
-              <FaUserTie className="text-xs" />
-              <span>₹{driverBetta}</span>
-            </div>
-          </div>
-        </div>
-        <div className="flex-1 flex flex-col justify-between p-6 pt-10 bg-gray-50">
-          <div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">{name}</h3>
-            <p className="text-sm text-gray-600 mb-3">{type}</p>
-            <div className="flex items-center gap-2 text-sm text-gray-700">
-              <FaUserTie className="text-orange-600" />
-              <span>Driver Betta ₹{driverBetta}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Original vehicle card layout
+export default function VehicleCard({
+  image = '/images/car.png',
+  name = 'SWIFT, ZEST, XCENT _ Equivalent',
+  oneWayPrice = 14,
+  roundTripPrice = 13,
+  type = 'SEDAN',
+  seat = '4+1',
+  ac = true,
+}) {
   return (
-    <div className="bg-white flex flex-col overflow-hidden h-full">
-      <div className="relative">
-        <img src={image} alt={name} className="w-full h-56 object-contain rounded-t-3xl bg-white" />
-        {/* Price tab right-aligned */}
-        <div className="absolute right-6 bottom-0 translate-y-1/2 bg-white rounded-t-2xl shadow px-7 py-4 flex flex-col items-center border-b-2 border-orange-500 min-w-[120px]" style={{right: 24}}>
-          <span className="text-2xl font-bold text-orange-600">₹{price}</span>
-          <span className="text-xs text-gray-500 font-semibold">/ L</span>
-          <button className="mt-2 px-4 py-1 rounded bg-black text-white text-xs font-semibold hover:bg-gray-800 transition">DETAIL</button>
-        </div>
+    <div className="max-w-sm w-full bg-white rounded-3xl shadow-lg overflow-hidden flex flex-col hover:shadow-2xl transition-all duration-300 border border-gray-100">
+      {/* Image */}
+      <div className="relative w-full h-52 bg-gradient-to-tr from-gray-50 to-white overflow-hidden">
+        <img src={image} alt={name} className="w-full h-full object-contain scale-105 hover:scale-110 transition-transform duration-500" />
+        <span className="absolute top-3 left-3 bg-orange-500 text-white text-xs px-3 py-1 rounded-full shadow">Popular</span>
       </div>
-      <div className="flex-1 flex flex-col justify-between p-6 pt-10 bg-gray-50">
+
+      {/* Content */}
+      <div className="p-6 text-center flex-1 flex flex-col justify-between bg-gray-50">
         <div>
-          <h3 className="text-lg font-bold text-gray-900 mb-2">{name}</h3>
-          <div className="flex flex-wrap gap-4 text-sm text-gray-700 mb-2">
-            <span className="flex items-center gap-1"><span role="img" aria-label="seat">🪑</span> {seat} Seat</span>
-            <span className="flex items-center gap-1"><span role="img" aria-label="bags">🧳</span> {bags} Bags</span>
-            <span className="flex items-center gap-1"><span role="img" aria-label="type">🚗</span> {type}</span>
+          <h3 className="text-lg font-extrabold text-gray-900 mb-3 leading-tight tracking-wide uppercase">{name}</h3>
+
+          <div className="space-y-1">
+            <p className="text-sm text-blue-600 font-medium">
+              One Way Tariff - <span className="text-gray-800 font-semibold">{oneWayPrice} Rs/KM</span>
+            </p>
+            <p className="text-sm text-sky-600 font-medium">
+              Round Trip Tariff - <span className="text-gray-800 font-semibold">{roundTripPrice} Rs/KM</span>
+            </p>
           </div>
-          <div className="flex gap-2 text-xs font-semibold mt-2">
-            <span className={fuel === 'Petrol' ? 'text-orange-600' : 'text-gray-400 line-through'}>Petrol</span>
-            <span className={fuel === 'Diesel' ? 'text-orange-600' : 'text-gray-400 line-through'}>Diesel</span>
-            <span className={fuel === 'Electric' ? 'text-orange-600' : 'text-gray-400 line-through'}>Electric</span>
+
+          <div className="flex justify-center flex-wrap gap-6 text-gray-700 text-sm font-medium mt-4">
+            <div className="flex items-center gap-2"><FaCarSide className="text-blue-600" /> {type}</div>
+            <div className="flex items-center gap-2"><MdAirlineSeatReclineNormal className="text-blue-600" /> {seat}</div>
+            {ac && <div className="flex items-center gap-2"><FaSnowflake className="text-blue-600" /> AC</div>}
           </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex justify-between items-center mt-6 gap-4">
+          <button className="flex-1 bg-sky-500 hover:bg-sky-600 text-white py-2.5 rounded-xl text-sm font-semibold shadow transition-all duration-300">
+            View Details
+          </button>
+          <button className="flex-1 bg-gray-900 hover:bg-black text-white py-2.5 rounded-xl text-sm font-semibold shadow transition-all duration-300">
+            Book Now
+          </button>
         </div>
       </div>
     </div>
   );
-} 
+}

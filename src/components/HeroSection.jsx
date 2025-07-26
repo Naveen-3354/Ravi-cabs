@@ -81,7 +81,8 @@ const HeroSection = () => {
                                                         <option className="text-gray-800">Select vehicle type</option>
                                                         <option className="text-gray-800">Sedan</option>
                                                         <option className="text-gray-800">SUV</option>
-                                                        <option className="text-gray-800">Luxury</option>
+                                                        <option className="text-gray-800">Innova</option>
+                                                          <option className="text-gray-800">Etios</option>
                                                     </select>
                                                 </div>
                                                 <div className="relative">
@@ -152,7 +153,8 @@ const HeroSection = () => {
                                                         <option className="text-gray-800">Select vehicle type</option>
                                                         <option className="text-gray-800">Sedan</option>
                                                         <option className="text-gray-800">SUV</option>
-                                                        <option className="text-gray-800">Luxury</option>
+                                                        <option className="text-gray-800">Etios</option>
+                                                          <option className="text-gray-800">Innova</option>
                                                     </select>
                                                 </div>
                                                 <div className="relative">
@@ -231,7 +233,8 @@ const HeroSection = () => {
                                                         <option className="text-gray-800">Select vehicle type</option>
                                                         <option className="text-gray-800">Sedan</option>
                                                         <option className="text-gray-800">SUV</option>
-                                                        <option className="text-gray-800">Luxury</option>
+                                                        <option className="text-gray-800">Etios</option>
+                                                        <option className="text-gray-800">Innova</option>
                                                     </select>
                                                 </div>
                                                 <div className="relative">
@@ -257,8 +260,13 @@ const HeroSection = () => {
                                                     <label className="block text-xs font-medium text-gray-300 mb-1">Airport</label>
                                                     <select className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400">
                                                         <option className="text-gray-800">Select Airport</option>
-                                                        <option className="text-gray-800">International Airport</option>
-                                                        <option className="text-gray-800">Domestic Airport</option>
+                                                        <option className="text-gray-800">Chennai</option>
+                                                        <option className="text-gray-800">Coimbatore</option>
+                                                           <option className="text-gray-800">Madurai</option>
+                                                              <option className="text-gray-800">Trichy</option>
+                                                                 <option className="text-gray-800">Salam</option>
+                                                                    <option className="text-gray-800">Pondicherry</option>
+                                                                       <option className="text-gray-800">Bangolore</option>
                                                     </select>
                                                 </div>
                                             </div>
