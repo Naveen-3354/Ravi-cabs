@@ -60,7 +60,7 @@ const TermsAndConditions = () => {
               <img
                 src={imageSrc}
                 alt={isOneWay ? "One Way Trip Car" : "Round Trip Car"}
-                className="w-full h-auto max-h-64 object-contain rounded-xl shadow-md"
+                className="w-full h-auto max-h-64 object-contain rounded-xl "
               />
             </div>
 
@@ -120,7 +120,7 @@ const TermsAndConditions = () => {
       <img
         src="/images/etios_right3.png" // Change to your preferred image path
         alt="Car Image"
-        className="w-full h-auto object-contain rounded-xl shadow-md"
+        className="w-full h-auto object-contain rounded-xl"
       />
     </div>
   </div>

@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import About from './components/pages/About';
 import Services from './components/pages/Services'; // Note capital 'S' if your file is Services.jsx
 import Terms from './components/pages/Terms';
+import Contact from './components/pages/Contact';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,6 +22,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
         <Footer />
