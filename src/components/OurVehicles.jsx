@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import VehicleCard from './VehicleCard';
@@ -7,67 +7,66 @@ const cars = [
   {
     name: 'Innova',
     image: '/images/Innova_Right.png',
-    seat: 7,
-    bags: 4,
-    type: 'SUV',
-    fuel: 'Diesel',
-    price: 17,
+    seat: '7+1',
+    type: 'INNOVA',
+    oneWayPrice: 20,
+    roundTripPrice: 18,
+    ac: true,
   },
   {
-    name: 'Etios',
+    name: ' Only Etios',
     image: '/images/etios_right2.png',
-    seat: 5,
-    bags: 3,
-    type: 'Sedan',
-    fuel: 'Petrol',
-    price: 16,
+    seat: '4+1',
+    type: 'ETIOS',
+    oneWayPrice: 14,
+    roundTripPrice: 13,
+    ac: true,
   },
   {
-    name: 'Creta',
+    name: 'Innova Crysta',
     image: '/images/Creta_right.png',
-    seat: 5,
-    bags: 4,
+    seat: '7+1',
     type: 'SUV',
-    fuel: 'Diesel',
-    price: 18,
+    oneWayPrice: 20,
+    roundTripPrice: 18,
+    ac: true,
   },
   {
     name: 'Ertiga',
     image: '/images/Ertiga_left.png',
-    seat: 7,
-    bags: 4,
+    seat: '7+1',
     type: 'MPV',
-    fuel: 'Petrol',
-    price: 15,
+    oneWayPrice: 14,
+    roundTripPrice: 12,
+    ac: true,
   },
   {
     name: 'Swift',
     image: '/images/swift.png',
-    seat: 5,
-    bags: 2,
-    type: 'Hatchback',
-    fuel: 'Petrol',
-    price: 14,
+    seat: '4+1',
+    type: 'Sedan',
+    oneWayPrice: 14,
+    roundTripPrice: 12,
+    ac: true,
   },
   {
-    name: 'Etios Front',
+    name:'XYLO',
     image: '/images/etios_Front.png',
-    seat: 5,
-    bags: 3,
-    type: 'Sedan',
-    fuel: 'Electric',
-    price: 19,
+    seat: '4+1',
+    type: 'SUV',
+    oneWayPrice: 19,
+    roundTripPrice: 18,
+    ac: true,
   },
 ];
 
 const breakpoints = [
-  { width: 1024, cards: 3 }, // lg+
-  { width: 640, cards: 2 }, // md
-  { width: 0, cards: 1 },   // sm
+  { width: 1024, cards: 3 },
+  { width: 640, cards: 2 },
+  { width: 0, cards: 1 },
 ];
 
-const gap = 32; // px (Tailwind gap-8)
-
+const gap = 32;
 const infiniteCars = [...cars, ...cars];
 
 function getCardsPerView(width) {
@@ -80,19 +79,19 @@ function getCardsPerView(width) {
 export default function OurVehicles() {
   const controls = useAnimation();
   const [index, setIndex] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1200
+  );
   const totalCards = infiniteCars.length;
   const maxIndex = cars.length;
-  const autoScrollDelay = 2200; // ms
+  const autoScrollDelay = 2200;
 
-  // Responsive card width
   let cardsPerView = getCardsPerView(windowWidth);
   let cardWidth = 340;
   if (windowWidth < 1024 && windowWidth >= 640) cardWidth = 300;
-  if (windowWidth < 640) cardWidth = 90 * windowWidth / 100; // 90vw for mobile
+  if (windowWidth < 640) cardWidth = (90 * windowWidth) / 100;
   const slideWidth = cardWidth + gap;
 
-  // Only show N cards at a time, hide overflow
   const containerStyle = {
     width: `${cardsPerView * cardWidth + (cardsPerView - 1) * gap}px`,
     overflow: 'hidden',
@@ -100,24 +99,20 @@ export default function OurVehicles() {
     maxWidth: '100vw',
   };
 
-  // Responsive: update on resize
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Move carousel left
   const handlePrev = () => {
     setIndex((prev) => (prev === 0 ? maxIndex - 1 : prev - 1));
   };
 
-  // Move carousel right
   const handleNext = () => {
     setIndex((prev) => (prev + 1) % maxIndex);
   };
 
-  // Animate carousel
   useEffect(() => {
     controls.start({
       x: -index * slideWidth,
@@ -125,7 +120,6 @@ export default function OurVehicles() {
     });
   }, [index, controls, slideWidth]);
 
-  // Auto-scroll effect
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % maxIndex);
@@ -153,7 +147,6 @@ export default function OurVehicles() {
               ))}
             </motion.div>
           </div>
-          {/* Carousel Controls */}
           <div className="flex justify-center gap-4 mt-8">
             <button
               onClick={handlePrev}
@@ -174,4 +167,4 @@ export default function OurVehicles() {
       </div>
     </section>
   );
-} 
+}

@@ -1,5 +1,8 @@
 import React from 'react';
 import { FaCheckCircle } from "react-icons/fa";
+import WhatsAppButton from '../WhatsappButton';
+
+
 
 const AboutUs = () => {
   const steps = [
@@ -194,6 +197,7 @@ const AboutUs = () => {
         </div>
       </div>
     </section>
+<WhatsAppButton />
     </div>
   );
 };
