@@ -9,6 +9,7 @@ const TermsAndConditions = () => {
   const imageSrc = isOneWay ? '/images/etios_right3.png' : '/images/Ertiga_left.png';
 
   return (
+    
     <div className="bg-gradient-to-br from-blue-50 via-white to-blue-50 py-20 px-10 mt-2 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
 
@@ -127,6 +128,7 @@ const TermsAndConditions = () => {
     </div>
   </div>
 </motion.div>
+<WhatsAppButton />
 
       </div>
     </div>
@@ -143,8 +145,9 @@ const TermItem = ({ title, value, icon }) => (
       <h4 className="font-semibold text-gray-800">{title}</h4>
       <p className="text-gray-600 text-sm mt-1">{value}</p>
     </div>
-<WhatsAppButton />
   </motion.div>
+
+  
 );
 
 export default TermsAndConditions;
