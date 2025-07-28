@@ -1,11 +1,12 @@
 import { useState } from "react";
 import VehicleCard from "../VehicleCard";
+import WhatsAppButton from "../WhatsappButton";
 
 // Car data structured for VehicleCard component with service information
 const carList = [
   {
-    name: "Ertiga",
-    type: "Swift Dzire, Etios and Similar",
+    name: "Innova",
+    type: "SUV.INNOVA",
     rate: 19,
     image: "/images/Ertiga_left.png",
   },
@@ -142,6 +143,7 @@ export default function Services() {
           </div>
         </div>
       </div>
+      <WhatsAppButton />
     </section>
   );
 }

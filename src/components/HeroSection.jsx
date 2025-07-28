@@ -21,7 +21,10 @@ const HeroSection = () => {
                             </h1>
 
                             {/* Booking Form */}
-                            <div className="mt-8 bg-black/80 backdrop-blur-sm rounded-xl text-white p-4 md:p-6 w-full max-w-xl relative z-20 border border-gray-700/50">
+                         <div className="mt-8 rounded-xl text-white p-4 md:p-6 w-full max-w-xl relative z-20 border border-gray-700/50 overflow-hidden ">
+  <div className="absolute inset-0 bg-[url('/images/highway_1.jpg')] bg-cover bg-center opacity-80 z-0"></div>
+
+
                                 {/* <p className="font-medium mb-6 text-lg">Available For Rent</p> */}
 
                                 {/* Material UI Style Tabs */}

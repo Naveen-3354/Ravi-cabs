@@ -3,6 +3,7 @@ import HeroSection from '../HeroSection';
 import Cities from '../Cities';
 import OurVehicles from '../OurVehicles';
 import OurServices from '../OurServices';
+import WhatsAppButton from '../WhatsappButton';
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <OurServices />
       <OurVehicles />
       <Cities />
+      <WhatsAppButton />
     </>
   );
 };

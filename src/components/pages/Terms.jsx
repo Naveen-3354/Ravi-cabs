@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import WhatsAppButton from '../WhatsappButton';
+
 
 const TermsAndConditions = () => {
   const [activeTab, setActiveTab] = useState('oneWay');
@@ -77,13 +79,13 @@ const TermsAndConditions = () => {
                   <TermItem title="One Way Drop Trips" value="Minimum 130 kms" icon="📍" />
                   <TermItem title="Hills Station Charges" value="Rs. 300" icon="⛰️" />
                   <TermItem title="Additional charges" value="Toll, Permit, Airport & Parking extra" icon="➕" />
-                  <TermItem title="Waiting Charges" value="Rs. 2/min (First 30 min for food free)" icon="⏱️" />
+                  <TermItem title="Waiting Charges" value="Rs. 150 per hours (First 30 min for food free)" icon="⏱️" />
                   <TermItem title="Luggage Capacity" value="Sedan: 3 bags, SUV: 4 bags" icon="🧳" />
                 </>
               ) : (
                 <>
-                  <TermItem title="Driver Betta" value="Rs. 300" icon="💰" />
-                  <TermItem title="Driver Betta above 400 km" value="Rs. 500" icon="🛣️" />
+                  <TermItem title="Driver Betta" value="Rs. 400" icon="💰" />
+                  <TermItem title="Driver Betta above 400 km" value="Rs. 600" icon="🛣️" />
                   <TermItem title="Round Trips" value="Min 250 kms/day. Bengaluru: 300 kms/day" icon="🔁" />
                   <TermItem title="Hills Station Charges" value="Rs. 300" icon="⛰️" />
                   <TermItem title="Additional charges" value="Toll, Permit, Airport & Parking extra" icon="➕" />
@@ -141,6 +143,7 @@ const TermItem = ({ title, value, icon }) => (
       <h4 className="font-semibold text-gray-800">{title}</h4>
       <p className="text-gray-600 text-sm mt-1">{value}</p>
     </div>
+<WhatsAppButton />
   </motion.div>
 );
 

@@ -1,5 +1,5 @@
 import React from "react";
-
+import WhatsAppButton from "../WhatsappButton";
 const ContactPage = () => {
   return (
     <>
@@ -117,6 +117,7 @@ const ContactPage = () => {
           </div>
         </div>
       </section>
+<WhatsAppButton />
     </>
   );
 };
