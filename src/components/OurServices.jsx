@@ -16,7 +16,7 @@ const OurServices = () => {
         <Banner
           title="DROP TAXI"
           description="Drop taxi is a convenient and hassle-free way to travel from one point to another, without having to worry about driving or parking. With Super Cabs' drop taxi services, you can enjoy a comfortable and safe ride to your destination, with no hidden charges and flexible payment options."
-          imageSrc="/images/etios_right3.png"
+          imageSrc="/images/pickup1.png"
           isStyled={true}
           isInvert={false}
           color="white"
@@ -26,17 +26,17 @@ const OurServices = () => {
         <Banner
           title="LOCAL RENTALS"
           description="Super Cabs' local rental services provide a convenient and flexible way to explore your city at your own pace. With a range of well-maintained vehicles and experienced drivers, you can enjoy a comfortable and hassle-free ride for all your local travel needs."
-          imageSrc="/images/Ertiga_left.png"
+          imageSrc="/images/pickup2.png"
           isStyled={true}
           isInvert={true}
           color="white"
         />
 
         {/* Airport Transfers Service */}
-          <Banner
+        <Banner
           title="AIRPORT TRANSFERS"
           description="Super Cabs offers hassle-free and comfortable airport transfers with experienced drivers and well-maintained vehicles. We prioritize safety and punctuality to ensure that you reach your destination on time, every time."
-          imageSrc="/images/Creta_right.png"
+          imageSrc="/images/pickup3.png"
           isStyled={true}
           isInvert={false}
           color="white"

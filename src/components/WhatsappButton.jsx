@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaWhatsapp } from 'react-icons/fa'; // 👈 Import the WhatsApp icon
 
 const WhatsAppButton = () => {
   const phoneNumber = "918148783506";
@@ -14,19 +15,15 @@ const WhatsAppButton = () => {
         className="block relative group"
         aria-label="Chat on WhatsApp"
       >
-        {/* Animated WhatsApp Icon */}
+        {/* Styled WhatsApp Icon Button */}
         <div className={`
           w-14 h-14 md:w-16 md:h-16 rounded-full 
-          bg-white shadow-xl ring-2 ring-green-500 
+          bg-green-500 shadow-xl ring-2 ring-green-500 
           animate-bounce hover:scale-110 transition-transform duration-500 
           flex items-center justify-center
           backdrop-blur-sm
         `}>
-          <img
-            src="/images/whatsapp_icon.png" // 📌 Make sure this image exists in public/images
-            alt="WhatsApp"
-            className="w-8 h-8 md:w-10 md:h-10 object-contain"
-          />
+          <FaWhatsapp className="text-white w-8 h-8 md:w-10 md:h-10" />
         </div>
 
         {/* Tooltip for Desktop */}

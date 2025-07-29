@@ -39,13 +39,13 @@ const Header = () => {
       </a>
 
       {/* Desktop Navigation */}
-   <nav className="hidden md:flex flex-1 justify-center space-x-6 text-lg font-medium text-gray-900">
-  <a href="/" onClick={closeMenu} className="hover:text-orange-500">Home</a>
-  <a href="/about" onClick={closeMenu} className="hover:text-orange-500">About</a>
-  <a href="/services" onClick={closeMenu} className="hover:text-orange-500">Our Services</a>
-  <a href="/terms" onClick={closeMenu} className="hover:text-orange-500">Terms & Conditions</a>
-  <a href="/contact" onClick={closeMenu} className="hover:text-orange-500">Contact</a>
-</nav>
+      <nav className="hidden md:flex flex-1 justify-center space-x-6 text-lg font-medium text-gray-900">
+        <a href="/" onClick={closeMenu} className="hover:text-orange-500">Home</a>
+        <a href="/about" onClick={closeMenu} className="hover:text-orange-500">About</a>
+        <a href="/services" onClick={closeMenu} className="hover:text-orange-500">Our Services</a>
+        <a href="/terms" onClick={closeMenu} className="hover:text-orange-500">Terms & Conditions</a>
+        <a href="/contact" onClick={closeMenu} className="hover:text-orange-500">Contact</a>
+      </nav>
 
       {/* Contact Info - Desktop */}
       <div className="hidden lg:flex items-center space-x-4">
