@@ -15,7 +15,7 @@ const SubHeader = () => {
                 }}
             >
                 <span className="px-4">{text}</span>
-                <span className="px-4">{text}</span> {/* Duplicate for smooth looping */}
+                <span className="px-4">{text}</span>
             </motion.div>
         </div>
     );
