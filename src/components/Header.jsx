@@ -1,12 +1,38 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FiMenu, FiX, FiPhone, FiMail } from 'react-icons/fi';
+import { useLocation, Link } from 'react-router-dom';
+import SubHeader from './SubHeader';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isTop, setIsTop] = useState(true);
   const drawerRef = useRef(null);
+  const location = useLocation();
 
   const toggleMenu = () => setIsMenuOpen(prev => !prev);
   const closeMenu = () => setIsMenuOpen(false);
+
+  const isActive = (path) => {
+    return location.pathname === path ||
+      (path !== '/' && location.pathname.startsWith(path));
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      setIsTop(scrollTop < 10);
+
+      if (scrollTop > 100) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -25,91 +51,163 @@ const Header = () => {
   }, [isMenuOpen]);
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-gray-100 py-4 px-6 flex items-center justify-between z-50">
-
-      {/* Logo */}
-      <a href="/">
-        <div className="flex items-center">
-          <img
-            src="/images/NK_TAXI.png"
-            alt="CARNTEL Logo"
-            className="h-14 w-auto object-contain"
-          />
-        </div>
-      </a>
-
-      {/* Desktop Navigation */}
-      <nav className="hidden md:flex flex-1 justify-center space-x-6 text-lg font-medium text-gray-900">
-        <a href="/" onClick={closeMenu} className="hover:text-orange-500">Home</a>
-        <a href="/about" onClick={closeMenu} className="hover:text-orange-500">About</a>
-        <a href="/services" onClick={closeMenu} className="hover:text-orange-500">Our Services</a>
-        <a href="/terms" onClick={closeMenu} className="hover:text-orange-500">Terms & Conditions</a>
-        <a href="/contact" onClick={closeMenu} className="hover:text-orange-500">Contact</a>
-      </nav>
-
-      {/* Contact Info - Desktop */}
-      <div className="hidden lg:flex items-center space-x-4">
-        <div className="flex items-center space-x-2">
-          <span className="bg-orange-500 p-2 rounded-md text-white">
-            <FiMail />
-          </span>
-          <span className="text-base font-medium text-gray-900 ">+ 91 8778243755</span>
-        </div>
-        {/* <div className="flex items-center space-x-2">
-          <span className="bg-orange-500 p-2 rounded-md text-white">
-            <FiPhone />
-          </span>
-          <span className="text-base font-medium text-gray-900">carntelinfo@gmail.com</span>
-        </div> */}
-      </div>
-
-      {/* Hamburger Button - Mobile */}
-      <button className="lg:hidden text-3xl text-gray-800" onClick={toggleMenu}>
-        <FiMenu />
-      </button>
-
-      {/* Backdrop */}
-      {isMenuOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 z-40"></div>
-      )}
-
-      {/* Drawer */}
-      <div
-        ref={drawerRef}
-        className={`fixed top-0 right-0 w-64 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+    <>
+      <header
+        className={`fixed top-0 left-0 w-full py-3 px-4 md:px-12 lg:px-20 flex items-center justify-between z-50 bg-white transition-all duration-300 ease-in-out ${isScrolled
+          ? 'shadow-md translate-y-0'
+          : isTop
+            ? 'shadow-none translate-y-0'
+            : 'shadow-sm -translate-y-full'
           }`}
       >
-        <div className="flex items-center justify-between px-4 py-4 border-b">
-          <span className="text-xl font-bold text-orange-500">Menu</span>
-          <button onClick={closeMenu} className="text-2xl text-gray-700">
-            <FiX />
-          </button>
-        </div>
-        <div className="flex flex-col space-y-4 px-6 py-6 text-lg text-gray-800 font-medium">
-          <a href="/" onClick={closeMenu} className="hover:text-orange-500">Home</a>
-          <a href="about" onClick={closeMenu} className="hover:text-orange-500">About</a>
-          <a href="services" onClick={closeMenu} className="hover:text-orange-500">Our Services</a>
-          <a href="terms" onClick={closeMenu} className="hover:text-orange-500">Terms & Conditions</a>
-          <a href="contact" onClick={closeMenu} className="hover:text-orange-500">Contact</a>
-        </div>
+        {/* Logo */}
+        <Link to="/">
+          <div className="flex items-center">
+            <img
+              src="/images/NK_TAXI.png"
+              alt="CARNTEL Logo"
+              className="h-14 w-auto object-contain transition-all duration-300"
+            />
+          </div>
+        </Link>
 
-        {/* Drawer Contact Info */}
-        <div className="border-t mt-4 px-6 py-4 space-y-3">
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex space-x-4 lg:space-x-6 items-center text-gray-900 text-sm lg:text-base font-medium">
+          <Link
+            to="/"
+            onClick={closeMenu}
+            className={`hover:text-orange-500 ${isActive('/') ? 'text-orange-500' : ''}`}
+          >
+            Home
+          </Link>
+          <Link
+            to="/about"
+            onClick={closeMenu}
+            className={`hover:text-orange-500 ${isActive('/about') ? 'text-orange-500' : ''}`}
+          >
+            About
+          </Link>
+          <Link
+            to="/services"
+            onClick={closeMenu}
+            className={`hover:text-orange-500 ${isActive('/services') ? 'text-orange-500' : ''}`}
+          >
+            Our Services
+          </Link>
+          <Link
+            to="/terms"
+            onClick={closeMenu}
+            className={`hover:text-orange-500 ${isActive('/terms') ? 'text-orange-500' : ''}`}
+          >
+            Terms & Conditions
+          </Link>
+          <Link
+            to="/contact"
+            onClick={closeMenu}
+            className={`hover:text-orange-500 ${isActive('/contact') ? 'text-orange-500' : ''}`}
+          >
+            Contact
+          </Link>
+        </nav>
+
+        {/* Contact Info - Desktop */}
+        <div className="hidden lg:flex items-center space-x-4">
           <div className="flex items-center space-x-2">
             <span className="bg-orange-500 p-2 rounded-md text-white">
               <FiMail />
             </span>
-            <span className="text-base font-medium text-gray-900">+8778243755</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="bg-orange-500 p-2 rounded-md text-white">
-              <FiPhone />
-            </span>
-            <span className="text-base font-medium text-gray-900">ekumarnkr@gmail.com</span>
+            <span className="text-base font-medium text-gray-900">+ 91 8778243755</span>
           </div>
         </div>
+
+        {/* Hamburger Button - Mobile */}
+        <button className="md:hidden text-gray-800 focus:outline-none" onClick={toggleMenu}>
+          {isMenuOpen ? <FiX className="h-5 w-5" /> : <FiMenu className="h-5 w-5" />}
+        </button>
+
+        {/* Backdrop */}
+        {isMenuOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-30 z-50"></div>
+        )}
+
+        {/* Drawer */}
+        <div
+          ref={drawerRef}
+          className={`fixed top-0 right-0 w-64 h-full bg-white shadow-lg z-45 transform transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        >
+          <div className="flex items-center justify-between px-4 py-4 border-b">
+            <span className="text-xl font-bold text-orange-500">Menu</span>
+            <button onClick={closeMenu} className="text-gray-700 focus:outline-none">
+              <FiX className="h-5 w-5" />
+            </button>
+          </div>
+          <div className="flex flex-col space-y-4 px-6 py-6 text-gray-800 font-medium">
+            <Link
+              to="/"
+              onClick={closeMenu}
+              className={`hover:text-orange-500 ${isActive('/') ? 'text-orange-500' : ''}`}
+            >
+              Home
+            </Link>
+            <Link
+              to="/about"
+              onClick={closeMenu}
+              className={`hover:text-orange-500 ${isActive('/about') ? 'text-orange-500' : ''}`}
+            >
+              About
+            </Link>
+            <Link
+              to="/services"
+              onClick={closeMenu}
+              className={`hover:text-orange-500 ${isActive('/services') ? 'text-orange-500' : ''}`}
+            >
+              Our Services
+            </Link>
+            <Link
+              to="/terms"
+              onClick={closeMenu}
+              className={`hover:text-orange-500 ${isActive('/terms') ? 'text-orange-500' : ''}`}
+            >
+              Terms & Conditions
+            </Link>
+            <Link
+              to="/contact"
+              onClick={closeMenu}
+              className={`hover:text-orange-500 ${isActive('/contact') ? 'text-orange-500' : ''}`}
+            >
+              Contact
+            </Link>
+          </div>
+
+          {/* Drawer Contact Info */}
+          <div className="border-t mt-4 px-6 py-4 space-y-3">
+            <div className="flex items-center space-x-2">
+              <span className="bg-orange-500 p-2 rounded-md text-white">
+                <FiMail />
+              </span>
+              <span className="text-base font-medium text-gray-900">+8778243755</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="bg-orange-500 p-2 rounded-md text-white">
+                <FiPhone />
+              </span>
+              <span className="text-base font-medium text-gray-900">ekumarnkr@gmail.com</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className={`fixed top-20 left-0 w-full z-40 transition-all duration-300 ease-in-out ${isScrolled
+        ? 'translate-y-0'
+        : isTop
+          ? 'translate-y-0'
+          : '-translate-y-full'
+        }`}>
+        <SubHeader />
       </div>
-    </header>
+
+
+    </>
   );
 };
 
