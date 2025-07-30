@@ -344,6 +344,7 @@ const HeroSection = () => {
     const [location1, setLocation1] = useState(null);
     const [location2, setLocation2] = useState(null);
     const [distance, setDistance] = useState(null);
+    const [time, setTime] = useState(null);
     const [autocomplete1, setAutocomplete1] = useState(null);
     const [autocomplete2, setAutocomplete2] = useState(null);
 
@@ -369,10 +370,29 @@ const HeroSection = () => {
         }
     };
 
+    const calculateRouteDistance = async (origin, destination) => {
+        const directionsService = new window.google.maps.DirectionsService();
+        const results = await directionsService.route({
+            origin: new window.google.maps.LatLng(origin.lat, origin.lng),
+            destination: new window.google.maps.LatLng(destination.lat, destination.lng),
+            travelMode: window.google.maps.TravelMode.DRIVING,
+        });
+
+        console.log(results);
+
+        return {
+            "distance": results.routes[0].legs[0].distance.text,
+            "time": results.routes[0].legs[0].duration.text
+        }
+    };
+
     const handleSubmit = async () => {
         if (location1 && location2) {
-            const dist = await calculateRouteDistance(location1, location2);
-            setDistance(dist);
+            const result = await calculateRouteDistance(location1, location2);
+            setDistance(result.distance);
+            setTime(result.time);
+            console.log("Distance:", result.distance);
+            console.log("Time: ", result.time);
         }
     };
 
