@@ -334,10 +334,47 @@
 
 import { useState } from 'react';
 import { FaCar, FaMapMarkerAlt } from 'react-icons/fa';
+import { LoadScript } from '@react-google-maps/api';
+import AutocompleteComponent from './AutocompleteSecond';
 
 const HeroSection = () => {
     const [activeTab, setActiveTab] = useState('oneWay');
     const [isRoundTrip, setIsRoundTrip] = useState(false);
+
+    const [location1, setLocation1] = useState(null);
+    const [location2, setLocation2] = useState(null);
+    const [distance, setDistance] = useState(null);
+    const [autocomplete1, setAutocomplete1] = useState(null);
+    const [autocomplete2, setAutocomplete2] = useState(null);
+
+    const handlePlaceChanged1 = () => {
+        if (autocomplete1 !== null) {
+            const place = autocomplete1.getPlace();
+            const lat = place.geometry?.location?.lat();
+            const lng = place.geometry?.location?.lng();
+            if (lat && lng) {
+                setLocation1({ lat, lng });
+            }
+        }
+    };
+
+    const handlePlaceChanged2 = () => {
+        if (autocomplete2 !== null) {
+            const place = autocomplete2.getPlace();
+            const lat = place.geometry?.location?.lat();
+            const lng = place.geometry?.location?.lng();
+            if (lat && lng) {
+                setLocation2({ lat, lng });
+            }
+        }
+    };
+
+    const handleSubmit = async () => {
+        if (location1 && location2) {
+            const dist = await calculateRouteDistance(location1, location2);
+            setDistance(dist);
+        }
+    };
 
     return (
         <>
@@ -444,22 +481,18 @@ const HeroSection = () => {
                                                 </div>
                                                 <div className="relative">
                                                     <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Location</label>
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Enter pickup location"
-                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
-                                                    />
+                                                    <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={['places']}>
+                                                        <AutocompleteComponent onLoad={setAutocomplete1} onPlaceChanged={handlePlaceChanged1} />
+                                                    </LoadScript>
                                                 </div>
                                             </div>
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 <div className="relative">
                                                     <label className="block text-xs font-medium text-gray-300 mb-1">Drop Location</label>
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Enter drop location"
-                                                        className="w-full bg-white/10 border border-gray-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
-                                                    />
+                                                    <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={['places']}>
+                                                        <AutocompleteComponent onLoad={setAutocomplete2} onPlaceChanged={handlePlaceChanged2} />
+                                                    </LoadScript>
                                                 </div>
                                                 <div className="grid grid-cols-2 gap-2">
                                                     <div className="relative">
@@ -660,7 +693,9 @@ const HeroSection = () => {
                                 </div>
 
                                 {/* Button */}
-                                <button className="mt-8 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all duration-200 w-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                <button className="mt-8 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all duration-200 w-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                                    onClick={handleSubmit}
+                                >
                                     {activeTab === 'oneWay' && 'BOOK ONE WAY'}
                                     {activeTab === 'roundTrip' && 'BOOK ROUND TRIP'}
                                     {activeTab === 'airportTaxi' && 'BOOK AIRPORT TAXI'}
