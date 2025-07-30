@@ -3,17 +3,18 @@ import Cities from '../Cities';
 import OurVehicles from '../OurVehicles';
 import OurServices from '../OurServices';
 import WhatsAppButton from '../WhatsappButton';
-// import SubHeader from '../SubHeader';
+import PhoneButton from '../PhoneButton';
+
 
 const Home = () => {
   return (
     <>
-      {/* <SubHeader /> */}
       <HeroSection />
       <OurServices />
       <OurVehicles />
       <Cities />
       <WhatsAppButton />
+      <PhoneButton />
     </>
   );
 };
