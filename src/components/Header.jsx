@@ -52,8 +52,19 @@ const Header = () => {
 
   return (
     <>
+      {/* SubHeader positioned above main header */}
+      <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${isScrolled
+        ? 'translate-y-0'
+        : isTop
+          ? 'translate-y-0'
+          : '-translate-y-full'
+        }`}>
+        <SubHeader />
+      </div>
+
+      {/* Main Header positioned below SubHeader */}
       <header
-        className={`fixed top-0 left-0 w-full py-3 px-4 md:px-12 lg:px-20 flex items-center justify-between z-50 bg-white transition-all duration-300 ease-in-out ${isScrolled
+        className={`fixed top-10 left-0 w-full py-3 px-4 md:px-12 lg:px-20 flex items-center justify-between z-40 bg-white transition-all duration-300 ease-in-out ${isScrolled
           ? 'shadow-md translate-y-0'
           : isTop
             ? 'shadow-none translate-y-0'
@@ -127,13 +138,13 @@ const Header = () => {
 
         {/* Backdrop */}
         {isMenuOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-30 z-50"></div>
+          <div className="fixed inset-0 bg-black bg-opacity-30 z-45"></div>
         )}
 
         {/* Drawer */}
         <div
           ref={drawerRef}
-          className={`fixed top-0 right-0 w-64 h-full bg-white shadow-lg z-45 transform transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`fixed top-12 right-0 w-64 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
           <div className="flex items-center justify-between px-4 py-4 border-b">
             <span className="text-xl font-bold text-orange-500">Menu</span>
@@ -196,17 +207,6 @@ const Header = () => {
           </div>
         </div>
       </header>
-
-      <div className={`fixed top-20 left-0 w-full z-40 transition-all duration-300 ease-in-out ${isScrolled
-        ? 'translate-y-0'
-        : isTop
-          ? 'translate-y-0'
-          : '-translate-y-full'
-        }`}>
-        <SubHeader />
-      </div>
-
-
     </>
   );
 };
