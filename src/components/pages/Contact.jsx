@@ -1,6 +1,7 @@
 import React from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebookF, FaInstagram, FaPinterest } from "react-icons/fa";
 import WhatsAppButton from "../WhatsappButton";
+
 const ContactPage = () => {
   return (
     <>
@@ -155,6 +156,7 @@ const ContactPage = () => {
           </button>
         </form>
       </div>
+
     </section>
 
     <section className="w-full px-4 py-12 bg-gray-100">
