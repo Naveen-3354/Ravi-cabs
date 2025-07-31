@@ -48,7 +48,7 @@ const AboutUs = () => {
         {/* Content */}
         <div className="relative z-20 text-left max-w-6xl w-full px-4 sm:px-6 lg:px-12">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4">
-            About <span className="text-orange-500">NK Drop Taxi</span>
+            About <span className="text-primary-600">NK Drop Taxi</span>
           </h1>
           <p className="text-lg sm:text-xl text-gray-200 max-w-2xl">
             Your trusted partner for safe, reliable, and comfortable transportation
@@ -62,7 +62,7 @@ const AboutUs = () => {
           {/* Left Side Content */}
           <div className="w-full lg:w-1/2">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              About <span className="text-orange-500">NK Drop Taxi</span>
+              About <span className="text-primary-600">NK Drop Taxi</span>
             </h2>
             <p className="text-gray-700 text-lg leading-relaxed mb-4">
               NK Drop Taxi is your trusted partner for safe, reliable, and affordable intercity travel. We ensure your ride is smooth, comfortable, and on time — every time. Our professional drivers and well-maintained vehicles are available 24/7 to serve you across Tamil Nadu and beyond.
@@ -71,11 +71,11 @@ const AboutUs = () => {
               Choose NK Drop Taxi for a stress-free travel experience, whether it's a business trip or family outing.
             </p>
             <div className="mt-8 grid grid-cols-2 gap-4">
-              <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-orange-500">
+              <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-primary-500">
                 <h3 className="font-bold text-gray-800">24/7 Service</h3>
                 <p className="text-gray-600 text-sm">Always available when you need us</p>
               </div>
-              <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-orange-500">
+              <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-primary-500">
                 <h3 className="font-bold text-gray-800">500+ Trips</h3>
                 <p className="text-gray-600 text-sm">Completed successfully every month</p>
               </div>
@@ -115,14 +115,14 @@ const AboutUs = () => {
             </div>
             
             <div className="md:w-1/2 w-full">
-              <div className="bg-white p-6 sm:p-8 rounded-xl shadow-lg border-l-4 border-orange-500">
+              <div className="bg-white p-6 sm:p-8 rounded-xl shadow-lg border-l-4 border-primary-500">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 relative">
-                  <span className="relative z-10">Who We Are</span>
+                  <span className="relative z-10 text-primary-900">Who We Are</span>
                   <span className="absolute bottom-1 left-0 w-16 h-2 bg-orange-200 z-0 opacity-70"></span>
                 </h2>
                 
                 <p className="text-gray-700 mb-6 text-lg leading-relaxed">
-                  <span className="font-semibold text-orange-600">NK Drop Taxi</span> is a premier taxi service revolutionizing urban mobility since 2015. What began as a modest fleet has blossomed into one of the most trusted transportation networks in the region.
+                  <span className="font-semibold text-primary-900">NK Drop Taxi</span> is a premier taxi service revolutionizing urban mobility since 2015. What began as a modest fleet has blossomed into one of the most trusted transportation networks in the region.
                 </p>
                 
                 <div className="space-y-4 mb-8">
@@ -134,14 +134,14 @@ const AboutUs = () => {
                   ].map((item, index) => (
                     <div key={index} className="flex items-start">
                       <div className="flex-shrink-0 mt-1">
-                        <FaCheckCircle className="h-5 w-5 text-orange-500" />
+                        <FaCheckCircle className="h-5 w-5 text-primary-500" />
                       </div>
                       <p className="ml-3 text-gray-700">{item}</p>
                     </div>
                   ))}
                 </div>
                 
-                <button className="px-6 py-3 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition duration-300 shadow-md hover:shadow-lg flex items-center gap-2">
+                <button className="px-6 py-3 bg-primary-600 text-white font-medium rounded-lg hover:bg-orange-700 transition duration-300 shadow-md hover:shadow-lg flex items-center gap-2">
                   Learn More About Us
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -154,67 +154,69 @@ const AboutUs = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="w-full bg-white py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="inline-block text-sm font-semibold tracking-wider text-orange-600 uppercase mb-2">
-              Our Process
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-              Easy Steps to Book Your Ride
-            </h2>
-            <div className="mx-auto mt-4 h-1 w-20 bg-orange-500 rounded-full"></div>
-          </div>
+ <section className="w-full bg-white py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+  <div className="max-w-7xl mx-auto">
+    <div className="text-center mb-12 lg:mb-16">
+      <span className="inline-block text-sm md:text-base font-semibold tracking-wider text-primary-600 uppercase mb-3">
+        Our Process
+      </span>
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        Easy Steps to Book Your Ride
+      </h2>
+      <div className="mx-auto w-20 h-1.5 bg-gradient-to-r from-primary-500 to-primary-700 rounded-full"></div>
+    </div>
 
-          <div className="grid lg:grid-cols-2 gap-10 items-center">
-            <div className="w-full h-full rounded-xl overflow-hidden shadow-lg">
-              <img
-                src="/images/night1.jpg"
-                alt="Luxury Car"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
+    <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+      <div className="w-full h-full rounded-xl overflow-hidden shadow-lg transform hover:scale-[1.01] transition-transform duration-300">
+        <img
+          src="/images/night1.jpg"
+          alt="Luxury Car"
+          className="w-full h-full object-cover aspect-video lg:aspect-auto"
+          loading="lazy"
+        />
+      </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {steps.map((step) => (
-                <div
-                  key={step.number}
-                  className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300 border border-gray-100 hover:border-orange-200"
-                >
-                  <div className="flex items-center gap-4 mb-3">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-orange-100 text-orange-600">
-                      {step.icon}
-                    </div>
-                    <span className="text-orange-600 text-xl font-bold">
-                      {step.number}
-                    </span>
-                  </div>
-                  <div className="text-xl font-semibold text-gray-800 mb-2">
-                    {step.title}
-                  </div>
-                  <p className="text-gray-600 leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
+        {steps.map((step) => (
+          <div
+            key={step.number}
+            className="p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-primary-300 hover:bg-primary-50/20 group"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 group-hover:bg-primary-200 transition-colors duration-300">
+                <span className="text-primary-600 group-hover:text-primary-800">
+                  {step.icon}
+                </span>
+              </div>
+              <span className="text-primary-600 text-xl font-bold">
+                {step.number}
+              </span>
             </div>
+            <h3 className="text-lg md:text-xl font-semibold text-primary-600 mb-2 group-hover:text-primary-700 transition-colors duration-300">
+              {step.title}
+            </h3>
+            <p className="text-black leading-relaxed md:leading-loose text-sm md:text-base font-bold">
+              {step.description}
+            </p>
           </div>
-        </div>
-      </section>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Features Section */}
-      <section className="bg-gray-50 py-12 lg:py-20">
+      <section className="bg-secondary-50 py-12 lg:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-10">
           {/* LEFT Content */}
           <div className="lg:w-1/2 w-full">
-            <span className="text-sm uppercase tracking-wide text-orange-600 font-semibold mb-2 inline-block">
+            <span className="text-sm uppercase tracking-wide text-primary-600 font-semibold mb-2 inline-block">
               Why Choose Us
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-snug mb-6">
               We Provide Exceptional Service With Our Experience
             </h2>
-            <p className="text-gray-600 mb-8 text-lg">
+            <p className="text-black text-bold mb-8 text-lg ">
               Our commitment to excellence has made us a preferred choice for thousands of customers who value reliability, comfort, and professional service.
             </p>
 
@@ -228,13 +230,13 @@ const AboutUs = () => {
                 "Real-time Trip Tracking"
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <FaCheckCircle className="text-orange-500 text-xl mt-1 flex-shrink-0" />
+                  <FaCheckCircle className="text-primary-500 text-xl mt-1 flex-shrink-0" />
                   <span className="text-gray-800 font-medium text-lg">{item}</span>
                 </li>
               ))}
             </ul>
 
-            <button className="px-6 py-3 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition duration-300 shadow-md">
+            <button className="px-6 py-3 bg-primary-600 text-white font-medium rounded-lg hover:bg-orange-700 transition duration-300 shadow-md">
               Contact Us Today
             </button>
           </div>
@@ -249,8 +251,8 @@ const AboutUs = () => {
             />
             {/* Experience Badge */}
             <div className="absolute bottom-6 left-6 bg-white px-5 py-3 rounded-lg shadow-lg flex items-center gap-3">
-              <div className="text-4xl font-bold text-orange-600">8+</div>
-              <div className="text-sm text-gray-600">
+              <div className="text-4xl font-bold text-primary-700">8+</div>
+              <div className="text-sm text-black">
                 <div className="font-semibold">Years of</div>
                 <div>Experience</div>
               </div>

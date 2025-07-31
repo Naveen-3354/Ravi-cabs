@@ -6,11 +6,11 @@ import WhatsAppButton from '../WhatsappButton';
 const TermsAndConditions = () => {
   const [activeTab, setActiveTab] = useState('oneWay');
   const isOneWay = activeTab === 'oneWay';
-  const imageSrc = isOneWay ? '/images/etios_right3.png' : '/images/Ertiga_left.png';
+  const imageSrc = isOneWay ? '/images/Innova_Right.png' : '/images/swift.png';
 
   return (
     
-    <div className="bg-gradient-to-br from-blue-50 via-white to-blue-50 py-20 px-10 mt-2 sm:px-6 lg:px-8">
+    <div className="bg-gradient-to-br from-blue-50 via-white to-blue-50 py-20 px-10 mt-8 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
@@ -20,7 +20,7 @@ const TermsAndConditions = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-6"
         >
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-primary-400">
             Terms & Conditions
           </h1>
           <p className="mt-2 text-lg text-blue-600">Transparent pricing for your journeys</p>
@@ -69,7 +69,7 @@ const TermsAndConditions = () => {
 
             {/* Terms */}
             <div className="w-full md:w-1/2 space-y-5">
-              <h2 className="text-2xl font-bold text-blue-700">
+              <h2 className="text-2xl font-bold text-primary-700">
                 {isOneWay ? 'One Way Trips Tariff' : 'Round Trips Terms'}
               </h2>
 
@@ -106,7 +106,7 @@ const TermsAndConditions = () => {
     
     {/* Left Side - Terms List */}
     <div className="w-full md:w-2/3">
-      <h2 className="text-2xl font-bold text-blue-700 mb-4">General Terms of Service</h2>
+      <h2 className="text-2xl font-bold text-primary-700 mb-4">General Terms of Service</h2>
 
       <ul className="space-y-4 text-gray-700 text-sm list-disc pl-6">
         <li><strong>Booking Confirmation:</strong> Bookings must be confirmed via phone, website, or app.</li>
