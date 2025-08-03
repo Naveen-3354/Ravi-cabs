@@ -50,7 +50,7 @@ export default function Services() {
   const driverBetta = currentTab?.driverBetta || 300;
 
   return (
-    <section className="py-12 md:py-16 lg:py-20 bg-white min-h-screen">
+    <section className="py-12 mt-12 md:py-16 lg:py-20 bg-white min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
@@ -69,10 +69,9 @@ export default function Services() {
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={`px-6 sm:px-8 py-3 text-sm sm:text-base font-semibold rounded-lg transition-all duration-300 flex-1 sm:flex-none border-2
-                ${
-                  activeTab === tab.key
-                    ? "bg-orange-600 text-white border-orange-600 shadow-lg"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:border-orange-300"
+                ${activeTab === tab.key
+                  ? "bg-orange-600 text-white border-orange-600 shadow-lg"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:border-orange-300"
                 }`}
             >
               {tab.label}
@@ -86,9 +85,9 @@ export default function Services() {
           {activeTab === "oneWay" && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {carList.map((car, index) => (
-                <VehicleCard 
-                  key={index} 
-                  {...car} 
+                <VehicleCard
+                  key={index}
+                  {...car}
                   isService={true}
                   driverBetta={driverBetta}
                 />
@@ -100,9 +99,9 @@ export default function Services() {
           {activeTab === "roundTrip" && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {carList.map((car, index) => (
-                <VehicleCard 
-                  key={index} 
-                  {...car} 
+                <VehicleCard
+                  key={index}
+                  {...car}
                   isService={true}
                   driverBetta={driverBetta}
                 />

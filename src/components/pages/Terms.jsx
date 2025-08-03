@@ -9,8 +9,8 @@ const TermsAndConditions = () => {
   const imageSrc = isOneWay ? '/images/etios_right3.png' : '/images/Ertiga_left.png';
 
   return (
-    
-    <div className="bg-gradient-to-br from-blue-50 via-white to-blue-50 py-20 px-10 mt-2 sm:px-6 lg:px-8">
+
+    <div className="bg-gradient-to-br from-blue-50 via-white to-blue-50 mt-12 py-20 px-10 mt-2 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
@@ -32,17 +32,15 @@ const TermsAndConditions = () => {
           <div className="inline-flex bg-gray-50 rounded-full shadow-md p-1 border border-blue-100">
             <button
               onClick={() => setActiveTab('oneWay')}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                isOneWay ? 'bg-yellow-600 text-white shadow' : 'text-gray-600 hover:text-blue-600'
-              }`}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isOneWay ? 'bg-yellow-600 text-white shadow' : 'text-gray-600 hover:text-blue-600'
+                }`}
             >
               One Way Trips
             </button>
             <button
               onClick={() => setActiveTab('round')}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                !isOneWay ? 'bg-yellow-600 text-white shadow' : 'text-gray-600 hover:text-blue-600'
-              }`}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${!isOneWay ? 'bg-yellow-600 text-white shadow' : 'text-gray-600 hover:text-blue-600'
+                }`}
             >
               Round Trips
             </button>
@@ -96,39 +94,39 @@ const TermsAndConditions = () => {
           </div>
         </motion.div>
         {/* General Terms Section */}
-<motion.div
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.5 }}
-  className="mt-10 bg-white shadow-lg rounded-2xl p-6 sm:p-8 border border-blue-100"
->
-  <div className="flex flex-col md:flex-row items-center gap-6">
-    
-    {/* Left Side - Terms List */}
-    <div className="w-full md:w-2/3">
-      <h2 className="text-2xl font-bold text-blue-700 mb-4">General Terms of Service</h2>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mt-10 bg-white shadow-lg rounded-2xl p-6 sm:p-8 border border-blue-100"
+        >
+          <div className="flex flex-col md:flex-row items-center gap-6">
 
-      <ul className="space-y-4 text-gray-700 text-sm list-disc pl-6">
-        <li><strong>Booking Confirmation:</strong> Bookings must be confirmed via phone, website, or app.</li>
-        <li><strong>Vehicle Substitution:</strong> In case of unavailability, we may provide a similar or upgraded vehicle.</li>
-        <li><strong>Driver Conduct:</strong> All drivers are instructed to maintain polite and safe driving practices.</li>
-        <li><strong>Customer Responsibility:</strong> Any damage to the vehicle due to negligence is the customer's responsibility.</li>
-        <li><strong>No Smoking Policy:</strong> Smoking and consumption of alcohol is strictly prohibited inside the vehicle.</li>
-        <li><strong>Emergency Support:</strong> 24/7 customer support is available in case of emergencies.</li>
-      </ul>
-    </div>
+            {/* Left Side - Terms List */}
+            <div className="w-full md:w-2/3">
+              <h2 className="text-2xl font-bold text-blue-700 mb-4">General Terms of Service</h2>
 
-    {/* Right Side - Car Image */}
-    <div className="w-full md:w-1/3">
-      <img
-        src="/images/etios_right3.png" // Change to your preferred image path
-        alt="Car Image"
-        className="w-full h-auto object-contain rounded-xl"
-      />
-    </div>
-  </div>
-</motion.div>
-<WhatsAppButton />
+              <ul className="space-y-4 text-gray-700 text-sm list-disc pl-6">
+                <li><strong>Booking Confirmation:</strong> Bookings must be confirmed via phone, website, or app.</li>
+                <li><strong>Vehicle Substitution:</strong> In case of unavailability, we may provide a similar or upgraded vehicle.</li>
+                <li><strong>Driver Conduct:</strong> All drivers are instructed to maintain polite and safe driving practices.</li>
+                <li><strong>Customer Responsibility:</strong> Any damage to the vehicle due to negligence is the customer's responsibility.</li>
+                <li><strong>No Smoking Policy:</strong> Smoking and consumption of alcohol is strictly prohibited inside the vehicle.</li>
+                <li><strong>Emergency Support:</strong> 24/7 customer support is available in case of emergencies.</li>
+              </ul>
+            </div>
+
+            {/* Right Side - Car Image */}
+            <div className="w-full md:w-1/3">
+              <img
+                src="/images/etios_right3.png" // Change to your preferred image path
+                alt="Car Image"
+                className="w-full h-auto object-contain rounded-xl"
+              />
+            </div>
+          </div>
+        </motion.div>
+        <WhatsAppButton />
 
       </div>
     </div>
@@ -147,7 +145,7 @@ const TermItem = ({ title, value, icon }) => (
     </div>
   </motion.div>
 
-  
+
 );
 
 export default TermsAndConditions;
