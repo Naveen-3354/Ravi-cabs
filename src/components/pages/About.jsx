@@ -31,7 +31,7 @@ const AboutUs = () => {
   ];
 
   return (
-    <div className="font-sans">
+    <div className="font-sans mt-8">
       {/* Hero Section */}
       <section className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] flex items-center overflow-hidden rounded-lg">
         {/* Background Image */}
@@ -105,26 +105,26 @@ const AboutUs = () => {
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
             <div className="md:w-1/2 w-full">
               <div className="rounded-xl overflow-hidden shadow-2xl transform hover:scale-[1.01] transition duration-300">
-                <img 
+                <img
                   src="/images/etios_right3.png"
-                  alt="NK Drop Taxi Vehicle" 
+                  alt="NK Drop Taxi Vehicle"
                   className="w-full h-auto object-cover"
                   loading="lazy"
                 />
               </div>
             </div>
-            
+
             <div className="md:w-1/2 w-full">
               <div className="bg-white p-6 sm:p-8 rounded-xl shadow-lg border-l-4 border-orange-500">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 relative">
                   <span className="relative z-10">Who We Are</span>
                   <span className="absolute bottom-1 left-0 w-16 h-2 bg-orange-200 z-0 opacity-70"></span>
                 </h2>
-                
+
                 <p className="text-gray-700 mb-6 text-lg leading-relaxed">
                   <span className="font-semibold text-orange-600">NK Drop Taxi</span> is a premier taxi service revolutionizing urban mobility since 2015. What began as a modest fleet has blossomed into one of the most trusted transportation networks in the region.
                 </p>
-                
+
                 <div className="space-y-4 mb-8">
                   {[
                     "200+ professional drivers serving 24/7",
@@ -140,7 +140,7 @@ const AboutUs = () => {
                     </div>
                   ))}
                 </div>
-                
+
                 <button className="px-6 py-3 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition duration-300 shadow-md hover:shadow-lg flex items-center gap-2">
                   Learn More About Us
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
