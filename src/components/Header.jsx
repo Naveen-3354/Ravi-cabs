@@ -64,7 +64,7 @@ const Header = () => {
 
       {/* Main Header positioned below SubHeader */}
       <header
-        className={`fixed top-10 left-0 w-full py-3 px-4 md:px-12 lg:px-20 flex items-center justify-between z-40 bg-white transition-all duration-300 ease-in-out ${isScrolled
+        className={`fixed top-8 md:top-10 left-0 w-full py-3 px-4 md:px-12 lg:px-20 flex items-center justify-between z-40 bg-white transition-all duration-300 ease-in-out ${isScrolled
           ? 'shadow-md translate-y-0'
           : isTop
             ? 'shadow-none translate-y-0'
