@@ -43,10 +43,15 @@ const Header = () => {
 
     if (isMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside);
+      // Prevent body scroll when drawer is open
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.body.style.overflow = 'unset';
     };
   }, [isMenuOpen]);
 
@@ -135,78 +140,125 @@ const Header = () => {
         <button className="md:hidden text-gray-800 focus:outline-none" onClick={toggleMenu}>
           {isMenuOpen ? <FiX className="h-5 w-5" /> : <FiMenu className="h-5 w-5" />}
         </button>
-
-        {/* Backdrop */}
-        {isMenuOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-30 z-45"></div>
-        )}
-
-        {/* Drawer */}
-        <div
-          ref={drawerRef}
-          className={`fixed top-12 right-0 w-64 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
-        >
-          <div className="flex items-center justify-between px-4 py-4 border-b">
-            <span className="text-xl font-bold text-orange-500">Menu</span>
-            <button onClick={closeMenu} className="text-gray-700 focus:outline-none">
-              <FiX className="h-5 w-5" />
-            </button>
-          </div>
-          <div className="flex flex-col space-y-4 px-6 py-6 text-gray-800 font-medium">
-            <Link
-              to="/"
-              onClick={closeMenu}
-              className={`hover:text-orange-500 ${isActive('/') ? 'text-orange-500' : ''}`}
-            >
-              Home
-            </Link>
-            <Link
-              to="/about"
-              onClick={closeMenu}
-              className={`hover:text-orange-500 ${isActive('/about') ? 'text-orange-500' : ''}`}
-            >
-              About
-            </Link>
-            <Link
-              to="/services"
-              onClick={closeMenu}
-              className={`hover:text-orange-500 ${isActive('/services') ? 'text-orange-500' : ''}`}
-            >
-              Our Services
-            </Link>
-            <Link
-              to="/terms"
-              onClick={closeMenu}
-              className={`hover:text-orange-500 ${isActive('/terms') ? 'text-orange-500' : ''}`}
-            >
-              Terms & Conditions
-            </Link>
-            <Link
-              to="/contact"
-              onClick={closeMenu}
-              className={`hover:text-orange-500 ${isActive('/contact') ? 'text-orange-500' : ''}`}
-            >
-              Contact
-            </Link>
-          </div>
-
-          {/* Drawer Contact Info */}
-          <div className="border-t mt-4 px-6 py-4 space-y-3">
-            <div className="flex items-center space-x-2">
-              <span className="bg-orange-500 p-2 rounded-md text-white">
-                <FiMail />
-              </span>
-              <span className="text-base font-medium text-gray-900">+8778243755</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <span className="bg-orange-500 p-2 rounded-md text-white">
-                <FiPhone />
-              </span>
-              <span className="text-base font-medium text-gray-900">ekumarnkr@gmail.com</span>
-            </div>
-          </div>
-        </div>
       </header>
+
+      {/* Mobile Drawer with proper z-index and backdrop */}
+      {isMenuOpen && (
+        <>
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-[60] transition-opacity duration-300 ease-in-out"
+            onClick={closeMenu}
+          />
+          
+          {/* Drawer */}
+          <div
+            ref={drawerRef}
+            className={`fixed top-0 right-0 w-80 h-full bg-white shadow-2xl z-[70] transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          >
+            {/* Drawer Header */}
+            <div className="flex items-center justify-between px-6 py-6 border-b border-gray-200 bg-gradient-to-r from-orange-50 to-white">
+              <span className="text-xl font-bold text-orange-500">Menu</span>
+              <button 
+                onClick={closeMenu} 
+                className="text-gray-700 hover:text-orange-500 focus:outline-none transition-colors duration-200 p-2 rounded-full hover:bg-orange-50"
+              >
+                <FiX className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Drawer Navigation */}
+            <div className="flex flex-col py-6">
+              <div className="px-6 space-y-2">
+                <Link
+                  to="/"
+                  onClick={closeMenu}
+                  className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 font-medium ${
+                    isActive('/') 
+                      ? 'text-orange-500 bg-orange-50 border-l-4 border-orange-500' 
+                      : 'text-gray-800 hover:text-orange-500 hover:bg-orange-50'
+                  }`}
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/about"
+                  onClick={closeMenu}
+                  className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 font-medium ${
+                    isActive('/about') 
+                      ? 'text-orange-500 bg-orange-50 border-l-4 border-orange-500' 
+                      : 'text-gray-800 hover:text-orange-500 hover:bg-orange-50'
+                  }`}
+                >
+                  About
+                </Link>
+                <Link
+                  to="/services"
+                  onClick={closeMenu}
+                  className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 font-medium ${
+                    isActive('/services') 
+                      ? 'text-orange-500 bg-orange-50 border-l-4 border-orange-500' 
+                      : 'text-gray-800 hover:text-orange-500 hover:bg-orange-50'
+                  }`}
+                >
+                  Our Services
+                </Link>
+                <Link
+                  to="/terms"
+                  onClick={closeMenu}
+                  className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 font-medium ${
+                    isActive('/terms') 
+                      ? 'text-orange-500 bg-orange-50 border-l-4 border-orange-500' 
+                      : 'text-gray-800 hover:text-orange-500 hover:bg-orange-50'
+                  }`}
+                >
+                  Terms & Conditions
+                </Link>
+                <Link
+                  to="/contact"
+                  onClick={closeMenu}
+                  className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 font-medium ${
+                    isActive('/contact') 
+                      ? 'text-orange-500 bg-orange-50 border-l-4 border-orange-500' 
+                      : 'text-gray-800 hover:text-orange-500 hover:bg-orange-50'
+                  }`}
+                >
+                  Contact
+                </Link>
+              </div>
+
+              {/* Drawer Contact Info */}
+              <div className="mt-8 px-6">
+                <div className="bg-gradient-to-r from-orange-50 to-white rounded-lg p-6 space-y-4">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Contact Information</h3>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm">
+                      <span className="bg-orange-500 p-2 rounded-lg text-white flex-shrink-0">
+                        <FiMail className="h-4 w-4" />
+                      </span>
+                      <div className="flex-1">
+                        <p className="text-sm text-gray-600">Phone</p>
+                        <p className="text-base font-medium text-gray-900">+8778243755</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm">
+                      <span className="bg-orange-500 p-2 rounded-lg text-white flex-shrink-0">
+                        <FiPhone className="h-4 w-4" />
+                      </span>
+                      <div className="flex-1">
+                        <p className="text-sm text-gray-600">Email</p>
+                        <p className="text-base font-medium text-gray-900">ekumarnkr@gmail.com</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

@@ -10,7 +10,7 @@ const TermsAndConditions = () => {
 
   return (
 
-    <div className="bg-gradient-to-br from-blue-50 via-white to-blue-50 mt-12 py-20 px-10 mt-2 sm:px-6 lg:px-8">
+    <div className="bg-gradient-to-br from-blue-50 via-white to-blue-50 mt-24 py-20 px-10 mt-2 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}

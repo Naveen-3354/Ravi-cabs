@@ -31,7 +31,7 @@ const AboutUs = () => {
   ];
 
   return (
-    <div className="font-sans mt-8">
+    <div className="font-sans mt-16 md:mt-8">
       {/* Hero Section */}
       <section className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] flex items-center overflow-hidden rounded-lg">
         {/* Background Image */}
