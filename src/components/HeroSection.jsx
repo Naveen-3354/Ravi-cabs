@@ -6,6 +6,61 @@ const HeroSection = () => {
     const [activeTab, setActiveTab] = useState('oneWay');
     const [isRoundTrip, setIsRoundTrip] = useState(false);
 
+    const [location1, setLocation1] = useState(null);
+    const [location2, setLocation2] = useState(null);
+    const [distance, setDistance] = useState(null);
+    const [time, setTime] = useState(null);
+    const [autocomplete1, setAutocomplete1] = useState(null);
+    const [autocomplete2, setAutocomplete2] = useState(null);
+
+    const handlePlaceChanged1 = () => {
+        if (autocomplete1 !== null) {
+            const place = autocomplete1.getPlace();
+            const lat = place.geometry?.location?.lat();
+            const lng = place.geometry?.location?.lng();
+            if (lat && lng) {
+                setLocation1({ lat, lng });
+            }
+        }
+    };
+
+    const handlePlaceChanged2 = () => {
+        if (autocomplete2 !== null) {
+            const place = autocomplete2.getPlace();
+            const lat = place.geometry?.location?.lat();
+            const lng = place.geometry?.location?.lng();
+            if (lat && lng) {
+                setLocation2({ lat, lng });
+            }
+        }
+    };
+
+    const calculateRouteDistance = async (origin, destination) => {
+        const directionsService = new window.google.maps.DirectionsService();
+        const results = await directionsService.route({
+            origin: new window.google.maps.LatLng(origin.lat, origin.lng),
+            destination: new window.google.maps.LatLng(destination.lat, destination.lng),
+            travelMode: window.google.maps.TravelMode.DRIVING,
+        });
+
+        console.log(results);
+
+        return {
+            "distance": results.routes[0].legs[0].distance.text,
+            "time": results.routes[0].legs[0].duration.text
+        }
+    };
+
+    const handleSubmit = async () => {
+        if (location1 && location2) {
+            const result = await calculateRouteDistance(location1, location2);
+            setDistance(result.distance);
+            setTime(result.time);
+            console.log("Distance:", result.distance);
+            console.log("Time: ", result.time);
+        }
+    };
+
     return (
         <>
             <div className="px-0 pb-0 pt-0 lg:px-24 lg:pb-24 lg:pt-12">
