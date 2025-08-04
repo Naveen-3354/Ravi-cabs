@@ -28,26 +28,26 @@ const Footer = () => {
             </p>
             <div className="space-y-3 mb-4 text-sm">
               <div className="flex items-center text-gray-300">
-                <FiPhone className="text-orange-500 mr-2" />
+                <FiPhone className="text-primary-500 mr-2" />
                 <span>123 654 0214</span>
               </div>
               <div className="flex items-center text-gray-300">
-                <FiMail className="text-orange-500 mr-2" />
+                <FiMail className="text-primary-500 mr-2" />
                 <span>carntelinfo@gmail.com</span>
               </div>
               <div className="flex items-center text-gray-300">
-                <FiMapPin className="text-orange-500 mr-2" />
+                <FiMapPin className="text-primary-500 mr-2" />
                 <span>55/11 ronin tower New York</span>
               </div>
             </div>
             <div className="flex space-x-3 mt-4">
-              <div className="bg-orange-500 p-2 rounded-md">
+              <div className="bg-primary-500 p-2 rounded-md">
                 <FiTwitter className="text-white" />
               </div>
-              <div className="bg-orange-500 p-2 rounded-md">
+              <div className="bg-primary-500 p-2 rounded-md">
                 <FiFacebook className="text-white" />
               </div>
-              <div className="bg-orange-500 p-2 rounded-md">
+              <div className="bg-primary-500 p-2 rounded-md">
                 <FiInstagram className="text-white" />
               </div>
             </div>
@@ -113,7 +113,7 @@ const Footer = () => {
             />
             <button
               type="submit"
-              className="bg-black border border-l-0 border-gray-700 px-4 py-2 rounded-r text-orange-500 text-xl"
+              className="bg-black border border-l-0 border-gray-700 px-4 py-2 rounded-r text-primary-500 text-xl"
             >
               →
             </button>
@@ -125,7 +125,7 @@ const Footer = () => {
       <div className="bg-black text-gray-400 text-sm py-4 px-4 md:px-16">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>
-            © 2024 <span className="text-orange-500">CARNTEL</span> All rights reserved.
+            © 2024 <span className="text-primary-500">CARNTEL</span> All rights reserved.
           </span>
         </div>
       </div>

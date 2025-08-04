@@ -20,7 +20,7 @@ const ContactPage = () => {
         <div className="relative z-20 text-left max-w-6xl w-full px-4 sm:px-6 lg:px-12">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">
             <span className="italic">Contact us</span>{" "}
-            <span className="inline-block w-1.5 h-6 sm:h-8 ml-2 bg-orange-500 align-middle rounded-sm"></span>
+            <span className="inline-block w-1.5 h-6 sm:h-8 ml-2 bg-primary-500 align-middle rounded-sm"></span>
           </h1>
         </div>
       </section>
@@ -41,10 +41,10 @@ const ContactPage = () => {
           {/* Contact Info */}
           <div className="mt-8 md:mt-12 w-full max-w-md space-y-4 sm:space-y-5 text-left">
             <div className="flex items-start sm:items-center space-x-3">
-              <FaPhone className="text-orange-500 text-lg sm:text-xl mt-1 sm:mt-0 flex-shrink-0" />
+              <FaPhone className="text-primary-500 text-lg sm:text-xl mt-1 sm:mt-0 flex-shrink-0" />
               <a
                 href="tel:8778243755"
-                className="text-gray-800 font-medium hover:text-orange-600 transition-colors text-sm sm:text-base"
+                className="text-gray-800 font-medium hover:text-primary-600 transition-colors text-sm sm:text-base"
                 aria-label="Call us at 8778243755"
               >
                 8778243755
@@ -52,10 +52,10 @@ const ContactPage = () => {
             </div>
 
             <div className="flex items-start sm:items-center space-x-3">
-              <FaEnvelope className="text-orange-500 text-lg sm:text-xl mt-1 sm:mt-0 flex-shrink-0" />
+              <FaEnvelope className="text-primary-500 text-lg sm:text-xl mt-1 sm:mt-0 flex-shrink-0" />
               <a
                 href="mailto:ekumarnkr@gmail.com"
-                className="text-gray-800 font-medium hover:text-orange-600 transition-colors text-sm sm:text-base break-all"
+                className="text-gray-800 font-medium hover:text-primary-600 transition-colors text-sm sm:text-base break-all"
                 aria-label="Email us at ekumarnkr@gmail.com"
               >
                 ekumarnkr@gmail.com
@@ -63,7 +63,7 @@ const ContactPage = () => {
             </div>
 
             <div className="flex items-start space-x-3">
-              <FaMapMarkerAlt className="text-orange-500 text-lg sm:text-xl mt-1 flex-shrink-0" />
+              <FaMapMarkerAlt className="text-primary-500 text-lg sm:text-xl mt-1 flex-shrink-0" />
               <address className="text-gray-800 font-medium not-italic text-sm sm:text-base">
                 Mariamman kovil street, veeranam (village), santhanur (post), Thandrampet (tk), tiruvannamalai (dis), 606 706
               </address>
@@ -77,21 +77,21 @@ const ContactPage = () => {
               <a
                 href="#"
                 aria-label="Facebook"
-                className="bg-orange-500 p-2 sm:p-2.5 rounded-full text-white hover:bg-orange-600 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                className="bg-primary-500 p-2 sm:p-2.5 rounded-full text-white hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
               >
                 <FaFacebookF className="text-sm sm:text-base" />
               </a>
               <a
                 href="#"
                 aria-label="Instagram"
-                className="bg-orange-500 p-2 sm:p-2.5 rounded-full text-white hover:bg-orange-600 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                className="bg-primary-500 p-2 sm:p-2.5 rounded-full text-white hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
               >
                 <FaInstagram className="text-sm sm:text-base" />
               </a>
               <a
                 href="#"
                 aria-label="Pinterest"
-                className="bg-orange-500 p-2 sm:p-2.5 rounded-full text-white hover:bg-orange-600 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                className="bg-primary-500 p-2 sm:p-2.5 rounded-full text-white hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
               >
                 <FaPinterest className="text-sm sm:text-base" />
               </a>
@@ -106,7 +106,7 @@ const ContactPage = () => {
             onSubmit={(e) => e.preventDefault()}
           >
             <div className="space-y-1 sm:space-y-2">
-              <h2 className="text-2xl sm:text-3xl font-bold text-orange-600 text-center">Send a Message</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-primary-600 text-center">Send a Message</h2>
               <p className="text-gray-500 text-xs sm:text-sm text-center">
                 We're here to help! Fill out the form and we'll get back to you soon.
               </p>
@@ -119,7 +119,7 @@ const ContactPage = () => {
                   id="name"
                   type="text"
                   placeholder="Your Name"
-                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
+                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base"
                   aria-required="true"
                 />
               </div>
@@ -130,7 +130,7 @@ const ContactPage = () => {
                   id="email"
                   type="email"
                   placeholder="Your Email"
-                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
+                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base"
                   aria-required="true"
                 />
               </div>
@@ -141,7 +141,7 @@ const ContactPage = () => {
                   id="message"
                   rows="4"
                   placeholder="Your Message"
-                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
+                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base"
                   aria-required="true"
                 ></textarea>
               </div>
@@ -149,7 +149,7 @@ const ContactPage = () => {
 
             <button
               type="submit"
-              className="w-full bg-orange-500 text-white font-semibold text-sm sm:text-base px-6 py-2.5 sm:py-3 rounded-lg hover:bg-orange-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+              className="w-full bg-primary-500 text-white font-semibold text-sm sm:text-base px-6 py-2.5 sm:py-3 rounded-lg hover:bg-primary-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
             >
               Send Message
             </button>

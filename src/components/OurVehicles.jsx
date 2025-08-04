@@ -50,7 +50,7 @@ const cars = [
     ac: true,
   },
   {
-    name:'XYLO',
+    name: 'XYLO',
     image: '/images/etios_Front.png',
     seat: '4+1',
     type: 'SUV',
@@ -131,7 +131,7 @@ export default function OurVehicles() {
     <section className="w-full py-12 px-2 md:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8 text-gray-700">
-          Our <span className="text-orange-600 font-bold">Vehicles</span>
+          Our <span className="text-primary-600 font-bold">Vehicles</span>
         </h2>
         <div className="relative flex flex-col items-center">
           <div style={containerStyle}>
@@ -150,14 +150,14 @@ export default function OurVehicles() {
           <div className="flex justify-center gap-4 mt-8">
             <button
               onClick={handlePrev}
-              className="border-2 border-orange-500 text-orange-500 rounded-full p-2 w-10 h-10 flex items-center justify-center hover:bg-orange-50 transition"
+              className="border-2 border-primary-500 text-primary-500 rounded-full p-2 w-10 h-10 flex items-center justify-center hover:bg-primary-50 transition"
               aria-label="Previous"
             >
               <FiChevronLeft size={24} />
             </button>
             <button
               onClick={handleNext}
-              className="border-2 border-orange-500 text-orange-500 rounded-full p-2 w-10 h-10 flex items-center justify-center hover:bg-orange-50 transition"
+              className="border-2 border-primary-500 text-primary-500 rounded-full p-2 w-10 h-10 flex items-center justify-center hover:bg-primary-50 transition"
               aria-label="Next"
             >
               <FiChevronRight size={24} />

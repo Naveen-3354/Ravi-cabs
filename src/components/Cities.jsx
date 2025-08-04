@@ -25,7 +25,7 @@ export default function Cities() {
     <section className="w-full py-10 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-10">
-          One Way Taxi Service in <span className="text-orange-600">Cities</span>
+          One Way Taxi Service in <span className="text-primary-600">Cities</span>
         </h2>
 
         {/* Responsive design: 2 columns on mobile, 5 on desktop */}
@@ -35,9 +35,9 @@ export default function Cities() {
               {col.map(city => (
                 <li
                   key={city}
-                  className="flex items-center gap-2 text-gray-800 hover:text-orange-600 transition"
+                  className="flex items-center gap-2 text-gray-800 hover:text-primary-600 transition"
                 >
-                  <FiMapPin className="text-orange-500" />
+                  <FiMapPin className="text-primary-500" />
                   <span className="text-base font-medium">{city}</span>
                 </li>
               ))}
@@ -51,9 +51,9 @@ export default function Cities() {
               {col.map(city => (
                 <li
                   key={city}
-                  className="flex items-center gap-2 text-gray-800 hover:text-orange-600 transition"
+                  className="flex items-center gap-2 text-gray-800 hover:text-primary-600 transition"
                 >
-                  <FiMapPin className="text-orange-500" />
+                  <FiMapPin className="text-primary-500" />
                   <span className="text-base font-medium">{city}</span>
                 </li>
               ))}
