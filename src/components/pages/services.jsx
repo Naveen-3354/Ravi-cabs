@@ -55,7 +55,7 @@ export default function Services() {
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
-            Our <span className="text-orange-600">Tariff</span>
+            Our <span className="text-primary-600">Tariff</span>
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             Choose from our wide range of vehicles with competitive pricing and professional drivers
@@ -70,8 +70,8 @@ export default function Services() {
               onClick={() => setActiveTab(tab.key)}
               className={`px-6 sm:px-8 py-3 text-sm sm:text-base font-semibold rounded-lg transition-all duration-300 flex-1 sm:flex-none border-2
                 ${activeTab === tab.key
-                  ? "bg-orange-600 text-white border-orange-600 shadow-lg"
-                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:border-orange-300"
+                  ? "bg-primary-600 text-white border-primary-600 shadow-lg"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:border-primary-300"
                 }`}
             >
               {tab.label}
@@ -118,24 +118,24 @@ export default function Services() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm md:text-base">
               <div className="text-center">
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🕒</span>
                 </div>
-                <div className="text-orange-600 text-xl font-bold mb-2">24/7</div>
+                <div className="text-primary-600 text-xl font-bold mb-2">24/7</div>
                 <p className="text-gray-600">Available Service</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🛡️</span>
                 </div>
-                <div className="text-orange-600 text-xl font-bold mb-2">100%</div>
+                <div className="text-primary-600 text-xl font-bold mb-2">100%</div>
                 <p className="text-gray-600">Safe & Secure</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">✓</span>
                 </div>
-                <div className="text-orange-600 text-xl font-bold mb-2">Free</div>
+                <div className="text-primary-600 text-xl font-bold mb-2">Free</div>
                 <p className="text-gray-600">Cancellation</p>
               </div>
             </div>

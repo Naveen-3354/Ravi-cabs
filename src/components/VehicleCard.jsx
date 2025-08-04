@@ -19,7 +19,7 @@ export default function VehicleCard({
           alt={name}
           className="w-full h-full object-contain scale-105 hover:scale-110 transition-transform duration-500"
         />
-        <span className="absolute top-3 left-3 bg-orange-500 text-white text-xs px-3 py-1 rounded-full shadow">
+        <span className="absolute top-3 left-3 bg-primary-500 text-white text-xs px-3 py-1 rounded-full shadow">
           Popular
         </span>
       </div>

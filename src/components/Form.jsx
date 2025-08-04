@@ -175,19 +175,19 @@ const Form = ({ activeTab, setActiveTab }) => {
                         </div>
                     </div>
 
-                    <div className="text-xs text-orange-400 mb-6">
+                    <div className="text-xs text-primary-400 mb-6">
                         Note: Toll Gate and State Permit are extra
                     </div>
 
                     <div className="space-y-4 mb-6">
                         <button
-                            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all duration-200"
+                            className="w-full bg-gradient-to-r from-primary-500 to-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-primary-600 hover:to-primary-700 transition-all duration-200"
                             onClick={handleConfirmBooking}
                         >
                             Confirm Booking
                         </button>
                         <button
-                            className="text-orange-400 text-sm underline flex items-center gap-1"
+                            className="text-primary-400 text-sm underline flex items-center gap-1"
                             onClick={handleBackToForm}
                         >
                             <FaArrowLeft className="inline" /> Back to Form
@@ -205,7 +205,7 @@ const Form = ({ activeTab, setActiveTab }) => {
             {/* Material UI Style Tabs */}
             <div className="relative mb-8">
                 {/* Tab Indicator */}
-                <div className="absolute bottom-0 left-0 h-0.5 bg-orange-500 transition-all duration-300 ease-in-out"
+                <div className="absolute bottom-0 left-0 h-0.5 bg-primary-500 transition-all duration-300 ease-in-out"
                     style={{
                         width: activeTab === 'oneWay' ? '33.33%' : activeTab === 'roundTrip' ? '33.33%' : '33.33%',
                         transform: `translateX(${activeTab === 'oneWay' ? '0%' : activeTab === 'roundTrip' ? '100%' : '200%'})`
@@ -218,7 +218,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                         type="button"
                         onClick={() => setActiveTab('oneWay')}
                         className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 relative ${activeTab === 'oneWay'
-                            ? 'text-orange-500'
+                            ? 'text-primary-500'
                             : 'text-gray-400 hover:text-gray-300'
                             }`}
                     >
@@ -228,7 +228,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                         type="button"
                         onClick={() => setActiveTab('roundTrip')}
                         className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 relative ${activeTab === 'roundTrip'
-                            ? 'text-orange-500'
+                            ? 'text-primary-500'
                             : 'text-gray-400 hover:text-gray-300'
                             }`}
                     >
@@ -238,7 +238,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                         type="button"
                         onClick={() => setActiveTab('airportTaxi')}
                         className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 relative ${activeTab === 'airportTaxi'
-                            ? 'text-orange-500'
+                            ? 'text-primary-500'
                             : 'text-gray-400 hover:text-gray-300'
                             }`}
                     >
@@ -260,7 +260,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                         name="vehicleType"
                                         value={formData.vehicleType}
                                         onChange={handleChange}
-                                        className={`w-full bg-white/10 border ${errors.vehicleType ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
+                                        className={`w-full bg-white/10 border ${errors.vehicleType ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
                                     >
                                         <option value="" className="bg-gray-800 text-white">Select vehicle type</option>
                                         <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Sedan</option>
@@ -284,7 +284,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     value={formData.fullName}
                                     onChange={handleChange}
                                     placeholder="Enter your full name"
-                                    className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
                                 {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
                             </div>
@@ -299,7 +299,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     value={formData.mobileNumber}
                                     onChange={handleChange}
                                     placeholder="Enter mobile number"
-                                    className={`w-full bg-white/10 border ${errors.mobileNumber ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${errors.mobileNumber ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                     maxLength="10"
                                 />
                                 {errors.mobileNumber && <p className="text-red-500 text-xs mt-1">{errors.mobileNumber}</p>}
@@ -312,7 +312,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     value={formData.pickupLocation}
                                     onChange={handleChange}
                                     placeholder="Enter pickup location"
-                                    className={`w-full bg-white/10 border ${errors.pickupLocation ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${errors.pickupLocation ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
                                 {errors.pickupLocation && <p className="text-red-500 text-xs mt-1">{errors.pickupLocation}</p>}
                             </div>
@@ -327,7 +327,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     value={formData.dropLocation}
                                     onChange={handleChange}
                                     placeholder="Enter drop location"
-                                    className={`w-full bg-white/10 border ${errors.dropLocation ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${errors.dropLocation ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
                                 {errors.dropLocation && <p className="text-red-500 text-xs mt-1">{errors.dropLocation}</p>}
                             </div>
@@ -339,7 +339,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                         name="date"
                                         value={formData.date}
                                         onChange={handleChange}
-                                        className={`w-full bg-white/10 border ${errors.date ? 'border-red-500' : 'border-gray-600'} text-white px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200`}
+                                        className={`w-full bg-white/10 border ${errors.date ? 'border-red-500' : 'border-gray-600'} text-white px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
                                     />
                                     {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date}</p>}
                                 </div>
@@ -350,7 +350,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                         name="time"
                                         value={formData.time}
                                         onChange={handleChange}
-                                        className={`w-full bg-white/10 border ${errors.time ? 'border-red-500' : 'border-gray-600'} text-white px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200`}
+                                        className={`w-full bg-white/10 border ${errors.time ? 'border-red-500' : 'border-gray-600'} text-white px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
                                     />
                                     {errors.time && <p className="text-red-500 text-xs mt-1">{errors.time}</p>}
                                 </div>
@@ -370,7 +370,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                         name="vehicleType"
                                         value={formData.vehicleType}
                                         onChange={handleChange}
-                                        className={`w-full bg-white/10 border ${errors.vehicleType ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
+                                        className={`w-full bg-white/10 border ${errors.vehicleType ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
                                     >
                                         <option value="" className="bg-gray-800 text-white">Select vehicle type</option>
                                         <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Sedan</option>
@@ -394,7 +394,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     value={formData.fullName}
                                     onChange={handleChange}
                                     placeholder="Enter your full name"
-                                    className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
                                 {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
                             </div>
@@ -409,7 +409,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     value={formData.mobileNumber}
                                     onChange={handleChange}
                                     placeholder="Enter mobile number"
-                                    className={`w-full bg-white/10 border ${errors.mobileNumber ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${errors.mobileNumber ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                     maxLength="10"
                                 />
                                 {errors.mobileNumber && <p className="text-red-500 text-xs mt-1">{errors.mobileNumber}</p>}
@@ -422,7 +422,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     value={formData.pickupLocation}
                                     onChange={handleChange}
                                     placeholder="Enter pickup location"
-                                    className={`w-full bg-white/10 border ${errors.pickupLocation ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${errors.pickupLocation ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
                                 {errors.pickupLocation && <p className="text-red-500 text-xs mt-1">{errors.pickupLocation}</p>}
                             </div>
@@ -437,7 +437,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     value={formData.dropLocation}
                                     onChange={handleChange}
                                     placeholder="Enter drop location"
-                                    className={`w-full bg-white/10 border ${errors.dropLocation ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${errors.dropLocation ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
                                 {errors.dropLocation && <p className="text-red-500 text-xs mt-1">{errors.dropLocation}</p>}
                             </div>
@@ -448,7 +448,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     name="date"
                                     value={formData.date}
                                     onChange={handleChange}
-                                    className={`w-full bg-white/10 border ${errors.date ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200`}
+                                    className={`w-full bg-white/10 border ${errors.date ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
                                 />
                                 {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date}</p>}
                             </div>
@@ -462,7 +462,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     name="pickupTime"
                                     value={formData.pickupTime}
                                     onChange={handleChange}
-                                    className={`w-full bg-white/10 border ${errors.pickupTime ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200`}
+                                    className={`w-full bg-white/10 border ${errors.pickupTime ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
                                 />
                                 {errors.pickupTime && <p className="text-red-500 text-xs mt-1">{errors.pickupTime}</p>}
                             </div>
@@ -475,7 +475,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     onChange={handleChange}
                                     min={minReturnDate}
                                     disabled={!formData.date}
-                                    className={`w-full bg-white/10 border ${errors.returnDate ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 ${!formData.date ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    className={`w-full bg-white/10 border ${errors.returnDate ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 ${!formData.date ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 />
                                 {errors.returnDate && <p className="text-red-500 text-xs mt-1">{errors.returnDate}</p>}
                             </div>
@@ -494,7 +494,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                         name="vehicleType"
                                         value={formData.vehicleType}
                                         onChange={handleChange}
-                                        className={`w-full bg-white/10 border ${errors.vehicleType ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
+                                        className={`w-full bg-white/10 border ${errors.vehicleType ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
                                     >
                                         <option value="" className="bg-gray-800 text-white">Select vehicle type</option>
                                         <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Sedan</option>
@@ -518,7 +518,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     value={formData.fullName}
                                     onChange={handleChange}
                                     placeholder="Enter your full name"
-                                    className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
                                 {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
                             </div>
@@ -533,7 +533,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     value={formData.mobileNumber}
                                     onChange={handleChange}
                                     placeholder="Enter mobile number"
-                                    className={`w-full bg-white/10 border ${errors.mobileNumber ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${errors.mobileNumber ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                     maxLength="10"
                                 />
                                 {errors.mobileNumber && <p className="text-red-500 text-xs mt-1">{errors.mobileNumber}</p>}
@@ -545,7 +545,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                         name="airport"
                                         value={formData.airport}
                                         onChange={handleChange}
-                                        className={`w-full bg-white/10 border ${errors.airport ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
+                                        className={`w-full bg-white/10 border ${errors.airport ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
                                     >
                                         <option value="" className="bg-gray-800 text-white">Select Airport</option>
                                         <option value="Chennai" className="bg-gray-800 text-white flex items-center gap-2"><FaMapMarkerAlt className="inline mr-2" /> Chennai</option>
@@ -574,7 +574,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     name="date"
                                     value={formData.date}
                                     onChange={handleChange}
-                                    className={`w-full bg-white/10 border ${errors.date ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200`}
+                                    className={`w-full bg-white/10 border ${errors.date ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
                                 />
                                 {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date}</p>}
                             </div>
@@ -585,7 +585,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     name="time"
                                     value={formData.time}
                                     onChange={handleChange}
-                                    className={`w-full bg-white/10 border ${errors.time ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200`}
+                                    className={`w-full bg-white/10 border ${errors.time ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
                                 />
                                 {errors.time && <p className="text-red-500 text-xs mt-1">{errors.time}</p>}
                             </div>
@@ -599,7 +599,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                                 value={formData.hotelAddress}
                                 onChange={handleChange}
                                 placeholder="Enter hotel or destination address"
-                                className={`w-full bg-white/10 border ${errors.hotelAddress ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                className={`w-full bg-white/10 border ${errors.hotelAddress ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                             />
                             {errors.hotelAddress && <p className="text-red-500 text-xs mt-1">{errors.hotelAddress}</p>}
                         </div>
@@ -610,7 +610,7 @@ const Form = ({ activeTab, setActiveTab }) => {
             {/* Button */}
             <button
                 type="submit"
-                className="mt-8 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all duration-200 w-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                className="mt-8 bg-gradient-to-r from-primary-500 to-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-primary-600 hover:to-primary-700 transition-all duration-200 w-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
                 {activeTab === 'oneWay' && 'BOOK ONE WAY'}
                 {activeTab === 'roundTrip' && 'BOOK ROUND TRIP'}

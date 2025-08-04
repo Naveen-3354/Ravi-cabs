@@ -17,7 +17,7 @@ const HeroSection = () => {
                         {/* Left Section */}
                         <div className="w-full lg:w-1/2 text-white">
                             <h1 className="text-4xl md:text-5xl font-light leading-tight">
-                                <span className="font-bold text-orange-500 me-4">Cars</span>
+                                <span className="font-bold text-primary-500 me-4">Cars</span>
                                 For Rent
                             </h1>
 
@@ -27,9 +27,9 @@ const HeroSection = () => {
 
                         {/* Right Section (Car Image) */}
                         <div className="relative w-full lg:w-1/2 flex items-end justify-center lg:justify-end min-h-[300px]">
-                            <div className="absolute bottom-[200px] right-0 bg-gradient-to-b from-black to-orange-600 text-white text-sm font-bold p-4 rounded-bl-xl shadow-lg z-10">
+                            <div className="absolute bottom-[200px] right-0 bg-gradient-to-b from-black to-primary-600 text-white text-sm font-bold p-4 rounded-bl-xl shadow-lg z-10">
                                 <p className="uppercase text-xs tracking-wide">Mercedes</p>
-                                <p className="text-orange-400 text-2xl">$800<span className="text-base">/Day</span></p>
+                                <p className="text-primary-400 text-2xl">$800<span className="text-base">/Day</span></p>
                             </div>
 
                             <img
