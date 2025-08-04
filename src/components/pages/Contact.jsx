@@ -5,7 +5,7 @@ const ContactPage = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative w-full h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[65vh]  flex items-center overflow-hidden rounded-lg mt-2 sm:mt-6 md:mt-10 px-4 sm:px-6 md:px-6">
+      <section className="relative w-full h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[65vh]  flex items-center overflow-hidden rounded-lg mt-16 md:mt-10 px-4 sm:px-6 md:px-6">
         {/* Background Image */}
         <img
           src="/images/toyota.jpg"

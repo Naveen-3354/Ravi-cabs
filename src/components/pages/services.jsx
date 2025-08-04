@@ -50,7 +50,7 @@ export default function Services() {
   const driverBetta = currentTab?.driverBetta || 300;
 
   return (
-    <section className="py-12 mt-12 md:py-16 lg:py-20 bg-white min-h-screen">
+    <section className="py-12 mt-24 md:mt-12 md:py-16 lg:py-20 bg-white min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
