@@ -2,6 +2,11 @@ import { useState, useEffect } from 'react';
 import { FaCar, FaMapMarkerAlt, FaArrowLeft } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AutocompleteComponent from './AutocompleteSecond';
+import { LoadScript } from '@react-google-maps/api';
+
+// Static libraries array to prevent performance warnings
+const libraries = ['places'];
 
 const Form = ({ activeTab, setActiveTab }) => {
     const [formData, setFormData] = useState({
@@ -20,6 +25,22 @@ const Form = ({ activeTab, setActiveTab }) => {
     const [errors, setErrors] = useState({});
     const [showEstimation, setShowEstimation] = useState(false);
     const [minReturnDate, setMinReturnDate] = useState('');
+    const [location1, setLocation1] = useState(null);
+    const [location2, setLocation2] = useState(null);
+    const [distance, setDistance] = useState(null);
+    const [time, setTime] = useState(null);
+    const [autocomplete1, setAutocomplete1] = useState(null);
+    const [autocomplete2, setAutocomplete2] = useState(null);
+    const [calculatedPrice, setCalculatedPrice] = useState(null);
+    const [distanceInKm, setDistanceInKm] = useState(null);
+
+    // Static pricing configuration
+    const pricingConfig = {
+        'Sedan': { oneWay: 14, roundTrip: 14 },
+        'SUV': { oneWay: 19, roundTrip: 18 },
+        'Innova': { oneWay: 20, roundTrip: 18 },
+        'Etios': { oneWay: 15, roundTrip: 13 }
+    };
 
     useEffect(() => {
         // Load saved data from localStorage if available
@@ -91,23 +112,6 @@ const Form = ({ activeTab, setActiveTab }) => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (validateForm()) {
-            // For airport taxi, use airport as pickup location
-            const dataToSave = activeTab === 'airportTaxi'
-                ? { ...formData, pickupLocation: formData.airport }
-                : formData;
-
-            // Save to localStorage
-            localStorage.setItem('bookingFormData', JSON.stringify(dataToSave));
-            setShowEstimation(true);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            toast.error('Please fill all required fields correctly');
-        }
-    };
-
     const handleConfirmBooking = () => {
         toast.success('Booking confirmed successfully!', {
             position: "bottom-right",
@@ -140,6 +144,113 @@ const Form = ({ activeTab, setActiveTab }) => {
         setShowEstimation(false);
     };
 
+    const handlePlaceChanged1 = () => {
+        if (autocomplete1 !== null) {
+            const place = autocomplete1.getPlace();
+            const lat = place.geometry?.location?.lat();
+            const lng = place.geometry?.location?.lng();
+            if (lat && lng) {
+                setLocation1({ lat, lng });
+                setFormData(prev => ({
+                    ...prev,
+                    pickupLocation: place.formatted_address || place.name
+                }));
+            }
+        }
+    };
+
+    const handlePlaceChanged2 = () => {
+        if (autocomplete2 !== null) {
+            const place = autocomplete2.getPlace();
+            const lat = place.geometry?.location?.lat();
+            const lng = place.geometry?.location?.lng();
+            if (lat && lng) {
+                setLocation2({ lat, lng });
+                setFormData(prev => ({
+                    ...prev,
+                    dropLocation: place.formatted_address || place.name
+                }));
+            }
+        }
+    };
+
+    const calculateRouteDistance = async (origin, destination) => {
+        const directionsService = new window.google.maps.DirectionsService();
+        const results = await directionsService.route({
+            origin: new window.google.maps.LatLng(origin.lat, origin.lng),
+            destination: new window.google.maps.LatLng(destination.lat, destination.lng),
+            travelMode: window.google.maps.TravelMode.DRIVING,
+        });
+
+        console.log(results);
+
+        return {
+            "distance": results.routes[0].legs[0].distance.text,
+            "time": results.routes[0].legs[0].duration.text
+        }
+    };
+
+    const calculatePrice = (distanceKm, vehicleType, tripType) => {
+        const pricing = pricingConfig[vehicleType];
+        if (!pricing) return 0;
+
+        const ratePerKm = tripType === 'roundTrip' ? pricing.roundTrip : pricing.oneWay;
+        return distanceKm * ratePerKm;
+    };
+
+    const parseDistance = (distanceText) => {
+        // Extract numeric value from distance text (e.g., "334 km" -> 334)
+        const match = distanceText.match(/(\d+(?:\.\d+)?)/);
+        return match ? parseFloat(match[1]) : 0;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            toast.error('Please fill all required fields correctly');
+            return;
+        }
+
+        // For airport taxi, use airport as pickup location
+        const dataToSave = activeTab === 'airportTaxi'
+            ? { ...formData, pickupLocation: formData.airport }
+            : formData;
+
+        // Save to localStorage
+        localStorage.setItem('bookingFormData', JSON.stringify(dataToSave));
+
+        // Calculate distance and price if locations are available
+        if (location1 && location2) {
+            try {
+                const result = await calculateRouteDistance(location1, location2);
+                setDistance(result.distance);
+                setTime(result.time);
+                
+                const distanceKm = parseDistance(result.distance);
+                setDistanceInKm(distanceKm);
+                
+                const price = calculatePrice(distanceKm, formData.vehicleType, activeTab);
+                setCalculatedPrice(price);
+                
+                console.log("Distance:", result.distance);
+                console.log("Time: ", result.time);
+                console.log("Distance in KM:", distanceKm);
+                console.log("Calculated Price:", price);
+                
+                setShowEstimation(true);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (error) {
+                console.error("Error calculating route:", error);
+                toast.error('Error calculating route. Please try again.');
+            }
+        } else {
+            // For airport taxi or when locations are not available, show estimation with basic info
+            setShowEstimation(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
     if (showEstimation) {
         return (
             <div className="mt-8 rounded-xl text-white p-4 md:p-6 w-full max-w-xl relative z-20 border border-gray-700/50 overflow-hidden">
@@ -151,27 +262,45 @@ const Form = ({ activeTab, setActiveTab }) => {
                     <div className="bg-white/5 rounded-lg p-4 mb-6">
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Selected Car Type:</span>
-                            <span className="font-medium">{formData.vehicleType || 'ETIOS'}</span>
+                            <span className="font-medium">{formData.vehicleType || 'Not Selected'}</span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Total Distance:</span>
-                            <span className="font-medium">334 KM</span>
+                            <span className="font-medium">{distance || 'Calculating...'}</span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Total Duration:</span>
-                            <span className="font-medium">6 hours 1 min</span>
+                            <span className="font-medium">{time || 'Calculating...'}</span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Rate Per Km:</span>
-                            <span className="font-medium">Rs. 14</span>
+                            <span className="font-medium">
+                                Rs. {formData.vehicleType && pricingConfig[formData.vehicleType] 
+                                    ? (activeTab === 'roundTrip' ? pricingConfig[formData.vehicleType].roundTrip : pricingConfig[formData.vehicleType].oneWay)
+                                    : 'N/A'}
+                            </span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Estimated Amount:</span>
-                            <span className="font-medium">Rs. 5056</span>
+                            <span className="font-medium">
+                                {calculatedPrice ? `Rs. ${calculatedPrice.toFixed(0)}` : 'Calculating...'}
+                            </span>
                         </div>
-                        <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-300">Driver Allowance:</span>
-                            <span className="font-medium">Included</span>
+                        <div className="flex justify-between items-center mb-2">
+                            <span className="text-sm text-gray-300">Pickup Location:</span>
+                            <span className="font-medium">{formData.pickupLocation || 'Not specified'}</span>
+                        </div>
+                        <div className="flex justify-between items-center mb-2">
+                            <span className="text-sm text-gray-300">Drop Location:</span>
+                            <span className="font-medium">{formData.dropLocation || 'Not specified'}</span>
+                        </div>
+                        <div className="flex justify-between items-center mb-2">
+                            <span className="text-sm text-gray-300">Date:</span>
+                            <span className="font-medium">{formData.date || 'Not specified'}</span>
+                        </div>
+                        <div className="flex justify-between items-center mb-2">
+                            <span className="text-sm text-gray-300">Time:</span>
+                            <span className="font-medium">{formData.time || formData.pickupTime || 'Not specified'}</span>
                         </div>
                     </div>
 
@@ -306,14 +435,9 @@ const Form = ({ activeTab, setActiveTab }) => {
                             </div>
                             <div className="relative">
                                 <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Location</label>
-                                <input
-                                    type="text"
-                                    name="pickupLocation"
-                                    value={formData.pickupLocation}
-                                    onChange={handleChange}
-                                    placeholder="Enter pickup location"
-                                    className={`w-full bg-white/10 border ${errors.pickupLocation ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
-                                />
+                                <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
+                                    <AutocompleteComponent onLoad={setAutocomplete1} onPlaceChanged={handlePlaceChanged1} placeholder="Enter pickup location" />
+                                </LoadScript>
                                 {errors.pickupLocation && <p className="text-red-500 text-xs mt-1">{errors.pickupLocation}</p>}
                             </div>
                         </div>
@@ -321,14 +445,9 @@ const Form = ({ activeTab, setActiveTab }) => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
                                 <label className="block text-xs font-medium text-gray-300 mb-1">Drop Location</label>
-                                <input
-                                    type="text"
-                                    name="dropLocation"
-                                    value={formData.dropLocation}
-                                    onChange={handleChange}
-                                    placeholder="Enter drop location"
-                                    className={`w-full bg-white/10 border ${errors.dropLocation ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
-                                />
+                                <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
+                                    <AutocompleteComponent onLoad={setAutocomplete2} onPlaceChanged={handlePlaceChanged2} placeholder="Enter drop location" />
+                                </LoadScript>
                                 {errors.dropLocation && <p className="text-red-500 text-xs mt-1">{errors.dropLocation}</p>}
                             </div>
                             <div className="grid grid-cols-2 gap-2">
@@ -416,14 +535,9 @@ const Form = ({ activeTab, setActiveTab }) => {
                             </div>
                             <div className="relative">
                                 <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Location</label>
-                                <input
-                                    type="text"
-                                    name="pickupLocation"
-                                    value={formData.pickupLocation}
-                                    onChange={handleChange}
-                                    placeholder="Enter pickup location"
-                                    className={`w-full bg-white/10 border ${errors.pickupLocation ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
-                                />
+                                <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
+                                    <AutocompleteComponent onLoad={setAutocomplete1} onPlaceChanged={handlePlaceChanged1} placeholder="Enter pickup location" />
+                                </LoadScript>
                                 {errors.pickupLocation && <p className="text-red-500 text-xs mt-1">{errors.pickupLocation}</p>}
                             </div>
                         </div>
@@ -431,14 +545,9 @@ const Form = ({ activeTab, setActiveTab }) => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
                                 <label className="block text-xs font-medium text-gray-300 mb-1">Drop Location</label>
-                                <input
-                                    type="text"
-                                    name="dropLocation"
-                                    value={formData.dropLocation}
-                                    onChange={handleChange}
-                                    placeholder="Enter drop location"
-                                    className={`w-full bg-white/10 border ${errors.dropLocation ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
-                                />
+                                <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
+                                    <AutocompleteComponent onLoad={setAutocomplete2} onPlaceChanged={handlePlaceChanged2} placeholder="Enter drop location" />
+                                </LoadScript>
                                 {errors.dropLocation && <p className="text-red-500 text-xs mt-1">{errors.dropLocation}</p>}
                             </div>
                             <div className="relative">
@@ -540,28 +649,9 @@ const Form = ({ activeTab, setActiveTab }) => {
                             </div>
                             <div className="relative">
                                 <label className="block text-xs font-medium text-gray-300 mb-1">Airport</label>
-                                <div className="relative">
-                                    <select
-                                        name="airport"
-                                        value={formData.airport}
-                                        onChange={handleChange}
-                                        className={`w-full bg-white/10 border ${errors.airport ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
-                                    >
-                                        <option value="" className="bg-gray-800 text-white">Select Airport</option>
-                                        <option value="Chennai" className="bg-gray-800 text-white flex items-center gap-2"><FaMapMarkerAlt className="inline mr-2" /> Chennai</option>
-                                        <option value="Coimbatore" className="bg-gray-800 text-white flex items-center gap-2"><FaMapMarkerAlt className="inline mr-2" /> Coimbatore</option>
-                                        <option value="Madurai" className="bg-gray-800 text-white flex items-center gap-2"><FaMapMarkerAlt className="inline mr-2" /> Madurai</option>
-                                        <option value="Trichy" className="bg-gray-800 text-white flex items-center gap-2"><FaMapMarkerAlt className="inline mr-2" /> Trichy</option>
-                                        <option value="Salam" className="bg-gray-800 text-white flex items-center gap-2"><FaMapMarkerAlt className="inline mr-2" /> Salam</option>
-                                        <option value="Pondicherry" className="bg-gray-800 text-white flex items-center gap-2"><FaMapMarkerAlt className="inline mr-2" /> Pondicherry</option>
-                                        <option value="Bangolore" className="bg-gray-800 text-white flex items-center gap-2"><FaMapMarkerAlt className="inline mr-2" /> Bangolore</option>
-                                    </select>
-                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                        </svg>
-                                    </div>
-                                </div>
+                                <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
+                                    <AutocompleteComponent onLoad={setAutocomplete1} onPlaceChanged={handlePlaceChanged1} placeholder="Search for airports" />
+                                </LoadScript>
                                 {errors.airport && <p className="text-red-500 text-xs mt-1">{errors.airport}</p>}
                             </div>
                         </div>
@@ -593,14 +683,9 @@ const Form = ({ activeTab, setActiveTab }) => {
 
                         <div className="relative">
                             <label className="block text-xs font-medium text-gray-300 mb-1">Hotel/Destination Address</label>
-                            <input
-                                type="text"
-                                name="hotelAddress"
-                                value={formData.hotelAddress}
-                                onChange={handleChange}
-                                placeholder="Enter hotel or destination address"
-                                className={`w-full bg-white/10 border ${errors.hotelAddress ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
-                            />
+                            <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
+                                <AutocompleteComponent onLoad={setAutocomplete2} onPlaceChanged={handlePlaceChanged2} placeholder="Enter hotel or destination address" />
+                            </LoadScript>
                             {errors.hotelAddress && <p className="text-red-500 text-xs mt-1">{errors.hotelAddress}</p>}
                         </div>
                     </div>
