@@ -100,7 +100,7 @@ const AboutUs = () => {
       </section>
 
       {/* Who We Are Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-gray-50 to-blue-50">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-gray-50 to-primary-50">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
             <div className="md:w-1/2 w-full">

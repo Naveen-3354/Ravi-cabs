@@ -60,7 +60,7 @@ const HeroSection = () => {
         <>
             <div className="px-0 pb-0 pt-0 lg:px-24 lg:pb-24 lg:pt-12">
                 <div
-                    className="w-full bg-cover bg-center bg-no-repeat rounded-xl"
+                    className="w-full bg-cover bg-center bg-no-repeat rounded-br-xl"
                     style={{ backgroundImage: "url('/images/hero_bg.jpg')" }}
                 >
                     <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20 mt-20 lg:mt-0 flex flex-col lg:flex-row items-center justify-between gap-12">
