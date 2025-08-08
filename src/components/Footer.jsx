@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   FiPhone,
   FiMail,
@@ -6,11 +7,13 @@ import {
   FiInstagram,
   FiTwitter,
 } from "react-icons/fi";
+import Reveal from './Reveal';
 
 const Footer = () => {
   return (
     <footer className="w-full text-white bg-cover bg-center" style={{ backgroundImage: "url('/images/footer_bg.jpg')" }}>
       <div className=" w-full pt-10 pb-4 px-6 md:px-16">
+        <Reveal>
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Logo & Description */}
           <div>
@@ -101,8 +104,10 @@ const Footer = () => {
             </div>
           </div>
         </div>
+        </Reveal>
 
         {/* Newsletter */}
+        <Reveal>
         <div className="max-w-7xl mx-auto mt-8 border-t border-gray-700 pt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="text-lg font-semibold text-white">Subscribe To Our Newsletter Today!</div>
           <form className="flex w-full md:w-auto">
@@ -119,6 +124,7 @@ const Footer = () => {
             </button>
           </form>
         </div>
+        </Reveal>
       </div>
 
       {/* Bottom Bar */}

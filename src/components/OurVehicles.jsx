@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import VehicleCard from './VehicleCard';
+import Reveal from './Reveal';
 
 const cars = [
   {
@@ -130,9 +131,11 @@ export default function OurVehicles() {
   return (
     <section className="w-full py-12 px-2 md:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8 text-gray-700">
-          Our <span className="text-primary-600 font-bold">Vehicles</span>
-        </h2>
+        <Reveal>
+          <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8 text-gray-700">
+            Our <span className="text-primary-600 font-bold">Vehicles</span>
+          </h2>
+        </Reveal>
         <div className="relative flex flex-col items-center">
           <div style={containerStyle}>
             <motion.div
@@ -142,7 +145,9 @@ export default function OurVehicles() {
             >
               {infiniteCars.map((car, i) => (
                 <div key={i} style={{ minWidth: cardWidth, maxWidth: cardWidth }}>
-                  <VehicleCard {...car} />
+                  <Reveal delay={(i % cardsPerView) * 0.05}>
+                    <VehicleCard {...car} />
+                  </Reveal>
                 </div>
               ))}
             </motion.div>

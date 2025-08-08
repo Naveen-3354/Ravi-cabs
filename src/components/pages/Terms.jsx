@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import WhatsAppButton from '../WhatsappButton';
+import Reveal from '../Reveal';
 
 
 const TermsAndConditions = () => {
@@ -14,18 +15,13 @@ const TermsAndConditions = () => {
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-6"
-        >
+        <Reveal className="text-center mb-6">
           <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-secondary-400">
             Terms & Conditions
           </h1>
           <p className="mt-2 text-lg text-primary-600">Transparent pricing for your journeys</p>
           <div className="mt-4 h-1 w-20 bg-gradient-to-r from-primary-400 to-primary-200 mx-auto rounded-full"></div>
-        </motion.div>
+        </Reveal>
 
         {/* Tabs */}
         <div className="flex justify-center mb-6">

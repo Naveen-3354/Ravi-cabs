@@ -23,6 +23,7 @@ export default function VehicleCard({
         <img
           src={image}
           alt={name}
+          loading="lazy"
           className="w-full h-full object-contain scale-105 hover:scale-110 transition-transform duration-500"
         />
       </div>

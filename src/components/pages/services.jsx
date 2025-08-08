@@ -1,6 +1,8 @@
 import { useState } from "react";
 import VehicleCard from "../VehicleCard";
 import WhatsAppButton from "../WhatsappButton";
+import { motion } from 'framer-motion';
+import Reveal from "../Reveal";
 
 // Car data structured for VehicleCard component with service information
 const carList = [
@@ -51,17 +53,17 @@ export default function Services() {
   return (
     <section className="mt-24 md:mt-12 bg-gradient-to-br from-primary-50 via-white to-primary-50 py-14 md:py-18 lg:py-20 min-h-screen">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-8">
+        {/* Header with animation */}
+        <Reveal className="text-center mb-8">
           <h2 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-secondary-400">
             Our Tariff
           </h2>
           <p className="mt-2 text-lg text-primary-600">Transparent pricing for your journeys</p>
           <div className="mt-4 h-1 w-20 bg-gradient-to-r from-primary-400 to-primary-200 mx-auto rounded-full"></div>
-        </div>
+        </Reveal>
 
         {/* Tabs */}
-        <div className="flex justify-center mb-8">
+        <Reveal className="flex justify-center mb-8" delay={0.1}>
           <div className="inline-flex bg-gray-50 rounded-full shadow-md p-1 border border-primary-100">
             {TABS.map((tab) => (
               <button
@@ -77,24 +79,31 @@ export default function Services() {
               </button>
             ))}
           </div>
-        </div>
+        </Reveal>
 
         {/* Content */}
-        <div className="bg-gray-100 shadow-xl rounded-2xl p-6 sm:p-8 border border-primary-100">
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-gray-100 shadow-xl rounded-2xl p-6 sm:p-8 border border-primary-100"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {carList.map((car, index) => (
-              <VehicleCard
-                key={index}
-                {...car}
-                isService={true}
-                driverBetta={driverBetta}
-              />
+              <Reveal key={index} delay={index * 0.05}>
+                <VehicleCard
+                  {...car}
+                  isService={true}
+                  driverBetta={driverBetta}
+                />
+              </Reveal>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Additional Information */}
-        <div className="mt-10">
+        <Reveal className="mt-10">
           <div className="bg-white shadow-lg rounded-2xl p-6 sm:p-8 border border-primary-100 max-w-4xl mx-auto">
             <h3 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-6 text-center">Why Choose Our Service?</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm md:text-base">
@@ -121,7 +130,7 @@ export default function Services() {
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
       <WhatsAppButton />
     </section>
