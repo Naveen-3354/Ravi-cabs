@@ -13,6 +13,11 @@ const Header = () => {
   const toggleMenu = () => setIsMenuOpen(prev => !prev);
   const closeMenu = () => setIsMenuOpen(false);
 
+  const handleNavClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    closeMenu();
+  };
+
   const isActive = (path) => {
     return location.pathname === path ||
       (path !== '/' && location.pathname.startsWith(path));
@@ -77,7 +82,7 @@ const Header = () => {
           }`}
       >
         {/* Logo */}
-        <Link to="/">
+        <Link to="/" onClick={handleNavClick}>
           <div className="flex items-center">
             <img
               src="/images/NK_TAXI.png"
@@ -91,35 +96,35 @@ const Header = () => {
         <nav className="hidden md:flex space-x-4 lg:space-x-6 items-center text-gray-900 text-sm lg:text-base font-medium">
           <Link
             to="/"
-            onClick={closeMenu}
+            onClick={handleNavClick}
             className={`hover:text-primary-500 ${isActive('/') ? 'text-primary-500' : ''}`}
           >
             Home
           </Link>
           <Link
             to="/about"
-            onClick={closeMenu}
+            onClick={handleNavClick}
             className={`hover:text-primary-500 ${isActive('/about') ? 'text-primary-500' : ''}`}
           >
             About
           </Link>
           <Link
             to="/services"
-            onClick={closeMenu}
+            onClick={handleNavClick}
             className={`hover:text-primary-500 ${isActive('/services') ? 'text-primary-500' : ''}`}
           >
             Our Services
           </Link>
           <Link
             to="/terms"
-            onClick={closeMenu}
+            onClick={handleNavClick}
             className={`hover:text-primary-500 ${isActive('/terms') ? 'text-primary-500' : ''}`}
           >
             Terms & Conditions
           </Link>
           <Link
             to="/contact"
-            onClick={closeMenu}
+            onClick={handleNavClick}
             className={`hover:text-primary-500 ${isActive('/contact') ? 'text-primary-500' : ''}`}
           >
             Contact
@@ -172,7 +177,7 @@ const Header = () => {
               <div className="px-6 space-y-2">
                 <Link
                   to="/"
-                  onClick={closeMenu}
+                  onClick={handleNavClick}
                   className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 font-medium ${isActive('/')
                       ? 'text-primary-500 bg-primary-50 border-l-4 border-primary-500'
                       : 'text-gray-800 hover:text-primary-500 hover:bg-primary-50'
@@ -182,7 +187,7 @@ const Header = () => {
                 </Link>
                 <Link
                   to="/about"
-                  onClick={closeMenu}
+                  onClick={handleNavClick}
                   className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 font-medium ${isActive('/about')
                       ? 'text-primary-500 bg-primary-50 border-l-4 border-primary-500'
                       : 'text-gray-800 hover:text-primary-500 hover:bg-primary-50'
@@ -192,7 +197,7 @@ const Header = () => {
                 </Link>
                 <Link
                   to="/services"
-                  onClick={closeMenu}
+                  onClick={handleNavClick}
                   className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 font-medium ${isActive('/services')
                       ? 'text-primary-500 bg-primary-50 border-l-4 border-primary-500'
                       : 'text-gray-800 hover:text-primary-500 hover:bg-primary-50'
@@ -202,7 +207,7 @@ const Header = () => {
                 </Link>
                 <Link
                   to="/terms"
-                  onClick={closeMenu}
+                  onClick={handleNavClick}
                   className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 font-medium ${isActive('/terms')
                       ? 'text-primary-500 bg-primary-50 border-l-4 border-primary-500'
                       : 'text-gray-800 hover:text-primary-500 hover:bg-primary-50'
@@ -212,7 +217,7 @@ const Header = () => {
                 </Link>
                 <Link
                   to="/contact"
-                  onClick={closeMenu}
+                  onClick={handleNavClick}
                   className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 font-medium ${isActive('/contact')
                       ? 'text-primary-500 bg-primary-50 border-l-4 border-primary-500'
                       : 'text-gray-800 hover:text-primary-500 hover:bg-primary-50'

@@ -17,14 +17,15 @@ const ContactPage = () => {
         <div className="absolute inset-0 bg-black/70 z-10"></div>
 
         {/* Content */}
-        <div className="relative z-20 text-left max-w-6xl w-full px-4 sm:px-6 lg:px-12">
+        <div className="relative z-20 text-left max-w-6xl w-full px-4 sm:px-6 lg:px-12 mx-auto">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">
             <span className="italic">Contact us</span>{" "}
             <span className="inline-block w-1.5 h-6 sm:h-8 ml-2 bg-primary-500 align-middle rounded-sm"></span>
           </h1>
         </div>
       </section>
-      <section className="flex flex-col lg:flex-row w-full min-h-screen bg-white">
+      <section className="w-full bg-white">
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row min-h-screen">
         {/* Left Side - Brand & Contact Info */}
         <div className="lg:w-1/2 w-full p-6 sm:p-8 md:p-10 flex flex-col justify-center items-center text-center bg-white">
           {/* Background Text with Car Image Clipping */}
@@ -154,6 +155,7 @@ const ContactPage = () => {
               Send Message
             </button>
           </form>
+        </div>
         </div>
       </section>
 
