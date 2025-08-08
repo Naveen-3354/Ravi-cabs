@@ -12,6 +12,7 @@ const Form = ({ activeTab, setActiveTab }) => {
     const [formData, setFormData] = useState({
         vehicleType: '',
         fullName: '',
+        email: '',
         mobileNumber: '',
         pickupLocation: '',
         dropLocation: '',
@@ -82,6 +83,11 @@ const Form = ({ activeTab, setActiveTab }) => {
         // Common validation for all tabs
         if (!formData.vehicleType) newErrors.vehicleType = 'Vehicle type is required';
         if (!formData.fullName) newErrors.fullName = 'Full name is required';
+        if (!formData.email) {
+            newErrors.email = 'Email is required';
+        } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+            newErrors.email = 'Enter a valid email address';
+        }
         if (!formData.mobileNumber) {
             newErrors.mobileNumber = 'Mobile number is required';
         } else if (formData.mobileNumber.length !== 10) {
@@ -127,6 +133,7 @@ const Form = ({ activeTab, setActiveTab }) => {
         setFormData({
             vehicleType: '',
             fullName: '',
+            email: '',
             mobileNumber: '',
             pickupLocation: '',
             dropLocation: '',
@@ -263,6 +270,14 @@ const Form = ({ activeTab, setActiveTab }) => {
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Selected Car Type:</span>
                             <span className="font-medium">{formData.vehicleType || 'Not Selected'}</span>
+                        </div>
+                        <div className="flex justify-between items-center mb-2">
+                            <span className="text-sm text-gray-300">Name:</span>
+                            <span className="font-medium">{formData.fullName || 'Not specified'}</span>
+                        </div>
+                        <div className="flex justify-between items-center mb-2">
+                            <span className="text-sm text-gray-300">Email:</span>
+                            <span className="font-medium">{formData.email || 'Not specified'}</span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Total Distance:</span>
@@ -419,6 +434,22 @@ const Form = ({ activeTab, setActiveTab }) => {
                             </div>
                         </div>
 
+                        {/* Email full-width row after vehicle type and name */}
+                        <div className="grid grid-cols-1 gap-4">
+                            <div className="relative">
+                                <label className="block text-xs font-medium text-gray-300 mb-1">Email</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="Enter your email"
+                                    className={`w-full bg-white/10 border ${errors.email ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                />
+                                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                            </div>
+                        </div>
+
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
                                 <label className="block text-xs font-medium text-gray-300 mb-1">Mobile Number</label>
@@ -516,6 +547,22 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
                                 {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
+                            </div>
+                        </div>
+
+                        {/* Email full-width row after vehicle type and name */}
+                        <div className="grid grid-cols-1 gap-4">
+                            <div className="relative">
+                                <label className="block text-xs font-medium text-gray-300 mb-1">Email</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="Enter your email"
+                                    className={`w-full bg-white/10 border ${errors.email ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                />
+                                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                             </div>
                         </div>
 
@@ -630,6 +677,22 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
                                 {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
+                            </div>
+                        </div>
+
+                        {/* Email full-width row after vehicle type and name */}
+                        <div className="grid grid-cols-1 gap-4">
+                            <div className="relative">
+                                <label className="block text-xs font-medium text-gray-300 mb-1">Email</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="Enter your email"
+                                    className={`w-full bg-white/10 border ${errors.email ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                />
+                                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                             </div>
                         </div>
 

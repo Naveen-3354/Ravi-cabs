@@ -1,4 +1,5 @@
 import { FiMapPin } from 'react-icons/fi';
+import Reveal from './Reveal';
 
 // All cities (can be any number)
 const cities = [
@@ -24,9 +25,11 @@ export default function Cities() {
   return (
     <section className="w-full py-10 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-10">
-          One Way Taxi Service in <span className="text-primary-600">Cities</span>
-        </h2>
+        <Reveal>
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-10">
+            One Way Taxi Service in <span className="text-primary-600">Cities</span>
+          </h2>
+        </Reveal>
 
         {/* Responsive design: 2 columns on mobile, 5 on desktop */}
         <div className="grid grid-cols-2 md:hidden gap-6">

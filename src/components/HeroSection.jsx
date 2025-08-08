@@ -1,6 +1,7 @@
 // HeroSection.js
 import { useState } from 'react';
 import Form from './Form';
+import Reveal from './Reveal';
 
 const HeroSection = () => {
     const [activeTab, setActiveTab] = useState('oneWay');
@@ -66,13 +67,17 @@ const HeroSection = () => {
                     <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20 mt-20 lg:mt-0 flex flex-col lg:flex-row items-center justify-between gap-12">
                         {/* Left Section */}
                         <div className="w-full lg:w-1/2 text-white">
-                            <h1 className="text-4xl md:text-5xl font-light leading-tight">
-                                <span className="font-bold text-primary-500 me-4">Cars</span>
-                                For Rent
-                            </h1>
+                            <Reveal>
+                                <h1 className="text-4xl md:text-5xl font-light leading-tight">
+                                    <span className="font-bold text-primary-500 me-4">Cars</span>
+                                    For Rent
+                                </h1>
+                            </Reveal>
 
                             {/* Booking Form */}
-                            <Form activeTab={activeTab} setActiveTab={setActiveTab} />
+                            <Reveal delay={0.1}>
+                              <Form activeTab={activeTab} setActiveTab={setActiveTab} />
+                            </Reveal>
                         </div>
 
                         {/* Right Section (Car Image) */}
@@ -85,6 +90,7 @@ const HeroSection = () => {
                             <img
                                 src="/images/etios_right3.png"
                                 alt="Mercedes"
+                                loading="lazy"
                                 className="w-full max-w-[400px] md:max-w-[600px] lg:max-w-[700px] xl:w-[750px] xl:max-w-[800px] mx-auto object-contain transition-all duration-300 relative z-0 xl:absolute xl:bottom-[-320px] xl:right-[-90px] xl:mx-0"
                             />
                         </div>

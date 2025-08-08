@@ -58,6 +58,7 @@ const Banner = ({
         <img
           src={imageSrc || '/images/etios_right3.png'}
           alt="Hero"
+          loading="lazy"
           className={`w-full h-auto object-contain ${isStyled ? '' : 'max-w-[500px]'}`}
         />
       </div>
