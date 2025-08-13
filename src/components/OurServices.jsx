@@ -1,16 +1,19 @@
 import React from 'react';
 import Banner from './Banner';
+import Reveal from './Reveal';
 
 const OurServices = () => {
   return (
     <section className="w-full bg-white py-12">
       <div className="max-w-7xl mx-auto">
         {/* Section Title */}
-        <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-semibold text-red-600 mb-2">
-            Our Service
-          </h2>
-        </div>
+        <Reveal>
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-semibold text-red-600 mb-2">
+              Our Service
+            </h2>
+          </div>
+        </Reveal>
 
         {/* Drop Taxi Service */}
         <Banner

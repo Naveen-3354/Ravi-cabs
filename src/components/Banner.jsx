@@ -47,7 +47,7 @@ const Banner = ({
         {/* If not styled, show the button */}
         {!isStyled && (
           <div className="flex justify-center md:justify-start space-x-4 mt-4">
-            <a href="/contact" className="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition">
+            <a href="/contact" className="bg-primary-500 text-white px-6 py-3 rounded-lg hover:bg-primary-600 transition">
               Get a Free Consultation
             </a>
           </div>
@@ -58,6 +58,7 @@ const Banner = ({
         <img
           src={imageSrc || '/images/etios_right3.png'}
           alt="Hero"
+          loading="lazy"
           className={`w-full h-auto object-contain ${isStyled ? '' : 'max-w-[500px]'}`}
         />
       </div>
