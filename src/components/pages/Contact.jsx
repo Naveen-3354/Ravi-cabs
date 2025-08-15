@@ -1,7 +1,53 @@
-import React from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebookF, FaInstagram, FaPinterest } from "react-icons/fa";
 import WhatsAppButton from "../WhatsappButton";
+import { useState } from "react";
+
 const ContactPage = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const baseUrl = import.meta.env.VITE_DEV_API_URL;
+    try {
+      const response = await fetch(baseUrl + "/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      console.log(response);
+      
+      if (!response.ok) {
+        throw new Error("Failed to send booking request");
+      }
+
+      setFormData({
+        name: "",
+        email: "",
+        message: ""
+      });
+
+      console.log("Booking submitted successfully");
+
+    } catch (error) {
+      console.error("Error submitting booking:", error);
+    }
+  };
+
   return (
     <>
       {/* Hero Section */}
@@ -26,136 +72,142 @@ const ContactPage = () => {
       </section>
       <section className="w-full bg-white">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row min-h-screen">
-        {/* Left Side - Brand & Contact Info */}
-        <div className="lg:w-1/2 w-full p-6 sm:p-8 md:p-10 flex flex-col justify-center items-center text-center bg-white">
-          {/* Background Text with Car Image Clipping */}
-          <div className="relative w-full max-w-md mx-auto">
-            <h1
-              aria-label="NK Drop Taxi"
-              className="text-6xl sm:text-7xl md:text-8xl leading-[1.1] font-extrabold text-center bg-clip-text text-transparent bg-[url('/images/toyota.jpg')] bg-cover bg-center select-none"
+          {/* Left Side - Brand & Contact Info */}
+          <div className="lg:w-1/2 w-full p-6 sm:p-8 md:p-10 flex flex-col justify-center items-center text-center bg-white">
+            {/* Background Text with Car Image Clipping */}
+            <div className="relative w-full max-w-md mx-auto">
+              <h1
+                aria-label="NK Drop Taxi"
+                className="text-6xl sm:text-7xl md:text-8xl leading-[1.1] font-extrabold text-center bg-clip-text text-transparent bg-[url('/images/toyota.jpg')] bg-cover bg-center select-none"
+              >
+                <span className="block">NK Drop</span>
+                <span className="block">Taxi</span>
+              </h1>
+            </div>
+
+            {/* Contact Info */}
+            <div className="mt-8 md:mt-12 w-full max-w-md space-y-4 sm:space-y-5 text-left">
+              <div className="flex items-start sm:items-center space-x-3">
+                <FaPhone className="text-primary-500 text-lg sm:text-xl mt-1 sm:mt-0 flex-shrink-0" />
+                <a
+                  href="tel:8778243755"
+                  className="text-gray-800 font-medium hover:text-primary-600 transition-colors text-sm sm:text-base"
+                  aria-label="Call us at 8778243755"
+                >
+                  8778243755
+                </a>
+              </div>
+
+              <div className="flex items-start sm:items-center space-x-3">
+                <FaEnvelope className="text-primary-500 text-lg sm:text-xl mt-1 sm:mt-0 flex-shrink-0" />
+                <a
+                  href="mailto:ekumarnkr@gmail.com"
+                  className="text-gray-800 font-medium hover:text-primary-600 transition-colors text-sm sm:text-base break-all"
+                  aria-label="Email us at ekumarnkr@gmail.com"
+                >
+                  ekumarnkr@gmail.com
+                </a>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <FaMapMarkerAlt className="text-primary-500 text-lg sm:text-xl mt-1 flex-shrink-0" />
+                <address className="text-gray-800 font-medium not-italic text-sm sm:text-base">
+                  Mariamman kovil street, veeranam (village), santhanur (post), Thandrampet (tk), tiruvannamalai (dis), 606 706
+                </address>
+              </div>
+            </div>
+
+            {/* Social Media */}
+            <div className="mt-8 md:mt-12">
+              <p className="text-sm font-semibold text-gray-700 mb-3 sm:mb-4">Follow Us</p>
+              <div className="flex space-x-4">
+                <a
+                  href="#"
+                  aria-label="Facebook"
+                  className="bg-primary-500 p-2 sm:p-2.5 rounded-full text-white hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                >
+                  <FaFacebookF className="text-sm sm:text-base" />
+                </a>
+                <a
+                  href="#"
+                  aria-label="Instagram"
+                  className="bg-primary-500 p-2 sm:p-2.5 rounded-full text-white hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                >
+                  <FaInstagram className="text-sm sm:text-base" />
+                </a>
+                <a
+                  href="#"
+                  aria-label="Pinterest"
+                  className="bg-primary-500 p-2 sm:p-2.5 rounded-full text-white hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                >
+                  <FaPinterest className="text-sm sm:text-base" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side - Contact Form */}
+          <div className="lg:w-1/2 w-full bg-gray-50 p-6 sm:p-8 md:p-10 flex items-center justify-center">
+            <form
+              className="w-full max-w-md bg-white rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg p-6 sm:p-8 space-y-5 sm:space-y-6"
+              onSubmit={handleSubmit}
             >
-              <span className="block">NK Drop</span>
-              <span className="block">Taxi</span>
-            </h1>
-          </div>
-
-          {/* Contact Info */}
-          <div className="mt-8 md:mt-12 w-full max-w-md space-y-4 sm:space-y-5 text-left">
-            <div className="flex items-start sm:items-center space-x-3">
-              <FaPhone className="text-primary-500 text-lg sm:text-xl mt-1 sm:mt-0 flex-shrink-0" />
-              <a
-                href="tel:8778243755"
-                className="text-gray-800 font-medium hover:text-primary-600 transition-colors text-sm sm:text-base"
-                aria-label="Call us at 8778243755"
-              >
-                8778243755
-              </a>
-            </div>
-
-            <div className="flex items-start sm:items-center space-x-3">
-              <FaEnvelope className="text-primary-500 text-lg sm:text-xl mt-1 sm:mt-0 flex-shrink-0" />
-              <a
-                href="mailto:ekumarnkr@gmail.com"
-                className="text-gray-800 font-medium hover:text-primary-600 transition-colors text-sm sm:text-base break-all"
-                aria-label="Email us at ekumarnkr@gmail.com"
-              >
-                ekumarnkr@gmail.com
-              </a>
-            </div>
-
-            <div className="flex items-start space-x-3">
-              <FaMapMarkerAlt className="text-primary-500 text-lg sm:text-xl mt-1 flex-shrink-0" />
-              <address className="text-gray-800 font-medium not-italic text-sm sm:text-base">
-                Mariamman kovil street, veeranam (village), santhanur (post), Thandrampet (tk), tiruvannamalai (dis), 606 706
-              </address>
-            </div>
-          </div>
-
-          {/* Social Media */}
-          <div className="mt-8 md:mt-12">
-            <p className="text-sm font-semibold text-gray-700 mb-3 sm:mb-4">Follow Us</p>
-            <div className="flex space-x-4">
-              <a
-                href="#"
-                aria-label="Facebook"
-                className="bg-primary-500 p-2 sm:p-2.5 rounded-full text-white hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-              >
-                <FaFacebookF className="text-sm sm:text-base" />
-              </a>
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="bg-primary-500 p-2 sm:p-2.5 rounded-full text-white hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-              >
-                <FaInstagram className="text-sm sm:text-base" />
-              </a>
-              <a
-                href="#"
-                aria-label="Pinterest"
-                className="bg-primary-500 p-2 sm:p-2.5 rounded-full text-white hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-              >
-                <FaPinterest className="text-sm sm:text-base" />
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Side - Contact Form */}
-        <div className="lg:w-1/2 w-full bg-gray-50 p-6 sm:p-8 md:p-10 flex items-center justify-center">
-          <form
-            className="w-full max-w-md bg-white rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg p-6 sm:p-8 space-y-5 sm:space-y-6"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <div className="space-y-1 sm:space-y-2">
-              <h2 className="text-2xl sm:text-3xl font-bold text-primary-600 text-center">Send a Message</h2>
-              <p className="text-gray-500 text-xs sm:text-sm text-center">
-                We're here to help! Fill out the form and we'll get back to you soon.
-              </p>
-            </div>
-
-            <div className="space-y-4 sm:space-y-5">
-              <div>
-                <label htmlFor="name" className="sr-only">Your Name</label>
-                <input
-                  id="name"
-                  type="text"
-                  placeholder="Your Name"
-                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base"
-                  aria-required="true"
-                />
+              <div className="space-y-1 sm:space-y-2">
+                <h2 className="text-2xl sm:text-3xl font-bold text-primary-600 text-center">Send a Message</h2>
+                <p className="text-gray-500 text-xs sm:text-sm text-center">
+                  We're here to help! Fill out the form and we'll get back to you soon.
+                </p>
               </div>
 
-              <div>
-                <label htmlFor="email" className="sr-only">Your Email</label>
-                <input
-                  id="email"
-                  type="email"
-                  placeholder="Your Email"
-                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base"
-                  aria-required="true"
-                />
+              <div className="space-y-4 sm:space-y-5">
+                <div>
+                  <label htmlFor="name" className="sr-only">Your Name</label>
+                  <input
+                    id="name"
+                    type="text"
+                    placeholder="Your Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base"
+                    aria-required="true"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="sr-only">Your Email</label>
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="Your Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base"
+                    aria-required="true"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="sr-only">Your Message</label>
+                  <textarea
+                    id="message"
+                    rows="4"
+                    placeholder="Your Message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base"
+                    aria-required="true"
+                  ></textarea>
+                </div>
               </div>
 
-              <div>
-                <label htmlFor="message" className="sr-only">Your Message</label>
-                <textarea
-                  id="message"
-                  rows="4"
-                  placeholder="Your Message"
-                  className="w-full px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base"
-                  aria-required="true"
-                ></textarea>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-primary-500 text-white font-semibold text-sm sm:text-base px-6 py-2.5 sm:py-3 rounded-lg hover:bg-primary-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-            >
-              Send Message
-            </button>
-          </form>
-        </div>
+              <button
+                type="submit"
+                className="w-full bg-primary-500 text-white font-semibold text-sm sm:text-base px-6 py-2.5 sm:py-3 rounded-lg hover:bg-primary-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
         </div>
       </section>
 
