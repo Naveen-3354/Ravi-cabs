@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { FaCar, FaMapMarkerAlt, FaArrowLeft } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaArrowLeft } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AutocompleteComponent from './AutocompleteSecond';
 import { LoadScript } from '@react-google-maps/api';
 
-// Static libraries array to prevent performance warnings
 const libraries = ['places'];
 
 const Form = ({ activeTab, setActiveTab }) => {
@@ -35,7 +34,6 @@ const Form = ({ activeTab, setActiveTab }) => {
     const [calculatedPrice, setCalculatedPrice] = useState(null);
     const [distanceInKm, setDistanceInKm] = useState(null);
 
-    // Static pricing configuration
     const pricingConfig = {
         'Sedan': { oneWay: 14, roundTrip: 14 },
         'SUV': { oneWay: 19, roundTrip: 18 },
@@ -44,15 +42,6 @@ const Form = ({ activeTab, setActiveTab }) => {
     };
 
     useEffect(() => {
-        // Load saved data from localStorage if available
-        const savedData = localStorage.getItem('bookingFormData');
-        if (savedData) {
-            setFormData(JSON.parse(savedData));
-        }
-    }, []);
-
-    useEffect(() => {
-        // Set minimum return date when pickup date changes
         if (formData.date) {
             const date = new Date(formData.date);
             date.setDate(date.getDate() + 1);
@@ -65,7 +54,6 @@ const Form = ({ activeTab, setActiveTab }) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // Mobile number validation - only numbers and max 10 digits
         if (name === 'mobileNumber') {
             if (value.length > 10) return;
             if (!/^\d*$/.test(value)) return;
@@ -80,7 +68,6 @@ const Form = ({ activeTab, setActiveTab }) => {
     const validateForm = () => {
         const newErrors = {};
 
-        // Common validation for all tabs
         if (!formData.vehicleType) newErrors.vehicleType = 'Vehicle type is required';
         if (!formData.fullName) newErrors.fullName = 'Full name is required';
         if (!formData.email) {
@@ -94,7 +81,6 @@ const Form = ({ activeTab, setActiveTab }) => {
             newErrors.mobileNumber = 'Mobile number must be 10 digits';
         }
 
-        // Tab-specific validation
         if (activeTab === 'oneWay' || activeTab === 'roundTrip') {
             if (!formData.pickupLocation) newErrors.pickupLocation = 'Pickup location is required';
             if (!formData.dropLocation) newErrors.dropLocation = 'Drop location is required';
@@ -108,8 +94,8 @@ const Form = ({ activeTab, setActiveTab }) => {
         }
 
         if (activeTab === 'airportTaxi') {
-            if (!formData.airport) newErrors.airport = 'Airport is required';
-            if (!formData.hotelAddress) newErrors.hotelAddress = 'Hotel address is required';
+             if (!formData.pickupLocation) newErrors.pickupLocation = 'Pickup location is required';
+            if (!formData.dropLocation) newErrors.dropLocation = 'Drop location is required';
             if (!formData.date) newErrors.date = 'Pickup date is required';
             if (!formData.time) newErrors.time = 'Pickup time is required';
         }
@@ -118,33 +104,34 @@ const Form = ({ activeTab, setActiveTab }) => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleConfirmBooking = () => {
-        toast.success('Booking confirmed successfully!', {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
-        // Reset form and view
+    const handleConfirmBooking = async () => {
+        const rawData = localStorage.getItem('bookingFormData');
+        console.log("request", rawData);
+        
+        const data = JSON.parse(rawData);
+        console.log("request", data);
+        try {
+            const response = await fetch(import.meta.env.VITE_DEV_API_URL+"/book-now", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to send booking request");
+            }
+
+            const result = await response.json();
+            console.log("Booking submitted successfully:", result);
+        } catch (error) {
+            console.error("Error submitting booking:", error);
+        }
+        localStorage.removeItem('bookingFormData')
         setShowEstimation(false);
-        setFormData({
-            vehicleType: '',
-            fullName: '',
-            email: '',
-            mobileNumber: '',
-            pickupLocation: '',
-            dropLocation: '',
-            date: '',
-            time: '',
-            airport: '',
-            hotelAddress: '',
-            returnDate: '',
-            pickupTime: ''
-        });
-        localStorage.removeItem('bookingFormData');
+        setFormData(initialValues);
+        window.location.reload();
     };
 
     const handleBackToForm = () => {
@@ -213,16 +200,16 @@ const Form = ({ activeTab, setActiveTab }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        console.log("qwertyui");
         
         if (!validateForm()) {
             toast.error('Please fill all required fields correctly');
             return;
         }
-
-        // For airport taxi, use airport as pickup location
-        const dataToSave = activeTab === 'airportTaxi'
-            ? { ...formData, pickupLocation: formData.airport }
-            : formData;
+        
+        const dataToSave = formData;
+        console.log(dataToSave);
 
         // Save to localStorage
         localStorage.setItem('bookingFormData', JSON.stringify(dataToSave));
@@ -251,8 +238,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                 console.error("Error calculating route:", error);
                 toast.error('Error calculating route. Please try again.');
             }
-        } else {
-            // For airport taxi or when locations are not available, show estimation with basic info
+        } else {N
             setShowEstimation(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -407,10 +393,10 @@ const Form = ({ activeTab, setActiveTab }) => {
                                         className={`w-full bg-white/10 border ${errors.vehicleType ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
                                     >
                                         <option value="" className="bg-gray-800 text-white">Select vehicle type</option>
-                                        <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Sedan</option>
-                                        <option value="SUV" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> SUV</option>
-                                        <option value="Innova" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Innova</option>
-                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Etios</option>
+                                        <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2">Sedan</option>
+                                        <option value="SUV" className="bg-gray-800 text-white flex items-center gap-2">SUV</option>
+                                        <option value="Innova" className="bg-gray-800 text-white flex items-center gap-2">Innova</option>
+                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2">Etios</option>
                                     </select>
                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -523,10 +509,10 @@ const Form = ({ activeTab, setActiveTab }) => {
                                         className={`w-full bg-white/10 border ${errors.vehicleType ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
                                     >
                                         <option value="" className="bg-gray-800 text-white">Select vehicle type</option>
-                                        <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Sedan</option>
-                                        <option value="SUV" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> SUV</option>
-                                        <option value="Innova" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Innova</option>
-                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Etios</option>
+                                        <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2">Sedan</option>
+                                        <option value="SUV" className="bg-gray-800 text-white flex items-center gap-2">SUV</option>
+                                        <option value="Innova" className="bg-gray-800 text-white flex items-center gap-2">Innova</option>
+                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2">Etios</option>
                                     </select>
                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -653,10 +639,10 @@ const Form = ({ activeTab, setActiveTab }) => {
                                         className={`w-full bg-white/10 border ${errors.vehicleType ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
                                     >
                                         <option value="" className="bg-gray-800 text-white">Select vehicle type</option>
-                                        <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Sedan</option>
-                                        <option value="SUV" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> SUV</option>
-                                        <option value="Innova" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Innova</option>
-                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Etios</option>
+                                        <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2">Sedan</option>
+                                        <option value="SUV" className="bg-gray-800 text-white flex items-center gap-2">SUV</option>
+                                        <option value="Innova" className="bg-gray-800 text-white flex items-center gap-2">Innova</option>
+                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2">Etios</option>
                                     </select>
                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -713,9 +699,9 @@ const Form = ({ activeTab, setActiveTab }) => {
                             <div className="relative">
                                 <label className="block text-xs font-medium text-gray-300 mb-1">Airport</label>
                                 <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
-                                    <AutocompleteComponent onLoad={setAutocomplete1} onPlaceChanged={handlePlaceChanged1} placeholder="Search for airports" />
+                                    <AutocompleteComponent onLoad={setAutocomplete1} onPlaceChanged={handlePlaceChanged1} placeholder="Enter pickup location" />
                                 </LoadScript>
-                                {errors.airport && <p className="text-red-500 text-xs mt-1">{errors.airport}</p>}
+                                {errors.pickupLocation && <p className="text-red-500 text-xs mt-1">{errors.pickupLocation}</p>}
                             </div>
                         </div>
 
@@ -747,9 +733,9 @@ const Form = ({ activeTab, setActiveTab }) => {
                         <div className="relative">
                             <label className="block text-xs font-medium text-gray-300 mb-1">Hotel/Destination Address</label>
                             <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
-                                <AutocompleteComponent onLoad={setAutocomplete2} onPlaceChanged={handlePlaceChanged2} placeholder="Enter hotel or destination address" />
-                            </LoadScript>
-                            {errors.hotelAddress && <p className="text-red-500 text-xs mt-1">{errors.hotelAddress}</p>}
+                                    <AutocompleteComponent onLoad={setAutocomplete2} onPlaceChanged={handlePlaceChanged2} placeholder="Enter drop location" />
+                                </LoadScript>
+                                {errors.dropLocation && <p className="text-red-500 text-xs mt-1">{errors.dropLocation}</p>}
                         </div>
                     </div>
                 )}
