@@ -3,59 +3,11 @@ import { useState } from 'react';
 import Form from './Form';
 import Reveal from './Reveal';
 
+import { ToastContainer } from "react-toastify/unstyled";
+
 const HeroSection = () => {
     const [activeTab, setActiveTab] = useState('oneWay');
-    const [isRoundTrip, setIsRoundTrip] = useState(false);
-
-
-
-    // const handlePlaceChanged1 = () => {
-    //     if (autocomplete1 !== null) {
-    //         const place = autocomplete1.getPlace();
-    //         const lat = place.geometry?.location?.lat();
-    //         const lng = place.geometry?.location?.lng();
-    //         if (lat && lng) {
-    //             setLocation1({ lat, lng });
-    //         }
-    //     }
-    // };
-
-    // const handlePlaceChanged2 = () => {
-    //     if (autocomplete2 !== null) {
-    //         const place = autocomplete2.getPlace();
-    //         const lat = place.geometry?.location?.lat();
-    //         const lng = place.geometry?.location?.lng();
-    //         if (lat && lng) {
-    //             setLocation2({ lat, lng });
-    //         }
-    //     }
-    // };
-
-    // const calculateRouteDistance = async (origin, destination) => {
-    //     const directionsService = new window.google.maps.DirectionsService();
-    //     const results = await directionsService.route({
-    //         origin: new window.google.maps.LatLng(origin.lat, origin.lng),
-    //         destination: new window.google.maps.LatLng(destination.lat, destination.lng),
-    //         travelMode: window.google.maps.TravelMode.DRIVING,
-    //     });
-
-    //     console.log(results);
-
-    //     return {
-    //         "distance": results.routes[0].legs[0].distance.text,
-    //         "time": results.routes[0].legs[0].duration.text
-    //     }
-    // };
-
-    // const handleSubmit = async () => {
-    //     if (location1 && location2) {
-    //         const result = await calculateRouteDistance(location1, location2);
-    //         setDistance(result.distance);
-    //         setTime(result.time);
-    //         console.log("Distance:", result.distance);
-    //         console.log("Time: ", result.time);
-    //     }
-    // };
+    const [toast, setToast] = useState({});
 
     return (
         <>
@@ -64,6 +16,7 @@ const HeroSection = () => {
                     className="w-full bg-cover bg-center bg-no-repeat rounded-br-xl"
                     style={{ backgroundImage: "url('/images/hero_bg.jpg')" }}
                 >
+                    <ToastContainer />
                     <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20 mt-20 lg:mt-0 flex flex-col lg:flex-row items-center justify-between gap-12">
                         {/* Left Section */}
                         <div className="w-full lg:w-1/2 text-white">
@@ -76,7 +29,7 @@ const HeroSection = () => {
 
                             {/* Booking Form */}
                             <Reveal delay={0.1}>
-                              <Form activeTab={activeTab} setActiveTab={setActiveTab} />
+                              <Form activeTab={activeTab} setActiveTab={setActiveTab} toast={setToast}/>
                             </Reveal>
                         </div>
 
