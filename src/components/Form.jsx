@@ -1,12 +1,12 @@
-import {useState, useEffect} from "react";
-import {FaMapMarkerAlt, FaArrowLeft} from "react-icons/fa";
+import {useState} from "react";
+import {FaArrowLeft} from "react-icons/fa";
 import AutocompleteComponent from "./AutocompleteSecond";
 import {LoadScript} from "@react-google-maps/api";
 
 const libraries = ["places"];
 
 const Form = ({activeTab, setActiveTab, toast}) => {
-    const [formData, setFormData] = useState({
+    const initialState = {
         vehicleType: "",
         fullName: "",
         email: "",
@@ -21,14 +21,15 @@ const Form = ({activeTab, setActiveTab, toast}) => {
         pickupTime: "",
         distance: "",
         price: "",
-        time: "",
         tripType: "",
         ratePerKm: "",
         extraPerKm: ""
-    });
+    };
+    const [formData, setFormData] = useState(initialState);
     const [errors, setErrors] = useState({});
     const [showEstimation, setShowEstimation] = useState(false);
-    const [minReturnDate, setMinReturnDate] = useState("");
+    const today = new Date();
+    const minReturnDate = today.toISOString().split("T")[0];
     const [location1, setLocation1] = useState(null);
     const [location2, setLocation2] = useState(null);
     const [distance, setDistance] = useState(null);
@@ -36,7 +37,6 @@ const Form = ({activeTab, setActiveTab, toast}) => {
     const [autocomplete1, setAutocomplete1] = useState(null);
     const [autocomplete2, setAutocomplete2] = useState(null);
     const [calculatedPrice, setCalculatedPrice] = useState(null);
-    const [distanceInKm, setDistanceInKm] = useState(null);
 
     const pricingConfig = {
         Sedan: {oneWay: 14, roundTrip: 13},
@@ -44,16 +44,6 @@ const Form = ({activeTab, setActiveTab, toast}) => {
         Innova: {oneWay: 29, roundTrip: 19},
         Etios: {oneWay: 15, roundTrip: 13},
     };
-
-    useEffect(() => {
-        if (formData.date) {
-            const date = new Date(formData.date);
-            date.setDate(date.getDate() + 1);
-            setMinReturnDate(date.toISOString().split("T")[0]);
-        } else {
-            setMinReturnDate("");
-        }
-    }, [formData.date]);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -136,13 +126,13 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                 throw new Error("Failed to send booking request");
             }
 
-            const result = await response.json();
+            // eslint-disable-next-line no-unused-vars
         } catch (error) {
             window.location.reload();
         } finally {
             localStorage.removeItem("bookingFormData");
             setShowEstimation(false);
-            setFormData(initialValues);
+            setFormData(initialState);
             window.location.reload();
         }
     };
@@ -198,12 +188,6 @@ const Form = ({activeTab, setActiveTab, toast}) => {
         };
     };
 
-    const parseDistance = (distanceText) => {
-        // Extract numeric value from distance text (e.g., "334 km" -> 334)
-        const match = distanceText.match(/(\d+(?:\.\d+)?)/);
-        return match ? parseFloat(match[1]) : 0;
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -213,7 +197,6 @@ const Form = ({activeTab, setActiveTab, toast}) => {
         }
         if (location1 && location2) {
             try {
-                const data = formData;
                 const result = await calculateRouteDistance(location1, location2);
                 setDistance(result.distance);
                 setTime(result.time);
@@ -223,9 +206,6 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                 }
                 let distanceKm = distance + " Km";
 
-                setDistanceInKm(distanceKm);
-
-                let activeTabIs = activeTab;
                 const pricing = pricingConfig[formData.vehicleType];
 
                 let price = 0;
@@ -248,12 +228,18 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                 setCalculatedPrice(price);
 
                 formData.distance = distanceKm;
-                formData.time = result.time;
                 formData.tripType = activeTab;
                 formData.price = "Rs " + price;
                 formData.ratePerKm = ratePerKm;
                 formData.extraPerKm = ratePerKm;
 
+                let time24 = formData.time;
+                let [hours, minutes] = time24.split(":").map(Number);
+
+                let period = hours >= 12 ? "PM" : "AM";
+                hours = hours % 12 || 12;
+
+                formData.time = `${hours}:${minutes.toString().padStart(2, '0')} ${period}`;
                 localStorage.setItem("bookingFormData", JSON.stringify(formData));
 
                 setShowEstimation(true);
@@ -483,6 +469,12 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                                             Sedan
                                         </option>
                                         <option
+                                            value="Etios"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            Etios
+                                        </option>
+                                        <option
                                             value="SUV"
                                             className="bg-gray-800 text-white flex items-center gap-2"
                                         >
@@ -493,12 +485,6 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                                             className="bg-gray-800 text-white flex items-center gap-2"
                                         >
                                             Innova
-                                        </option>
-                                        <option
-                                            value="Etios"
-                                            className="bg-gray-800 text-white flex items-center gap-2"
-                                        >
-                                            Etios
                                         </option>
                                     </select>
                                     <div
@@ -636,6 +622,7 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                                         name="date"
                                         value={formData.date}
                                         onChange={handleChange}
+                                        min={minReturnDate}
                                         className={`w-full bg-white/10 border ${
                                             errors.date ? "border-red-500" : "border-gray-600"
                                         } text-white px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
@@ -693,6 +680,12 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                                             Sedan
                                         </option>
                                         <option
+                                            value="Etios"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            Etios
+                                        </option>
+                                        <option
                                             value="SUV"
                                             className="bg-gray-800 text-white flex items-center gap-2"
                                         >
@@ -703,12 +696,6 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                                             className="bg-gray-800 text-white flex items-center gap-2"
                                         >
                                             Innova
-                                        </option>
-                                        <option
-                                            value="Etios"
-                                            className="bg-gray-800 text-white flex items-center gap-2"
-                                        >
-                                            Etios
                                         </option>
                                     </select>
                                     <div
@@ -845,6 +832,7 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                                     name="date"
                                     value={formData.date}
                                     onChange={handleChange}
+                                    min={minReturnDate}
                                     className={`w-full bg-white/10 border ${
                                         errors.date ? "border-red-500" : "border-gray-600"
                                     } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
@@ -929,6 +917,12 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                                             Sedan
                                         </option>
                                         <option
+                                            value="Etios"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            Etios
+                                        </option>
+                                        <option
                                             value="SUV"
                                             className="bg-gray-800 text-white flex items-center gap-2"
                                         >
@@ -939,12 +933,6 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                                             className="bg-gray-800 text-white flex items-center gap-2"
                                         >
                                             Innova
-                                        </option>
-                                        <option
-                                            value="Etios"
-                                            className="bg-gray-800 text-white flex items-center gap-2"
-                                        >
-                                            Etios
                                         </option>
                                     </select>
                                     <div
@@ -1061,6 +1049,7 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                                     name="date"
                                     value={formData.date}
                                     onChange={handleChange}
+                                    min={minReturnDate}
                                     className={`w-full bg-white/10 border ${
                                         errors.date ? "border-red-500" : "border-gray-600"
                                     } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
