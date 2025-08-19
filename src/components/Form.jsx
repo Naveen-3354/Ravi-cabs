@@ -196,58 +196,54 @@ const Form = ({activeTab, setActiveTab, toast}) => {
             return;
         }
         if (location1 && location2) {
-            try {
-                const result = await calculateRouteDistance(location1, location2);
-                setDistance(result.distance);
-                setTime(result.time);
-                let distance = parseInt(result.distance);
-                if (activeTab === "roundTrip") {
-                    distance *= 2;
-                }
-                let distanceKm = distance + " Km";
-
-                const pricing = pricingConfig[formData.vehicleType];
-
-                let price = 0;
-                let ratePerKm = 0;
-
-                if (activeTab === "roundTrip") {
-                    ratePerKm = pricing.roundTrip;
-                    price = distance * ratePerKm;
-                    if (distance <= 400) {
-                        price += 500;
-                    } else {
-                        price += 600;
-                    }
-                } else {
-                    ratePerKm = pricing.oneWay;
-                    price = distance * ratePerKm;
-                    price += 400;
-                }
-
-                setCalculatedPrice(price);
-
-                formData.distance = distanceKm;
-                formData.tripType = activeTab;
-                formData.price = "Rs " + price;
-                formData.ratePerKm = ratePerKm;
-                formData.extraPerKm = ratePerKm;
-
-                let time24 = formData.time;
-                let [hours, minutes] = time24.split(":").map(Number);
-
-                let period = hours >= 12 ? "PM" : "AM";
-                hours = hours % 12 || 12;
-
-                formData.time = `${hours}:${minutes.toString().padStart(2, '0')} ${period}`;
-                localStorage.setItem("bookingFormData", JSON.stringify(formData));
-
-                setShowEstimation(true);
-                window.scrollTo({top: 0, behavior: "smooth"});
-            } catch (error) {
-                console.error("Error calculating route:", error);
-                toast.error("Error calculating route. Please try again.");
+            const result = await calculateRouteDistance(location1, location2);
+            setDistance(result.distance);
+            setTime(result.time);
+            let distance = parseInt(result.distance);
+            if (activeTab === "roundTrip") {
+                distance *= 2;
             }
+            let distanceKm = distance + " Km";
+
+            const pricing = pricingConfig[formData.vehicleType];
+
+            let price = 0;
+            let ratePerKm = 0;
+
+            if (activeTab === "roundTrip") {
+                ratePerKm = pricing.roundTrip;
+                price = distance * ratePerKm;
+                if (distance <= 400) {
+                    price += 500;
+                } else {
+                    price += 600;
+                }
+            } else {
+                ratePerKm = pricing.oneWay;
+                price = distance * ratePerKm;
+                price += 400;
+            }
+
+            setCalculatedPrice(price);
+
+            formData.distance = distanceKm;
+            formData.tripType = activeTab;
+            formData.price = "Rs " + price;
+            formData.ratePerKm = ratePerKm;
+            formData.extraPerKm = ratePerKm;
+
+            let time24 = activeTab === "roundTrip"? formData.pickupTime : formData.time;
+            let [hours, minutes] = time24.split(":").map(Number);
+
+            let period = hours >= 12 ? "PM" : "AM";
+            hours = hours % 12 || 12;
+
+            formData.time = `${hours}:${minutes.toString().padStart(2, '0')} ${period}`;
+            localStorage.setItem("bookingFormData", JSON.stringify(formData));
+
+            setShowEstimation(true);
+            window.scrollTo({top: 0, behavior: "smooth"});
+
         } else {
             setShowEstimation(true);
             window.scrollTo({top: 0, behavior: "smooth"});
