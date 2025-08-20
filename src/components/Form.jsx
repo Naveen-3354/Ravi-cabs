@@ -210,18 +210,14 @@ const Form = ({activeTab, setActiveTab, toast}) => {
             let price = 0;
             let ratePerKm = 0;
 
-            if (activeTab === "roundTrip") {
+            if (activeTab === "oneWay") {
                 ratePerKm = pricing.roundTrip;
                 price = distance * ratePerKm;
                 if (distance <= 400) {
-                    price += 500;
+                    price += 400;
                 } else {
                     price += 600;
                 }
-            } else {
-                ratePerKm = pricing.oneWay;
-                price = distance * ratePerKm;
-                price += 400;
             }
 
             setCalculatedPrice(price);
