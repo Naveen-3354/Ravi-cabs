@@ -211,13 +211,20 @@ const Form = ({activeTab, setActiveTab, toast}) => {
             let ratePerKm = 0;
 
             if (activeTab === "oneWay") {
-                ratePerKm = pricing.roundTrip;
+                ratePerKm = pricing.oneWay;
                 price = distance * ratePerKm;
+                console.log("price", price)
                 if (distance <= 400) {
                     price += 400;
                 } else {
                     price += 600;
                 }
+            }else if(activeTab === "roundTrip"){
+                ratePerKm = pricing.roundTrip;
+                price = distance * ratePerKm;
+            }else{
+                ratePerKm = pricing.oneWay;
+                price = distance * ratePerKm;
             }
 
             setCalculatedPrice(price);
@@ -228,7 +235,7 @@ const Form = ({activeTab, setActiveTab, toast}) => {
             formData.ratePerKm = ratePerKm;
             formData.extraPerKm = ratePerKm;
 
-            let time24 = activeTab === "roundTrip"? formData.pickupTime : formData.time;
+            let time24 = activeTab === "roundTrip" ? formData.pickupTime : formData.time;
             let [hours, minutes] = time24.split(":").map(Number);
 
             let period = hours >= 12 ? "PM" : "AM";
@@ -339,6 +346,14 @@ const Form = ({activeTab, setActiveTab, toast}) => {
                 {formData.time || formData.pickupTime || "Not specified"}
               </span>
                         </div>
+                        {activeTab === "roundTrip" ?
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-sm text-gray-300">Driver beta:</span>
+                                <span className="font-medium">
+                                Rs 400 per day
+              </span>
+                            </div> :
+                            <></>}
                     </div>
 
                     <div className="text-xs text-primary-400 mb-6">
