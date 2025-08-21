@@ -1,31 +1,35 @@
-import { useState, useEffect } from 'react';
-import { FaCar, FaMapMarkerAlt, FaArrowLeft } from 'react-icons/fa';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import AutocompleteComponent from './AutocompleteSecond';
-import { LoadScript } from '@react-google-maps/api';
+import {useState} from "react";
+import {FaArrowLeft} from "react-icons/fa";
+import AutocompleteComponent from "./AutocompleteSecond";
+import {LoadScript} from "@react-google-maps/api";
 
-// Static libraries array to prevent performance warnings
-const libraries = ['places'];
+const libraries = ["places"];
 
-const Form = ({ activeTab, setActiveTab }) => {
-    const [formData, setFormData] = useState({
-        vehicleType: '',
-        fullName: '',
-        email: '',
-        mobileNumber: '',
-        pickupLocation: '',
-        dropLocation: '',
-        date: '',
-        time: '',
-        airport: '',
-        hotelAddress: '',
-        returnDate: '',
-        pickupTime: ''
-    });
+const Form = ({activeTab, setActiveTab, toast}) => {
+    const initialState = {
+        vehicleType: "",
+        fullName: "",
+        email: "",
+        mobileNumber: "",
+        pickupLocation: "",
+        dropLocation: "",
+        date: "",
+        time: "",
+        airport: "",
+        hotelAddress: "",
+        returnDate: "",
+        pickupTime: "",
+        distance: "",
+        price: "",
+        tripType: "",
+        ratePerKm: "",
+        extraPerKm: ""
+    };
+    const [formData, setFormData] = useState(initialState);
     const [errors, setErrors] = useState({});
     const [showEstimation, setShowEstimation] = useState(false);
-    const [minReturnDate, setMinReturnDate] = useState('');
+    const today = new Date();
+    const minReturnDate = today.toISOString().split("T")[0];
     const [location1, setLocation1] = useState(null);
     const [location2, setLocation2] = useState(null);
     const [distance, setDistance] = useState(null);
@@ -33,119 +37,104 @@ const Form = ({ activeTab, setActiveTab }) => {
     const [autocomplete1, setAutocomplete1] = useState(null);
     const [autocomplete2, setAutocomplete2] = useState(null);
     const [calculatedPrice, setCalculatedPrice] = useState(null);
-    const [distanceInKm, setDistanceInKm] = useState(null);
 
-    // Static pricing configuration
     const pricingConfig = {
-        'Sedan': { oneWay: 14, roundTrip: 13 },
-        'Etios': { oneWay: 15, roundTrip: 13 },
-        'SUV': { oneWay: 19, roundTrip: 18 },
-        'Innova': { oneWay: 20, roundTrip: 19 }
-        
+        Sedan: {oneWay: 14, roundTrip: 13},
+        SUV: {oneWay: 19, roundTrip: 18},
+        Innova: {oneWay: 29, roundTrip: 19},
+        Etios: {oneWay: 15, roundTrip: 13},
     };
 
-    useEffect(() => {
-        // Load saved data from localStorage if available
-        const savedData = localStorage.getItem('bookingFormData');
-        if (savedData) {
-            setFormData(JSON.parse(savedData));
-        }
-    }, []);
-
-    useEffect(() => {
-        // Set minimum return date when pickup date changes
-        if (formData.date) {
-            const date = new Date(formData.date);
-            date.setDate(date.getDate() + 1);
-            setMinReturnDate(date.toISOString().split('T')[0]);
-        } else {
-            setMinReturnDate('');
-        }
-    }, [formData.date]);
-
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
 
-        // Mobile number validation - only numbers and max 10 digits
-        if (name === 'mobileNumber') {
+        if (name === "mobileNumber") {
             if (value.length > 10) return;
             if (!/^\d*$/.test(value)) return;
         }
 
         setFormData({
             ...formData,
-            [name]: value
+            [name]: value,
         });
     };
 
     const validateForm = () => {
         const newErrors = {};
 
-        // Common validation for all tabs
-        if (!formData.vehicleType) newErrors.vehicleType = 'Vehicle type is required';
-        if (!formData.fullName) newErrors.fullName = 'Full name is required';
+        if (!formData.vehicleType)
+            newErrors.vehicleType = "Vehicle type is required";
+        if (!formData.fullName) newErrors.fullName = "Full name is required";
         if (!formData.email) {
-            newErrors.email = 'Email is required';
+            newErrors.email = "Email is required";
         } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-            newErrors.email = 'Enter a valid email address';
+            newErrors.email = "Enter a valid email address";
         }
         if (!formData.mobileNumber) {
-            newErrors.mobileNumber = 'Mobile number is required';
+            newErrors.mobileNumber = "Mobile number is required";
         } else if (formData.mobileNumber.length !== 10) {
-            newErrors.mobileNumber = 'Mobile number must be 10 digits';
+            newErrors.mobileNumber = "Mobile number must be 10 digits";
         }
 
-        // Tab-specific validation
-        if (activeTab === 'oneWay' || activeTab === 'roundTrip') {
-            if (!formData.pickupLocation) newErrors.pickupLocation = 'Pickup location is required';
-            if (!formData.dropLocation) newErrors.dropLocation = 'Drop location is required';
-            if (!formData.date) newErrors.date = 'Date is required';
-            if (!formData.time && activeTab === 'oneWay') newErrors.time = 'Time is required';
+        if (activeTab === "oneWay" || activeTab === "roundTrip") {
+            if (!formData.pickupLocation)
+                newErrors.pickupLocation = "Pickup location is required";
+            if (!formData.dropLocation)
+                newErrors.dropLocation = "Drop location is required";
+            if (!formData.date) newErrors.date = "Date is required";
+            if (!formData.time && activeTab === "oneWay")
+                newErrors.time = "Time is required";
         }
 
-        if (activeTab === 'roundTrip') {
-            if (!formData.returnDate) newErrors.returnDate = 'Return date is required';
-            if (!formData.pickupTime) newErrors.pickupTime = 'Pickup time is required';
+        if (activeTab === "roundTrip") {
+            if (!formData.returnDate)
+                newErrors.returnDate = "Return date is required";
+            if (!formData.pickupTime)
+                newErrors.pickupTime = "Pickup time is required";
         }
 
-        if (activeTab === 'airportTaxi') {
-            if (!formData.airport) newErrors.airport = 'Airport is required';
-            if (!formData.hotelAddress) newErrors.hotelAddress = 'Hotel address is required';
-            if (!formData.date) newErrors.date = 'Pickup date is required';
-            if (!formData.time) newErrors.time = 'Pickup time is required';
+        if (activeTab === "airportTaxi") {
+            if (!formData.pickupLocation)
+                newErrors.pickupLocation = "Pickup location is required";
+            if (!formData.dropLocation)
+                newErrors.dropLocation = "Drop location is required";
+            if (!formData.date) newErrors.date = "Pickup date is required";
+            if (!formData.time) newErrors.time = "Pickup time is required";
         }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleConfirmBooking = () => {
-        toast.success('Booking confirmed successfully!', {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
-        // Reset form and view
-        setShowEstimation(false);
-        setFormData({
-            vehicleType: '',
-            fullName: '',
-            email: '',
-            mobileNumber: '',
-            pickupLocation: '',
-            dropLocation: '',
-            date: '',
-            time: '',
-            airport: '',
-            hotelAddress: '',
-            returnDate: '',
-            pickupTime: ''
-        });
-        localStorage.removeItem('bookingFormData');
+    const handleConfirmBooking = async () => {
+        const rawData = localStorage.getItem("bookingFormData");
+
+        const data = JSON.parse(rawData);
+        try {
+            const response = await fetch(
+                import.meta.env.VITE_DEV_API_URL + "/book-now",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to send booking request");
+            }
+
+            // eslint-disable-next-line no-unused-vars
+        } catch (error) {
+            window.location.reload();
+        } finally {
+            localStorage.removeItem("bookingFormData");
+            setShowEstimation(false);
+            setFormData(initialState);
+            window.location.reload();
+        }
     };
 
     const handleBackToForm = () => {
@@ -158,10 +147,10 @@ const Form = ({ activeTab, setActiveTab }) => {
             const lat = place.geometry?.location?.lat();
             const lng = place.geometry?.location?.lng();
             if (lat && lng) {
-                setLocation1({ lat, lng });
-                setFormData(prev => ({
+                setLocation1({lat, lng});
+                setFormData((prev) => ({
                     ...prev,
-                    pickupLocation: place.formatted_address || place.name
+                    pickupLocation: place.formatted_address || place.name,
                 }));
             }
         }
@@ -173,10 +162,10 @@ const Form = ({ activeTab, setActiveTab }) => {
             const lat = place.geometry?.location?.lat();
             const lng = place.geometry?.location?.lng();
             if (lat && lng) {
-                setLocation2({ lat, lng });
-                setFormData(prev => ({
+                setLocation2({lat, lng});
+                setFormData((prev) => ({
                     ...prev,
-                    dropLocation: place.formatted_address || place.name
+                    dropLocation: place.formatted_address || place.name,
                 }));
             }
         }
@@ -186,83 +175,90 @@ const Form = ({ activeTab, setActiveTab }) => {
         const directionsService = new window.google.maps.DirectionsService();
         const results = await directionsService.route({
             origin: new window.google.maps.LatLng(origin.lat, origin.lng),
-            destination: new window.google.maps.LatLng(destination.lat, destination.lng),
+            destination: new window.google.maps.LatLng(
+                destination.lat,
+                destination.lng
+            ),
             travelMode: window.google.maps.TravelMode.DRIVING,
         });
 
-        console.log(results);
-
         return {
-            "distance": results.routes[0].legs[0].distance.text,
-            "time": results.routes[0].legs[0].duration.text
-        }
-    };
-
-    const calculatePrice = (distanceKm, vehicleType, tripType) => {
-        const pricing = pricingConfig[vehicleType];
-        if (!pricing) return 0;
-
-        const ratePerKm = tripType === 'roundTrip' ? pricing.roundTrip : pricing.oneWay;
-        return distanceKm * ratePerKm;
-    };
-
-    const parseDistance = (distanceText) => {
-        // Extract numeric value from distance text (e.g., "334 km" -> 334)
-        const match = distanceText.match(/(\d+(?:\.\d+)?)/);
-        return match ? parseFloat(match[1]) : 0;
+            distance: results.routes[0].legs[0].distance.text,
+            time: results.routes[0].legs[0].duration.text,
+        };
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (!validateForm()) {
-            toast.error('Please fill all required fields correctly');
+            toast.error("Please fill all required fields correctly");
             return;
         }
-
-        // For airport taxi, use airport as pickup location
-        const dataToSave = activeTab === 'airportTaxi'
-            ? { ...formData, pickupLocation: formData.airport }
-            : formData;
-
-        // Save to localStorage
-        localStorage.setItem('bookingFormData', JSON.stringify(dataToSave));
-
-        // Calculate distance and price if locations are available
         if (location1 && location2) {
-            try {
-                const result = await calculateRouteDistance(location1, location2);
-                setDistance(result.distance);
-                setTime(result.time);
-                
-                const distanceKm = parseDistance(result.distance);
-                setDistanceInKm(distanceKm);
-                
-                const price = calculatePrice(distanceKm, formData.vehicleType, activeTab);
-                setCalculatedPrice(price);
-                
-                console.log("Distance:", result.distance);
-                console.log("Time: ", result.time);
-                console.log("Distance in KM:", distanceKm);
-                console.log("Calculated Price:", price);
-                
-                setShowEstimation(true);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } catch (error) {
-                console.error("Error calculating route:", error);
-                toast.error('Error calculating route. Please try again.');
+            const result = await calculateRouteDistance(location1, location2);
+            setDistance(result.distance);
+            setTime(result.time);
+            let distance = parseInt(result.distance);
+            if (activeTab === "roundTrip") {
+                distance *= 2;
             }
-        } else {
-            // For airport taxi or when locations are not available, show estimation with basic info
+            let distanceKm = distance + " Km";
+
+            const pricing = pricingConfig[formData.vehicleType];
+
+            let price = 0;
+            let ratePerKm = 0;
+
+            if (activeTab === "oneWay") {
+                ratePerKm = pricing.oneWay;
+                price = distance * ratePerKm;
+                console.log("price", price)
+                if (distance <= 400) {
+                    price += 400;
+                } else {
+                    price += 600;
+                }
+            }else if(activeTab === "roundTrip"){
+                ratePerKm = pricing.roundTrip;
+                price = distance * ratePerKm;
+            }else{
+                ratePerKm = pricing.oneWay;
+                price = distance * ratePerKm;
+            }
+
+            setCalculatedPrice(price);
+
+            formData.distance = distanceKm;
+            formData.tripType = activeTab;
+            formData.price = "Rs " + price;
+            formData.ratePerKm = ratePerKm;
+            formData.extraPerKm = ratePerKm;
+
+            let time24 = activeTab === "roundTrip" ? formData.pickupTime : formData.time;
+            let [hours, minutes] = time24.split(":").map(Number);
+
+            let period = hours >= 12 ? "PM" : "AM";
+            hours = hours % 12 || 12;
+
+            formData.time = `${hours}:${minutes.toString().padStart(2, '0')} ${period}`;
+            localStorage.setItem("bookingFormData", JSON.stringify(formData));
+
             setShowEstimation(true);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({top: 0, behavior: "smooth"});
+
+        } else {
+            setShowEstimation(true);
+            window.scrollTo({top: 0, behavior: "smooth"});
         }
     };
 
     if (showEstimation) {
         return (
-            <div className="mt-8 rounded-xl text-white p-4 md:p-6 w-full max-w-xl relative z-20 border border-gray-700/50 overflow-hidden">
-                <div className="absolute inset-0 bg-[url('/images/highway_1.jpg')] bg-cover bg-center opacity-20 z-0"></div>
+            <div
+                className="mt-8 rounded-xl text-white p-4 md:p-6 w-full max-w-xl relative z-20 border border-gray-700/50 overflow-hidden">
+                <div
+                    className="absolute inset-0 bg-[url('/images/highway_1.jpg')] bg-cover bg-center opacity-20 z-0"></div>
 
                 <div className="relative z-10">
                     <h3 className="text-xl font-semibold mb-4">Trip Estimation</h3>
@@ -270,58 +266,99 @@ const Form = ({ activeTab, setActiveTab }) => {
                     <div className="bg-white/5 rounded-lg p-4 mb-6">
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Selected Car Type:</span>
-                            <span className="font-medium">{formData.vehicleType || 'Not Selected'}</span>
+                            <span className="font-medium">
+                {formData.vehicleType || "Not Selected"}
+              </span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Name:</span>
-                            <span className="font-medium">{formData.fullName || 'Not specified'}</span>
+                            <span className="font-medium">
+                {formData.fullName || "Not specified"}
+              </span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Email:</span>
-                            <span className="font-medium">{formData.email || 'Not specified'}</span>
+                            <span className="font-medium">
+                {formData.email || "Not specified"}
+              </span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Total Distance:</span>
-                            <span className="font-medium">{distance || 'Calculating...'}</span>
+                            <span className="font-medium">
+                {distance || "Calculating..."}
+              </span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Total Duration:</span>
-                            <span className="font-medium">{time || 'Calculating...'}</span>
+                            <span className="font-medium">{time || "Calculating..."}</span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Rate Per Km:</span>
                             <span className="font-medium">
-                                Rs. {formData.vehicleType && pricingConfig[formData.vehicleType] 
-                                    ? (activeTab === 'roundTrip' ? pricingConfig[formData.vehicleType].roundTrip : pricingConfig[formData.vehicleType].oneWay)
-                                    : 'N/A'}
-                            </span>
+                Rs.{" "}
+                                {formData.vehicleType && pricingConfig[formData.vehicleType]
+                                    ? activeTab === "roundTrip"
+                                        ? pricingConfig[formData.vehicleType].roundTrip
+                                        : pricingConfig[formData.vehicleType].oneWay
+                                    : "N/A"}
+              </span>
+                        </div>
+                        <div className="flex justify-between items-center mb-2">
+                            <span className="text-sm text-gray-300">Extra Per Km:</span>
+                            <span className="font-medium">
+                Rs.{" "}
+                                {formData.vehicleType && pricingConfig[formData.vehicleType]
+                                    ? activeTab === "roundTrip"
+                                        ? pricingConfig[formData.vehicleType].roundTrip
+                                        : pricingConfig[formData.vehicleType].oneWay
+                                    : "N/A"}
+              </span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Estimated Amount:</span>
                             <span className="font-medium">
-                                {calculatedPrice ? `Rs. ${calculatedPrice.toFixed(0)}` : 'Calculating...'}
-                            </span>
+                {calculatedPrice
+                    ? `Rs. ${calculatedPrice.toFixed(0)}`
+                    : "Calculating..."}
+              </span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Pickup Location:</span>
-                            <span className="font-medium">{formData.pickupLocation || 'Not specified'}</span>
+                            <span className="font-medium">
+                {formData.pickupLocation || "Not specified"}
+              </span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Drop Location:</span>
-                            <span className="font-medium">{formData.dropLocation || 'Not specified'}</span>
+                            <span className="font-medium">
+                {formData.dropLocation || "Not specified"}
+              </span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Date:</span>
-                            <span className="font-medium">{formData.date || 'Not specified'}</span>
+                            <span className="font-medium">
+                {formData.date || "Not specified"}
+              </span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-300">Time:</span>
-                            <span className="font-medium">{formData.time || formData.pickupTime || 'Not specified'}</span>
+                            <span className="font-medium">
+                {formData.time || formData.pickupTime || "Not specified"}
+              </span>
                         </div>
+                        {activeTab === "roundTrip" ?
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-sm text-gray-300">Driver beta:</span>
+                                <span className="font-medium">
+                                Rs 400 per day
+              </span>
+                            </div> :
+                            <></>}
                     </div>
 
                     <div className="text-xs text-primary-400 mb-6">
-                        Note: Toll Gate and State Permit are extra
+                        Note: Toll Gate, Waiting charges, Parking and State Permit are
+                        extra. {activeTab === 'roundTrip' ? " Maximum 250km per day" : " Maximum 130kms package."}
                     </div>
 
                     <div className="space-y-4 mb-6">
@@ -335,7 +372,7 @@ const Form = ({ activeTab, setActiveTab }) => {
                             className="text-primary-400 text-sm underline flex items-center gap-1"
                             onClick={handleBackToForm}
                         >
-                            <FaArrowLeft className="inline" /> Back to Form
+                            <FaArrowLeft className="inline"/> Back to Form
                         </button>
                     </div>
                 </div>
@@ -344,48 +381,66 @@ const Form = ({ activeTab, setActiveTab }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="mt-8 rounded-xl text-white p-4 md:p-6 w-full max-w-xl relative z-20 border border-gray-700/50 overflow-hidden">
+        <form
+            onSubmit={handleSubmit}
+            className="mt-8 rounded-xl text-white p-4 md:p-6 w-full max-w-xl relative z-20 border border-gray-700/50 overflow-hidden"
+        >
             <div className="absolute inset-0 bg-[url('/images/highway_1.jpg')] bg-cover bg-center opacity-20 z-0"></div>
 
             {/* Material UI Style Tabs */}
             <div className="relative mb-8">
                 {/* Tab Indicator */}
-                <div className="absolute bottom-0 left-0 h-0.5 bg-primary-500 transition-all duration-300 ease-in-out"
+                <div
+                    className="absolute bottom-0 left-0 h-0.5 bg-primary-500 transition-all duration-300 ease-in-out"
                     style={{
-                        width: activeTab === 'oneWay' ? '33.33%' : activeTab === 'roundTrip' ? '33.33%' : '33.33%',
-                        transform: `translateX(${activeTab === 'oneWay' ? '0%' : activeTab === 'roundTrip' ? '100%' : '200%'})`
-                    }}>
-                </div>
+                        width:
+                            activeTab === "oneWay"
+                                ? "33.33%"
+                                : activeTab === "roundTrip"
+                                    ? "33.33%"
+                                    : "33.33%",
+                        transform: `translateX(${
+                            activeTab === "oneWay"
+                                ? "0%"
+                                : activeTab === "roundTrip"
+                                    ? "100%"
+                                    : "200%"
+                        })`,
+                    }}
+                ></div>
 
                 {/* Tab Buttons */}
                 <div className="flex border-b border-gray-600">
                     <button
                         type="button"
-                        onClick={() => setActiveTab('oneWay')}
-                        className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 relative ${activeTab === 'oneWay'
-                            ? 'text-primary-500'
-                            : 'text-gray-400 hover:text-gray-300'
-                            }`}
+                        onClick={() => setActiveTab("oneWay")}
+                        className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 relative ${
+                            activeTab === "oneWay"
+                                ? "text-primary-500"
+                                : "text-gray-400 hover:text-gray-300"
+                        }`}
                     >
                         One Way
                     </button>
                     <button
                         type="button"
-                        onClick={() => setActiveTab('roundTrip')}
-                        className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 relative ${activeTab === 'roundTrip'
-                            ? 'text-primary-500'
-                            : 'text-gray-400 hover:text-gray-300'
-                            }`}
+                        onClick={() => setActiveTab("roundTrip")}
+                        className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 relative ${
+                            activeTab === "roundTrip"
+                                ? "text-primary-500"
+                                : "text-gray-400 hover:text-gray-300"
+                        }`}
                     >
                         Round Trip
                     </button>
                     <button
                         type="button"
-                        onClick={() => setActiveTab('airportTaxi')}
-                        className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 relative ${activeTab === 'airportTaxi'
-                            ? 'text-primary-500'
-                            : 'text-gray-400 hover:text-gray-300'
-                            }`}
+                        onClick={() => setActiveTab("airportTaxi")}
+                        className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 relative ${
+                            activeTab === "airportTaxi"
+                                ? "text-primary-500"
+                                : "text-gray-400 hover:text-gray-300"
+                        }`}
                     >
                         Airport Taxi
                     </button>
@@ -395,115 +450,210 @@ const Form = ({ activeTab, setActiveTab }) => {
             {/* Tab Content */}
             <div className="tab-content">
                 {/* One Way Tab */}
-                {activeTab === 'oneWay' && (
+                {activeTab === "oneWay" && (
                     <div className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Vehicle Type</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Vehicle Type
+                                </label>
                                 <div className="relative">
                                     <select
                                         name="vehicleType"
                                         value={formData.vehicleType}
                                         onChange={handleChange}
-                                        className={`w-full bg-white/10 border ${errors.vehicleType ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
+                                        className={`w-full bg-white/10 border ${
+                                            errors.vehicleType ? "border-red-500" : "border-gray-600"
+                                        } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
                                     >
-                                        <option value="" className="bg-gray-800 text-white">Select vehicle type</option>
-                                        <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Sedan</option>
-                                        <option value="SUV" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> SUV</option>
-                                        <option value="Innova" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Innova</option>
-                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Etios</option>
+                                        <option value="" className="bg-gray-800 text-white">
+                                            Select vehicle type
+                                        </option>
+                                        <option
+                                            value="Sedan"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            Sedan
+                                        </option>
+                                        <option
+                                            value="Etios"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            Etios
+                                        </option>
+                                        <option
+                                            value="SUV"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            SUV
+                                        </option>
+                                        <option
+                                            value="Innova"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            Innova
+                                        </option>
                                     </select>
-                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                    <div
+                                        className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                                        <svg
+                                            className="fill-current h-4 w-4"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
                                         </svg>
                                     </div>
                                 </div>
-                                {errors.vehicleType && <p className="text-red-500 text-xs mt-1">{errors.vehicleType}</p>}
+                                {errors.vehicleType && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.vehicleType}
+                                    </p>
+                                )}
                             </div>
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Full Name</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Full Name
+                                </label>
                                 <input
                                     type="text"
                                     name="fullName"
                                     value={formData.fullName}
                                     onChange={handleChange}
                                     placeholder="Enter your full name"
-                                    className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.fullName ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
-                                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
+                                {errors.fullName && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+                                )}
                             </div>
                         </div>
 
                         {/* Email full-width row after vehicle type and name */}
                         <div className="grid grid-cols-1 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Email</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Email
+                                </label>
                                 <input
                                     type="email"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
                                     placeholder="Enter your email"
-                                    className={`w-full bg-white/10 border ${errors.email ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.email ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
-                                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                                {errors.email && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                                )}
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Mobile Number</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Mobile Number
+                                </label>
                                 <input
                                     type="tel"
                                     name="mobileNumber"
                                     value={formData.mobileNumber}
                                     onChange={handleChange}
                                     placeholder="Enter mobile number"
-                                    className={`w-full bg-white/10 border ${errors.mobileNumber ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.mobileNumber ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                     maxLength="10"
                                 />
-                                {errors.mobileNumber && <p className="text-red-500 text-xs mt-1">{errors.mobileNumber}</p>}
+                                {errors.mobileNumber && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.mobileNumber}
+                                    </p>
+                                )}
                             </div>
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Location</label>
-                                <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
-                                    <AutocompleteComponent onLoad={setAutocomplete1} onPlaceChanged={handlePlaceChanged1} placeholder="Enter pickup location" />
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Pickup Location
+                                </label>
+                                <LoadScript
+                                    googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
+                                    libraries={libraries}
+                                >
+                                    <AutocompleteComponent
+                                        onLoad={setAutocomplete1}
+                                        onPlaceChanged={handlePlaceChanged1}
+                                        placeholder="Enter pickup location"
+                                    />
                                 </LoadScript>
-                                {errors.pickupLocation && <p className="text-red-500 text-xs mt-1">{errors.pickupLocation}</p>}
+                                {errors.pickupLocation && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.pickupLocation}
+                                    </p>
+                                )}
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Drop Location</label>
-                                <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
-                                    <AutocompleteComponent onLoad={setAutocomplete2} onPlaceChanged={handlePlaceChanged2} placeholder="Enter drop location" />
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Drop Location
+                                </label>
+                                <LoadScript
+                                    googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
+                                    libraries={libraries}
+                                >
+                                    <AutocompleteComponent
+                                        onLoad={setAutocomplete2}
+                                        onPlaceChanged={handlePlaceChanged2}
+                                        placeholder="Enter drop location"
+                                    />
                                 </LoadScript>
-                                {errors.dropLocation && <p className="text-red-500 text-xs mt-1">{errors.dropLocation}</p>}
+                                {errors.dropLocation && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.dropLocation}
+                                    </p>
+                                )}
                             </div>
                             <div className="grid grid-cols-2 gap-2">
                                 <div className="relative">
-                                    <label className="block text-xs font-medium text-gray-300 mb-1">Date</label>
+                                    <label className="block text-xs font-medium text-gray-300 mb-1">
+                                        Date
+                                    </label>
                                     <input
                                         type="date"
                                         name="date"
                                         value={formData.date}
                                         onChange={handleChange}
-                                        className={`w-full bg-white/10 border ${errors.date ? 'border-red-500' : 'border-gray-600'} text-white px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
+                                        min={minReturnDate}
+                                        className={`w-full bg-white/10 border ${
+                                            errors.date ? "border-red-500" : "border-gray-600"
+                                        } text-white px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
                                     />
-                                    {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date}</p>}
+                                    {errors.date && (
+                                        <p className="text-red-500 text-xs mt-1">{errors.date}</p>
+                                    )}
                                 </div>
                                 <div className="relative">
-                                    <label className="block text-xs font-medium text-gray-300 mb-1">Time</label>
+                                    <label className="block text-xs font-medium text-gray-300 mb-1">
+                                        Time
+                                    </label>
                                     <input
                                         type="time"
                                         name="time"
                                         value={formData.time}
                                         onChange={handleChange}
-                                        className={`w-full bg-white/10 border ${errors.time ? 'border-red-500' : 'border-gray-600'} text-white px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
+                                        className={`w-full bg-white/10 border ${
+                                            errors.time ? "border-red-500" : "border-gray-600"
+                                        } text-white px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
                                     />
-                                    {errors.time && <p className="text-red-500 text-xs mt-1">{errors.time}</p>}
+                                    {errors.time && (
+                                        <p className="text-red-500 text-xs mt-1">{errors.time}</p>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -511,121 +661,219 @@ const Form = ({ activeTab, setActiveTab }) => {
                 )}
 
                 {/* Round Trip Tab */}
-                {activeTab === 'roundTrip' && (
+                {activeTab === "roundTrip" && (
                     <div className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Vehicle Type</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Vehicle Type
+                                </label>
                                 <div className="relative">
                                     <select
                                         name="vehicleType"
                                         value={formData.vehicleType}
                                         onChange={handleChange}
-                                        className={`w-full bg-white/10 border ${errors.vehicleType ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
+                                        className={`w-full bg-white/10 border ${
+                                            errors.vehicleType ? "border-red-500" : "border-gray-600"
+                                        } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
                                     >
-                                        <option value="" className="bg-gray-800 text-white">Select vehicle type</option>
-                                        <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Sedan</option>
-                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Etios</option>
-                                        <option value="SUV" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> SUV</option>
-                                        <option value="Innova" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Innova</option>
-
+                                        <option value="" className="bg-gray-800 text-white">
+                                            Select vehicle type
+                                        </option>
+                                        <option
+                                            value="Sedan"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            Sedan
+                                        </option>
+                                        <option
+                                            value="Etios"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            Etios
+                                        </option>
+                                        <option
+                                            value="SUV"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            SUV
+                                        </option>
+                                        <option
+                                            value="Innova"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            Innova
+                                        </option>
                                     </select>
-                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                    <div
+                                        className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                                        <svg
+                                            className="fill-current h-4 w-4"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
                                         </svg>
                                     </div>
                                 </div>
-                                {errors.vehicleType && <p className="text-red-500 text-xs mt-1">{errors.vehicleType}</p>}
+                                {errors.vehicleType && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.vehicleType}
+                                    </p>
+                                )}
                             </div>
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Full Name</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Full Name
+                                </label>
                                 <input
                                     type="text"
                                     name="fullName"
                                     value={formData.fullName}
                                     onChange={handleChange}
                                     placeholder="Enter your full name"
-                                    className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.fullName ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
-                                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
+                                {errors.fullName && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+                                )}
                             </div>
                         </div>
 
                         {/* Email full-width row after vehicle type and name */}
                         <div className="grid grid-cols-1 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Email</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Email
+                                </label>
                                 <input
                                     type="email"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
                                     placeholder="Enter your email"
-                                    className={`w-full bg-white/10 border ${errors.email ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.email ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
-                                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                                {errors.email && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                                )}
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Mobile Number</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Mobile Number
+                                </label>
                                 <input
                                     type="tel"
                                     name="mobileNumber"
                                     value={formData.mobileNumber}
                                     onChange={handleChange}
                                     placeholder="Enter mobile number"
-                                    className={`w-full bg-white/10 border ${errors.mobileNumber ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.mobileNumber ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                     maxLength="10"
                                 />
-                                {errors.mobileNumber && <p className="text-red-500 text-xs mt-1">{errors.mobileNumber}</p>}
+                                {errors.mobileNumber && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.mobileNumber}
+                                    </p>
+                                )}
                             </div>
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Location</label>
-                                <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
-                                    <AutocompleteComponent onLoad={setAutocomplete1} onPlaceChanged={handlePlaceChanged1} placeholder="Enter pickup location" />
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Pickup Location
+                                </label>
+                                <LoadScript
+                                    googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
+                                    libraries={libraries}
+                                >
+                                    <AutocompleteComponent
+                                        onLoad={setAutocomplete1}
+                                        onPlaceChanged={handlePlaceChanged1}
+                                        placeholder="Enter pickup location"
+                                    />
                                 </LoadScript>
-                                {errors.pickupLocation && <p className="text-red-500 text-xs mt-1">{errors.pickupLocation}</p>}
+                                {errors.pickupLocation && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.pickupLocation}
+                                    </p>
+                                )}
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Drop Location</label>
-                                <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
-                                    <AutocompleteComponent onLoad={setAutocomplete2} onPlaceChanged={handlePlaceChanged2} placeholder="Enter drop location" />
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Drop Location
+                                </label>
+                                <LoadScript
+                                    googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
+                                    libraries={libraries}
+                                >
+                                    <AutocompleteComponent
+                                        onLoad={setAutocomplete2}
+                                        onPlaceChanged={handlePlaceChanged2}
+                                        placeholder="Enter drop location"
+                                    />
                                 </LoadScript>
-                                {errors.dropLocation && <p className="text-red-500 text-xs mt-1">{errors.dropLocation}</p>}
+                                {errors.dropLocation && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.dropLocation}
+                                    </p>
+                                )}
                             </div>
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Date</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Pickup Date
+                                </label>
                                 <input
                                     type="date"
                                     name="date"
                                     value={formData.date}
                                     onChange={handleChange}
-                                    className={`w-full bg-white/10 border ${errors.date ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
+                                    min={minReturnDate}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.date ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
                                 />
-                                {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date}</p>}
+                                {errors.date && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.date}</p>
+                                )}
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Time</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Pickup Time
+                                </label>
                                 <input
                                     type="time"
                                     name="pickupTime"
                                     value={formData.pickupTime}
                                     onChange={handleChange}
-                                    className={`w-full bg-white/10 border ${errors.pickupTime ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.pickupTime ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
                                 />
-                                {errors.pickupTime && <p className="text-red-500 text-xs mt-1">{errors.pickupTime}</p>}
+                                {errors.pickupTime && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.pickupTime}
+                                    </p>
+                                )}
                             </div>
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Return Date</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Return Date
+                                </label>
                                 <input
                                     type="date"
                                     name="returnDate"
@@ -633,126 +881,228 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     onChange={handleChange}
                                     min={minReturnDate}
                                     disabled={!formData.date}
-                                    className={`w-full bg-white/10 border ${errors.returnDate ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 ${!formData.date ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.returnDate ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 ${
+                                        !formData.date ? "opacity-50 cursor-not-allowed" : ""
+                                    }`}
                                 />
-                                {errors.returnDate && <p className="text-red-500 text-xs mt-1">{errors.returnDate}</p>}
+                                {errors.returnDate && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.returnDate}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     </div>
                 )}
 
                 {/* Airport Taxi Tab */}
-                {activeTab === 'airportTaxi' && (
+                {activeTab === "airportTaxi" && (
                     <div className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Vehicle Type</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Vehicle Type
+                                </label>
                                 <div className="relative">
                                     <select
                                         name="vehicleType"
                                         value={formData.vehicleType}
                                         onChange={handleChange}
-                                        className={`w-full bg-white/10 border ${errors.vehicleType ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
+                                        className={`w-full bg-white/10 border ${
+                                            errors.vehicleType ? "border-red-500" : "border-gray-600"
+                                        } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none pr-10`}
                                     >
-                                        <option value="" className="bg-gray-800 text-white">Select vehicle type</option>
-                                        <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Sedan</option>
-                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Etios</option>
-                                        <option value="SUV" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> SUV</option>
-                                        <option value="Innova" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Innova</option>
-
+                                        <option value="" className="bg-gray-800 text-white">
+                                            Select vehicle type
+                                        </option>
+                                        <option
+                                            value="Sedan"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            Sedan
+                                        </option>
+                                        <option
+                                            value="Etios"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            Etios
+                                        </option>
+                                        <option
+                                            value="SUV"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            SUV
+                                        </option>
+                                        <option
+                                            value="Innova"
+                                            className="bg-gray-800 text-white flex items-center gap-2"
+                                        >
+                                            Innova
+                                        </option>
                                     </select>
-                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                    <div
+                                        className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                                        <svg
+                                            className="fill-current h-4 w-4"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
                                         </svg>
                                     </div>
                                 </div>
-                                {errors.vehicleType && <p className="text-red-500 text-xs mt-1">{errors.vehicleType}</p>}
+                                {errors.vehicleType && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.vehicleType}
+                                    </p>
+                                )}
                             </div>
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Full Name</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Full Name
+                                </label>
                                 <input
                                     type="text"
                                     name="fullName"
                                     value={formData.fullName}
                                     onChange={handleChange}
                                     placeholder="Enter your full name"
-                                    className={`w-full bg-white/10 border ${errors.fullName ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.fullName ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
-                                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
+                                {errors.fullName && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+                                )}
                             </div>
                         </div>
 
                         {/* Email full-width row after vehicle type and name */}
                         <div className="grid grid-cols-1 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Email</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Email
+                                </label>
                                 <input
                                     type="email"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
                                     placeholder="Enter your email"
-                                    className={`w-full bg-white/10 border ${errors.email ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.email ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                 />
-                                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                                {errors.email && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                                )}
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Mobile Number</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Mobile Number
+                                </label>
                                 <input
                                     type="tel"
                                     name="mobileNumber"
                                     value={formData.mobileNumber}
                                     onChange={handleChange}
                                     placeholder="Enter mobile number"
-                                    className={`w-full bg-white/10 border ${errors.mobileNumber ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.mobileNumber ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-gray-400`}
                                     maxLength="10"
                                 />
-                                {errors.mobileNumber && <p className="text-red-500 text-xs mt-1">{errors.mobileNumber}</p>}
+                                {errors.mobileNumber && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.mobileNumber}
+                                    </p>
+                                )}
                             </div>
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Airport</label>
-                                <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
-                                    <AutocompleteComponent onLoad={setAutocomplete1} onPlaceChanged={handlePlaceChanged1} placeholder="Search for airports" />
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Airport
+                                </label>
+                                <LoadScript
+                                    googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
+                                    libraries={libraries}
+                                >
+                                    <AutocompleteComponent
+                                        onLoad={setAutocomplete1}
+                                        onPlaceChanged={handlePlaceChanged1}
+                                        placeholder="Enter pickup location"
+                                    />
                                 </LoadScript>
-                                {errors.airport && <p className="text-red-500 text-xs mt-1">{errors.airport}</p>}
+                                {errors.pickupLocation && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.pickupLocation}
+                                    </p>
+                                )}
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Date</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Pickup Date
+                                </label>
                                 <input
                                     type="date"
                                     name="date"
                                     value={formData.date}
                                     onChange={handleChange}
-                                    className={`w-full bg-white/10 border ${errors.date ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
+                                    min={minReturnDate}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.date ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
                                 />
-                                {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date}</p>}
+                                {errors.date && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.date}</p>
+                                )}
                             </div>
                             <div className="relative">
-                                <label className="block text-xs font-medium text-gray-300 mb-1">Pickup Time</label>
+                                <label className="block text-xs font-medium text-gray-300 mb-1">
+                                    Pickup Time
+                                </label>
                                 <input
                                     type="time"
                                     name="time"
                                     value={formData.time}
                                     onChange={handleChange}
-                                    className={`w-full bg-white/10 border ${errors.time ? 'border-red-500' : 'border-gray-600'} text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
+                                    className={`w-full bg-white/10 border ${
+                                        errors.time ? "border-red-500" : "border-gray-600"
+                                    } text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200`}
                                 />
-                                {errors.time && <p className="text-red-500 text-xs mt-1">{errors.time}</p>}
+                                {errors.time && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.time}</p>
+                                )}
                             </div>
                         </div>
 
                         <div className="relative">
-                            <label className="block text-xs font-medium text-gray-300 mb-1">Hotel/Destination Address</label>
-                            <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={libraries}>
-                                <AutocompleteComponent onLoad={setAutocomplete2} onPlaceChanged={handlePlaceChanged2} placeholder="Enter hotel or destination address" />
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
+                                Hotel/Destination Address
+                            </label>
+                            <LoadScript
+                                googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
+                                libraries={libraries}
+                            >
+                                <AutocompleteComponent
+                                    onLoad={setAutocomplete2}
+                                    onPlaceChanged={handlePlaceChanged2}
+                                    placeholder="Enter drop location"
+                                />
                             </LoadScript>
-                            {errors.hotelAddress && <p className="text-red-500 text-xs mt-1">{errors.hotelAddress}</p>}
+                            {errors.dropLocation && (
+                                <p className="text-red-500 text-xs mt-1">
+                                    {errors.dropLocation}
+                                </p>
+                            )}
                         </div>
                     </div>
                 )}
@@ -763,9 +1113,9 @@ const Form = ({ activeTab, setActiveTab }) => {
                 type="submit"
                 className="mt-8 bg-gradient-to-r from-primary-500 to-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-primary-600 hover:to-primary-700 transition-all duration-200 w-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
-                {activeTab === 'oneWay' && 'BOOK ONE WAY'}
-                {activeTab === 'roundTrip' && 'BOOK ROUND TRIP'}
-                {activeTab === 'airportTaxi' && 'BOOK AIRPORT TAXI'}
+                {activeTab === "oneWay" && "BOOK ONE WAY"}
+                {activeTab === "roundTrip" && "BOOK ROUND TRIP"}
+                {activeTab === "airportTaxi" && "BOOK AIRPORT TAXI"}
             </button>
         </form>
     );
