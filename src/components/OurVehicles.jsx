@@ -11,7 +11,7 @@ const cars = [
     seat: '7+1',
     type: 'INNOVA',
     oneWayPrice: 20,
-    roundTripPrice: 18,
+    roundTripPrice: 19,
     ac: true,
   },
   {
@@ -19,7 +19,7 @@ const cars = [
     image: '/images/etios_right2.png',
     seat: '4+1',
     type: 'ETIOS',
-    oneWayPrice: 14,
+    oneWayPrice: 15,
     roundTripPrice: 13,
     ac: true,
   },

@@ -239,7 +239,7 @@ const Header = () => {
                       </span>
                       <div className="flex-1">
                         <p className="text-sm text-gray-600">Phone</p>
-                        <p className="text-base font-medium text-gray-900">+8778243755</p>
+                        <p className="text-base font-medium text-gray-900">+8489751086</p>
                       </div>
                     </div>
 
@@ -249,7 +249,7 @@ const Header = () => {
                       </span>
                       <div className="flex-1">
                         <p className="text-sm text-gray-600">Email</p>
-                        <p className="text-base font-medium text-gray-900">ekumarnkr@gmail.com</p>
+                        <p className="text-base font-medium text-gray-900">enquiry@nkdroptaxi.com</p>
                       </div>
                     </div>
                   </div>
