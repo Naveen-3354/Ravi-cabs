@@ -7,7 +7,7 @@ import Reveal from "../Reveal";
 // Car data structured for VehicleCard component with service information
 const carList = [
   {
-    name: "Innova",
+    name: "Ertiga",
     type: "SUV.INNOVA",
     rate: 19,
     image: "/images/Ertiga_left.png",

@@ -36,7 +36,7 @@ const Footer = () => {
               <div className="space-y-3 mb-4 text-sm">
                 <div className="flex items-center text-gray-300">
                   <FiPhone className="text-primary-500 mr-2" />
-                  <span>+ 91 8778243755</span>
+                  <span>+ 91 8489751086</span>
                 </div>
                 <div className="flex items-center text-gray-300">
                   <FiMail className="text-primary-500 mr-2" />
@@ -111,25 +111,7 @@ const Footer = () => {
           </div>
         </Reveal>
 
-        {/* Newsletter */}
-        <Reveal>
-          <div className="max-w-7xl mx-auto mt-8 border-t border-gray-700 pt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div className="text-lg font-semibold text-white">Subscribe To Our Newsletter Today!</div>
-            <form className="flex w-full md:w-auto">
-              <input
-                type="email"
-                placeholder="Email address..."
-                className="px-4 py-2 rounded-l bg-black text-white border border-gray-700 focus:outline-none w-full md:w-64"
-              />
-              <button
-                type="submit"
-                className="bg-black border border-l-0 border-gray-700 px-4 py-2 rounded-r text-primary-500 text-xl"
-              >
-                →
-              </button>
-            </form>
-          </div>
-        </Reveal>
+
       </div>
 
       {/* Bottom Bar */}

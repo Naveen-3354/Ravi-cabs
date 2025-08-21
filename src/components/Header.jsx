@@ -137,7 +137,7 @@ const Header = () => {
             <span className="bg-primary-500 p-2 rounded-md text-white">
               <FiMail />
             </span>
-            <span className="text-base font-medium text-gray-900">+ 91 8778243755</span>
+            <span className="text-base font-medium text-gray-900">+ 91 8489751086</span>
           </div>
         </div>
 
@@ -239,7 +239,8 @@ const Header = () => {
                       </span>
                       <div className="flex-1">
                         <p className="text-sm text-gray-600">Phone</p>
-                        <p className="text-base font-medium text-gray-900">+8489751086</p>
+                        <p className="text-base font-medium text-gray-900">
+                          8489751086</p>
                       </div>
                     </div>
 

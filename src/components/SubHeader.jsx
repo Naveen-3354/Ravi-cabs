@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
 const SubHeader = () => {
-    const text = "NK drop taxi is the best and premium drop taxi at budget you can avail for all type of short and long rental rides";
+    const text = "All over tamil nadu including pondicherry ,kerala,Andhra pradhesh ";
 
     return (
         <div className="w-full bg-black overflow-hidden h-8 sm:h-10 flex items-center">
