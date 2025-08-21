@@ -37,10 +37,11 @@ const Form = ({ activeTab, setActiveTab }) => {
 
     // Static pricing configuration
     const pricingConfig = {
-        'Sedan': { oneWay: 14, roundTrip: 14 },
+        'Sedan': { oneWay: 14, roundTrip: 13 },
+        'Etios': { oneWay: 15, roundTrip: 13 },
         'SUV': { oneWay: 19, roundTrip: 18 },
-        'Innova': { oneWay: 20, roundTrip: 18 },
-        'Etios': { oneWay: 15, roundTrip: 13 }
+        'Innova': { oneWay: 20, roundTrip: 19 }
+        
     };
 
     useEffect(() => {
@@ -524,9 +525,10 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     >
                                         <option value="" className="bg-gray-800 text-white">Select vehicle type</option>
                                         <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Sedan</option>
+                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Etios</option>
                                         <option value="SUV" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> SUV</option>
                                         <option value="Innova" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Innova</option>
-                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Etios</option>
+
                                     </select>
                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -654,9 +656,10 @@ const Form = ({ activeTab, setActiveTab }) => {
                                     >
                                         <option value="" className="bg-gray-800 text-white">Select vehicle type</option>
                                         <option value="Sedan" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Sedan</option>
+                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Etios</option>
                                         <option value="SUV" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> SUV</option>
                                         <option value="Innova" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Innova</option>
-                                        <option value="Etios" className="bg-gray-800 text-white flex items-center gap-2"><FaCar className="inline mr-2" /> Etios</option>
+
                                     </select>
                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
