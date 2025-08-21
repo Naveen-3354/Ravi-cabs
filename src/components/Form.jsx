@@ -65,11 +65,7 @@ const Form = ({activeTab, setActiveTab, toast}) => {
         if (!formData.vehicleType)
             newErrors.vehicleType = "Vehicle type is required";
         if (!formData.fullName) newErrors.fullName = "Full name is required";
-        if (!formData.email) {
-            newErrors.email = "Email is required";
-        } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-            newErrors.email = "Enter a valid email address";
-        }
+
         if (!formData.mobileNumber) {
             newErrors.mobileNumber = "Mobile number is required";
         } else if (formData.mobileNumber.length !== 10) {
@@ -358,7 +354,7 @@ const Form = ({activeTab, setActiveTab, toast}) => {
 
                     <div className="text-xs text-primary-400 mb-6">
                         Note: Toll Gate, Waiting charges, Parking and State Permit are
-                        extra. {activeTab === 'roundTrip' ? " Maximum 250km per day" : " Maximum 130kms package."}
+                        extra. {activeTab === 'roundTrip' ? " Minimum 250km per day" : " Minimum 130kms package."}
                     </div>
 
                     <div className="space-y-4 mb-6">
