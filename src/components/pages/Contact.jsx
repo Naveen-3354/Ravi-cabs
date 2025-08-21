@@ -94,7 +94,7 @@ const ContactPage = () => {
                   className="text-gray-800 font-medium hover:text-primary-600 transition-colors text-sm sm:text-base"
                   aria-label="Call us at 8778243755"
                 >
-                  8778243755
+                  8489751086
                 </a>
               </div>
 
@@ -105,7 +105,7 @@ const ContactPage = () => {
                   className="text-gray-800 font-medium hover:text-primary-600 transition-colors text-sm sm:text-base break-all"
                   aria-label="Email us at ekumarnkr@gmail.com"
                 >
-                  ekumarnkr@gmail.com
+              enquiry@nkdroptaxi.com
                 </a>
               </div>
 
