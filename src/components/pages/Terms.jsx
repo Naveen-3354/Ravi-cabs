@@ -69,12 +69,12 @@ const TermsAndConditions = () => {
 
               {isOneWay ? (
                 <>
-                  <TermItem title="Driver Betta" value="Rs. 300" icon="💰" />
-                  <TermItem title="Driver Betta above 400 km" value="Rs. 500" icon="🛣️" />
+                  <TermItem title="Driver Betta" value="Rs. 400" icon="💰" />
+                  <TermItem title="Driver Betta above 400 km" value="Rs. 600" icon="🛣️" />
                   <TermItem title="One Way Drop Trips" value="Minimum 130 kms" icon="📍" />
                   <TermItem title="Hills Station Charges" value="Rs. 300" icon="⛰️" />
                   <TermItem title="Additional charges" value="Toll, Permit, Airport & Parking extra" icon="➕" />
-                  <TermItem title="Waiting Charges" value="Rs. 150 per hours (First 30 min for food free)" icon="⏱️" />
+                  <TermItem title="Waiting Charges are extra (First 30 mins for food free)" icon="⏱️" />
                   <TermItem title="Luggage Capacity" value="Sedan: 3 bags, SUV: 4 bags" icon="🧳" />
                 </>
               ) : (

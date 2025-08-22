@@ -30,11 +30,11 @@ export default function VehicleCard({
 
       <div className="p-6 text-center flex-1 flex flex-col justify-between bg-gray-50">
         <div>
-          <h3 className="text-lg font-extrabold text-gray-900 mb-3 leading-tight tracking-wide uppercase">
+          {/* <h3 className="text-lg font-extrabold text-gray-900 mb-3 leading-tight tracking-wide uppercase">
             {name}
-          </h3>
+          </h3> */}
 
-          <div className="space-y-1">
+          {/* <div className="space-y-1">
             <p className="text-sm text-primary-600 font-medium">
               One Way Tariff -{' '}
               <span className="text-gray-800 font-semibold">{oneWayPrice} Rs/KM</span>
@@ -43,20 +43,20 @@ export default function VehicleCard({
               Round Trip Tariff -{' '}
               <span className="text-gray-800 font-semibold">{roundTripPrice} Rs/KM</span>
             </p>
-          </div>
+          </div> */}
 
           <div className="flex justify-center flex-wrap gap-6 text-gray-700 text-sm font-medium mt-4">
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <FaCarSide className="text-primary-600" /> {type}
-            </div>
-            <div className="flex items-center gap-2">
+            </div> */}
+            {/* <div className="flex items-center gap-2">
               <MdAirlineSeatReclineNormal className="text-primary-600" /> {seat}
-            </div>
-            {ac && (
+            </div> */}
+            {/* {ac && (
               <div className="flex items-center gap-2">
                 <FaSnowflake className="text-primary-600" /> AC
               </div>
-            )}
+            )} */}
           </div>
         </div>
 

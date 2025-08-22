@@ -35,11 +35,7 @@ const HeroSection = () => {
 
                         {/* Right Section (Car Image) */}
                         <div className="relative w-full lg:w-1/2 flex items-end justify-center lg:justify-end min-h-[300px]">
-                            <div className="absolute bottom-[200px] right-0 bg-gradient-to-b from-black to-primary-600 text-white text-sm font-bold p-4 rounded-bl-xl shadow-lg z-10">
-                                <p className="uppercase text-xs tracking-wide">Mercedes</p>
-                                <p className="text-primary-400 text-2xl">$800<span className="text-base">/Day</span></p>
-                            </div>
-
+                    
                             <img
                                 src="/images/etios_right3.png"
                                 alt="Mercedes"
