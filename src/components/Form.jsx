@@ -41,7 +41,7 @@ const Form = ({activeTab, setActiveTab, toast}) => {
     const pricingConfig = {
         Sedan: {oneWay: 14, roundTrip: 13},
         SUV: {oneWay: 19, roundTrip: 18},
-        Innova: {oneWay: 29, roundTrip: 19},
+        Innova: {oneWay: 20, roundTrip: 19},
         Etios: {oneWay: 15, roundTrip: 13},
     };
 
@@ -252,6 +252,7 @@ const Form = ({activeTab, setActiveTab, toast}) => {
     if (showEstimation) {
         return (
             <div
+                id="my-section"
                 className="mt-8 rounded-xl text-white p-4 md:p-6 w-full max-w-xl relative z-20 border border-gray-700/50 overflow-hidden">
                 <div
                     className="absolute inset-0 bg-[url('/images/highway_1.jpg')] bg-cover bg-center opacity-20 z-0"></div>
