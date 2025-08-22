@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
 const SubHeader = () => {
-    const text = "All over tamil nadu including pondicherry ,kerala,Andhra pradhesh ";
+    const text = "All Over Tamilnadu, pondicherry,Bangalore,Kerala,Andhra Pradhesh service providedr.Any where any time.";
 
     return (
         <div className="w-full bg-black overflow-hidden h-8 sm:h-10 flex items-center">
