@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Car data with complete information
@@ -74,14 +75,17 @@ export default function Services() {
   const currentTab = TABS.find((tab) => tab.key === activeTab);
   const driverBetta = currentTab?.driverBetta || 400;
 
+    const navigate = useNavigate();
+
   const handleBookNow = (car) => {
-    setSelectedCar(car);
-    setFormData(prev => ({
-      ...prev,
-      carType: car.name,
-      tripType: activeTab
-    }));
-    setShowBookingForm(true);
+    // setSelectedCar(car);
+    // setFormData(prev => ({
+    //   ...prev,
+    //   carType: car.name,
+    //   tripType: activeTab
+    // }));
+    // setShowBookingForm(true);
+      navigate('/#my-section');
   };
 
   const handleInputChange = (e) => {
