@@ -41,7 +41,7 @@ const Form = ({activeTab, setActiveTab, toast}) => {
     const pricingConfig = {
         Sedan: {oneWay: 14, roundTrip: 13},
         SUV: {oneWay: 19, roundTrip: 18},
-        Innova: {oneWay: 29, roundTrip: 19},
+        Innova: {oneWay: 20, roundTrip: 19},
         Etios: {oneWay: 15, roundTrip: 13},
     };
 
