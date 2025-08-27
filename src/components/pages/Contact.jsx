@@ -90,9 +90,9 @@ const ContactPage = () => {
               <div className="flex items-start sm:items-center space-x-3">
                 <FaPhone className="text-primary-500 text-lg sm:text-xl mt-1 sm:mt-0 flex-shrink-0" />
                 <a
-                  href="tel:8778243755"
+                  href="tel:8489751086"
                   className="text-gray-800 font-medium hover:text-primary-600 transition-colors text-sm sm:text-base"
-                  aria-label="Call us at 8778243755"
+                  aria-label="Call us at 8489751086"
                 >
                   8489751086
                 </a>
@@ -101,9 +101,9 @@ const ContactPage = () => {
               <div className="flex items-start sm:items-center space-x-3">
                 <FaEnvelope className="text-primary-500 text-lg sm:text-xl mt-1 sm:mt-0 flex-shrink-0" />
                 <a
-                  href="mailto:ekumarnkr@gmail.com"
+                  href="mailto:enquiry@nkdroptaxi.com"
                   className="text-gray-800 font-medium hover:text-primary-600 transition-colors text-sm sm:text-base break-all"
-                  aria-label="Email us at ekumarnkr@gmail.com"
+                  aria-label="Email us at enquiry@nkdroptaxi.com"
                 >
               enquiry@nkdroptaxi.com
                 </a>
