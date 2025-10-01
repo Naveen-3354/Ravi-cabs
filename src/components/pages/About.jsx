@@ -32,6 +32,18 @@ const AboutUs = () => {
 
   return (
     <div className="font-sans mt-16 md:mt-8">
+      
+      <Helmet>
+        <title>About NK Drop Taxi | Safe & Reliable Car Rental Services</title>
+        <meta
+          name="description"
+          content="Learn about NK Drop Taxi, a trusted taxi and car rental service in Tamil Nadu. Safe, reliable, and comfortable rides with professional drivers and premium fleet of vehicles."
+        />
+        <meta
+          name="keywords"
+          content="NK Drop Taxi, car rental Tamil Nadu, taxi service, safe taxi rides, intercity taxi, affordable car hire, premium car rental, reliable taxi service, Innova rental, Ertiga taxi, Swift rental"
+        />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] flex items-center overflow-hidden rounded-lg">
         {/* Background Image */}

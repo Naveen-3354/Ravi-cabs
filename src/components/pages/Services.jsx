@@ -106,6 +106,18 @@ export default function Services() {
 
   return (
     <section className="mt-24 md:mt-12 bg-gradient-to-br from-primary-50 via-white to-primary-50 py-14 md:py-18 lg:py-20 min-h-screen">
+  
+      <Helmet>
+        <title>Car Rental Services & Tariff | NK Drop Taxi</title>
+        <meta
+          name="description"
+          content="Check NK Drop Taxi's transparent car rental tariffs. Book one-way or round-trip rides with affordable rates for Ertiga, Etios, Innova, Swift, Xylo, and Crysta. Reliable taxi services in Tiruvannamalai."
+        />
+        <meta
+          name="keywords"
+          content="car rental tariff, NK Drop Taxi pricing, one-way car rental, round-trip car rental, Ertiga taxi, Etios taxi, Innova rental, Swift car hire, Xylo taxi services, Innova Crysta rental, Tiruvannamalai car rental, taxi booking rates"
+        />
+      </Helmet>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">

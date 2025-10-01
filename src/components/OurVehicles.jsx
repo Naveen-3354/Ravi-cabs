@@ -5,6 +5,7 @@ import VehicleCard from './VehicleCard';
 import Reveal from './Reveal';
 
 const cars = [
+  
   {
     name: 'Innova',
     image: '/images/Innova_Right.png',
@@ -130,6 +131,18 @@ export default function OurVehicles() {
 
   return (
     <section className="w-full py-12 px-2 md:px-8 bg-white">
+      {/*SEO*/}
+      <Helmet>
+        <title>Car Rental Fleet | SUVs, Sedans & Family Cars for Hire</title>
+        <meta 
+          name="description" 
+          content="Browse our fleet of rental cars including Innova, Etios, Swift, Ertiga, and Xylo. Affordable one-way and round-trip rentals with AC options." 
+        />
+        <meta 
+          name="keywords" 
+          content="car rental, rent a car, car hire, affordable car rental, self-drive car hire, AC car rental, Innova rental, Etios car hire, Swift rental, Ertiga SUV rental, Xylo car hire, 7 seater car rental, family car hire, SUV car rental, one-way car rental, round trip car rental, online car booking, car rental deals, budget car hire, city car rental, weekend car rental deals"
+        />
+      </Helmet>
       <div className="max-w-7xl mx-auto">
         <Reveal>
           <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8 text-gray-700">

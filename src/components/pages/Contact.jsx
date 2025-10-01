@@ -50,6 +50,50 @@ const ContactPage = () => {
 
   return (
     <>
+     {/*SEO */}
+      <Helmet>
+        <title>Contact NK Drop Taxi | Book Cars & Get Assistance</title>
+        <meta 
+          name="description" 
+          content="Get in touch with NK Drop Taxi for car rentals, bookings, or inquiries. Contact us via phone, email, or visit our office in Tiruvannamalai. Fast, reliable taxi and car rental services." 
+        />
+        <meta 
+          name="keywords" 
+          content="contact NK Drop Taxi, car rental contact, taxi booking inquiry, rent a car contact, Tiruvannamalai taxi, call NK Drop Taxi, email NK Drop Taxi, book rental car, car hire support, vehicle rental inquiry"
+        />
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {`
+          {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "NK Drop Taxi",
+            "image": "/images/toyota.jpg",
+            "telephone": "+91 8489751086",
+            "email": "enquiry@nkdroptaxi.com",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Mariamman kovil street, veeranam (village), santhanur (post), Thandrampet (tk)",
+              "addressLocality": "Tiruvannamalai",
+              "postalCode": "606706",
+              "addressCountry": "IN"
+            },
+            "url": "https://www.nkdroptaxi.com",
+            "sameAs": [
+              "https://www.facebook.com/yourpage",
+              "https://www.instagram.com/yourpage",
+              "https://www.pinterest.com/yourpage"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+91 8489751086",
+              "contactType": "customer service",
+              "areaServed": "IN"
+            }
+          }
+          `}
+        </script>
+      </Helmet>
       {/* Hero Section */}
       <section className="relative w-full h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[65vh]  flex items-center overflow-hidden rounded-lg mt-16 md:mt-10 px-4 sm:px-6 md:px-6">
         {/* Background Image */}

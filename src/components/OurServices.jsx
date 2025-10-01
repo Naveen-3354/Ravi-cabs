@@ -14,6 +14,8 @@ const OurServices = () => {
             </h2>
           </div>
         </Reveal>
+    {/*SEO*/} <Helmet> <title>Car Rental Services | Affordable Cars for Rent</title> <meta name="description" content="Book affordable and reliable cars for rent with flexible options. Choose from one-way or round-trip rentals. Best deals on car rentals near you." /> <meta name="keywords" content="car rental, cars for rent, affordable car hire, one way car rental, round trip car rental, rent a car near me, best car rental deals" /> </Helmet>
+
 
         {/* Drop Taxi Service */}
         <Banner
